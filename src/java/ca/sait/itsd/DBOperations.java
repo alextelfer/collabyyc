@@ -36,11 +36,11 @@ public class DBOperations {
         return result;
     }
      
-         public boolean deleteItem(String itemName) {
+    public boolean deleteItem(String itemName) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
 
-        String sql = "delete from CreateTablesCollab.items where name=?";
+        String sql = "delete from collabyyc.items where name=?";
 
         try {
             Connection conn = pool.getConnection();
@@ -63,12 +63,12 @@ public class DBOperations {
         return result;
     }
     
-    public boolean addItem(int ItemID, int VendorID, String itemName, Double Price, int Quantity, String Category) {
+    public boolean addItem(int ItemID, int VendorID, String itemName, double Price, int Quantity, String Category) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
 
         try {
-            String sql = "insert into CreateTablesCollab.items set ItemID=?, VendorID=?, Name=?, Price=?, Quantity=?, Category=?";
+            String sql = "insert into collabyyc.items set ItemID=?, VendorID=?, Name=?, Price=?, Quantity=?, Category=?";
 
             Connection conn = pool.getConnection();
 
