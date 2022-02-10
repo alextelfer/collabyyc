@@ -1,19 +1,37 @@
-Drop Table Vendor;
-Drop Table Items;
+CREATE DATABASE  IF NOT EXISTS `collabyyc` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `collabyyc`;
 
-Create table Vendors
-VendorID NUMBER(5),
-Vendor_Name VARCHAR(40) CONSTRAINT VN_NN NOT NULL,
-Vendor_Email VARCHAR(40) CONSTRAINT VE_NN NOT NULL,
-Vendor_Phone Number(9) CONSTRAINT VP_NN NOT NULL,
-CONSTRAINT VendorID_PK PRIMARY KEY (VendorID));
+Drop Table if exists Items;
+Drop Table if exists Vendors;
 
-Create table Items
-ItemID NUMBER(8),
-VendorID NUMBER(5),
-Name VARCHAR(30) CONSTRAINT NAME_NN NOT NULL,
-Price NUMBER(4,2) CONSTRAINT PRICE_NN NOT NULL,
-Quantity NUMBER(3) CONSTRAINT QUANTITY_NN NOT NULL,
-Category VARCHAR(20) CONSTRAINT CATEGORY_NN NOT NULL,
-CONSTRAINT ItemID_PK PRIMARY KEY (ItemID),
-CONSTRAINT VendorID_FK FOREIGN KEY (VendorID) REFERENCES VENDORS (VendorID));
+
+Create table Vendors (
+    vendorID int(5),
+    vendorName VARCHAR(40) NOT NULL,
+    vendorEmail VARCHAR(40) NOT NULL,
+    vendorPhone varchar(10) NOT NULL,
+    PRIMARY KEY (vendorID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+Create table Items (
+    itemID int(8),
+    vendorID int(5),
+    nameProducts VARCHAR(30) NOT NULL,
+    price decimal(4,2) NOT NULL,
+    quantity int(3) NOT NULL,
+    category VARCHAR(20) NOT NULL,
+    PRIMARY KEY (ItemID),
+    FOREIGN KEY (VendorID) REFERENCES VENDORS (VendorID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
+VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472);
+
+INSERT INTO Vendors (VendorID, VendorName, VendorEmail, VendorPhone)
+VALUES(00002, 'Erin Baer Ceramics', 'erin@erinbaerceramics.com', 4033740619);
+
+INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
+VALUES(00000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
+
+INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
+VALUES(00000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
