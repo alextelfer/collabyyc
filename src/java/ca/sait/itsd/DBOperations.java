@@ -35,4 +35,71 @@ public class DBOperations {
         }
         return result;
     }
+     
+         public boolean deleteItem(String itemName) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        String sql = "delete from CreateTablesCollab.items where name=?";
+
+        try {
+            Connection conn = pool.getConnection();
+
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, itemName);
+
+            int rowAffected = st.executeUpdate();
+
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+    
+    public boolean addItem(int ItemID, int VendorID, String itemName, Double Price, int Quantity, String Category) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {
+            String sql = "insert into CreateTablesCollab.items set ItemID=?, VendorID=?, Name=?, Price=?, Quantity=?, Category=?";
+
+            Connection conn = pool.getConnection();
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            
+            String ItemIDStr = Integer.toString(ItemID);
+            String VendorIDStr = Integer.toString(VendorID);
+            String PriceStr = Double.toString(Price);
+            String QuantityStr = Integer.toString(Quantity);
+           
+
+            st.setString(1, ItemIDStr);
+            st.setString(2, VendorIDStr);
+            st.setString(3, itemName);
+            st.setString(4, PriceStr);
+            st.setString(5, QuantityStr);
+            st.setString(6, Category);
+            
+            int rowAffected = st.executeUpdate();
+
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+
+    }
+     
 }
