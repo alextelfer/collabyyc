@@ -1,3 +1,5 @@
+package ca.sait.itsd;
+
 public class Item {
 
     int itemID;
@@ -7,6 +9,17 @@ public class Item {
     int quantity;
     String category;
 
+    public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
+        this.itemID = itemID;
+        this.vendorID = vendorID;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+    }
+    
+    public Item() {}
+        
     public Vendor getVendorFinance() {
         Vendor vendorInfo = new Vendor();
         return vendorInfo;

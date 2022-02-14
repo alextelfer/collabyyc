@@ -1,3 +1,5 @@
+package ca.sait.itsd;
+
 public class Vendor {
     
     int vendorID;
