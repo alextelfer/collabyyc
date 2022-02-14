@@ -8,6 +8,10 @@
         <servlet-name>AddItem</servlet-name>
         <servlet-class>ca.sait.itsd.servlets.AddItem</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddVendor</servlet-name>
+        <servlet-class>ca.sait.itsd.servlets.AddVendor</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/FrontController</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>AddItem</servlet-name>
         <url-pattern>/AddItem</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddVendor</servlet-name>
+        <url-pattern>/AddVendor</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

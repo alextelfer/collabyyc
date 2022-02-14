@@ -7,6 +7,7 @@ package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
+import ca.sait.itsd.Vendor;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -33,9 +34,11 @@ public class FrontController extends HttpServlet {
             throws ServletException, IOException {
         
         DBOperations dbOps = new DBOperations();
+                
+        ArrayList<Vendor> vendors = dbOps.getVendors();
+        request.getSession().setAttribute("vendorlist", vendors);
         
-        ArrayList<Item> items = new ArrayList<Item>();
-        
+        ArrayList<Item> items = new ArrayList<>();
         //Building dummy items for testing
         items.add(new Item(0, 0, "item1", 1.50, 1, "cat1"));
         items.add(new Item(2, 0, "item1", 1.50, 1, "cat1"));
@@ -58,7 +61,7 @@ public class FrontController extends HttpServlet {
             
             case "additem":            
                 //Getting values from jsp to build item
-                int itemID = 0; //temp value, real value must be assigned in db
+                int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
                 int vendorID = Integer.parseInt(request.getParameter("vendor"));
                 String name = request.getParameter("name");
                 double price = Double.parseDouble(request.getParameter("price"));
@@ -69,6 +72,17 @@ public class FrontController extends HttpServlet {
                 
                 request.getSession().setAttribute("newitem", newItem);                
                 response.sendRedirect("AddItem");
+                break;
+                
+            case "addvendor":
+                int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
+                String vendorName = request.getParameter("vendorname");
+                String email = request.getParameter("email");
+                String phoneNo = request.getParameter("phoneno");
+                
+                Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
+                request.getSession().setAttribute("newvendor", newVendor);
+                response.sendRedirect("AddVendor");
                 break;
                 
             default:

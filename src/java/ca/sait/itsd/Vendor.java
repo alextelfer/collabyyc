@@ -5,11 +5,13 @@ import java.io.Serializable;
 public class Vendor implements Serializable {
     
     int vendorID;
+    String name;
     String vendorEmail;
-    int vendorPhoneNumber;
+    String vendorPhoneNumber;
     
-    public Vendor(int vendorID, String vendorEmail, int vendorPhoneNumber) {
+    public Vendor(int vendorID, String name, String vendorEmail, String vendorPhoneNumber) {
         this.vendorID = vendorID;
+        this.name = name;
         this.vendorEmail = vendorEmail;
         this.vendorPhoneNumber = vendorPhoneNumber;
     }
@@ -30,11 +32,11 @@ public class Vendor implements Serializable {
         this.vendorEmail = vendorEmail;
     }
 
-    public int getVendorPhoneNumber() {
+    public String getVendorPhoneNumber() {
         return this.vendorPhoneNumber;
     }
 
-    public void setVendorPhoneNumber(int vendorPhoneNumber) {
+    public void setVendorPhoneNumber(String vendorPhoneNumber) {
         this.vendorPhoneNumber = vendorPhoneNumber;
     }
 

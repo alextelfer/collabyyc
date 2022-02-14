@@ -6,7 +6,7 @@
 package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
-import ca.sait.itsd.Item;
+import ca.sait.itsd.Vendor;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author 857421
  */
-public class AddItem extends HttpServlet {
+public class AddVendor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,13 +33,13 @@ public class AddItem extends HttpServlet {
         
         DBOperations dbOps = new DBOperations();
         
-        Item item = (Item) request.getSession().getAttribute("newitem");
+        Vendor vendor = (Vendor) request.getSession().getAttribute("newvendor");
         
-        if(item != null) {
-            dbOps.addItem(item);
-            request.getSession().setAttribute("newitem", null);
-        }             
-
+        if(vendor != null) {
+            dbOps.addVendor(vendor);
+            request.getSession().setAttribute("newvendor", null);
+        }
+        
         request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
 

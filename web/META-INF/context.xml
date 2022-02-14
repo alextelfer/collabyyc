@@ -2,9 +2,9 @@
 <Context path="/CreateTablesCollab">
 
 
-    <Resource name="jdbc/CreateTablesCollab" auth="Container"
+    <Resource name="jdbc/collabyyc" auth="Container"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/CreateTablesCollab"
+        url="jdbc:mysql://localhost:3306/collabyyc"
         username="root" password="password"
         maxActive="100" maxIdle="30" maxWait="10000"
         logAbandoned="true" removeAbandoned="true"

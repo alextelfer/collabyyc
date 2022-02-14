@@ -20,6 +20,10 @@
                  
                 <table>
                     <tr>
+                        <td>Item ID:</td>
+                        <td><input type="number" name="itemid" /></td>
+                    </tr>
+                    <tr>
                         <td>Name:</td>
                         <td><input type="text" name="name" /></td>
                     </tr>
@@ -66,5 +70,50 @@
             </table>
         </div>
         
+        <div class="form">
+            <form action="FrontController" method="GET">
+                <table>
+                    <tr>
+                        <td>Vendor ID:</td>
+                        <td><input type="number" name="vendorid" /></td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input type="text" name="vendorname" /></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input type="text" name="email" /></td>
+                    </tr>
+                    <tr>
+                        <td>Phone No.:</td>
+                        <td><input type="number" name="phoneno" /></td>
+                    </tr>
+                </table>
+                
+                <input type="submit" value="Add Vendor" />
+                <input type="hidden" name="action" value="addvendor" />
+            </form>
+        </div>
+        
+        <div class="vendors">
+            <table>
+                <tr>
+                    <th>Vendor ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone No.</th>                                        
+                </tr>
+                
+                <c:forEach items="${vendorlist}" var="vendor">
+                    <tr>
+                        <td>${vendor.vendorID}</td>                        
+                        <td>${vendor.name}</td>
+                        <td>${vendor.vendorEmail}</td>
+                        <td>${vendor.vendorPhoneNumber}</td>                        
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </body>
 </html>

@@ -22,7 +22,7 @@ public class Item implements Serializable {
 
     public Vendor getVendorFinance() {
         //dummy vendor
-        Vendor vendorInfo = new Vendor(0, "", 0);
+        Vendor vendorInfo = new Vendor(0, "", "", "");
         return vendorInfo;
     } 
 
