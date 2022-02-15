@@ -273,4 +273,25 @@ public class DBOperations {
 
         return result;
     }
+
+    public String showVendor() {
+        String result = "";
+        ConnectionPool pool = ConnectionPool.getInstance();
+        try {
+            String sql = "select * from collabyyc.vendors;";
+            Connection conn = pool.getConnection();            
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                result = result + rs.getInt(1) + "," + rs.getString(2) + "," + rs.getString(3) +
+                    "," + rs.getString(4) + ";";
+            }
+            rs.close();
+            st.close();
+            pool.freeConnection(conn);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
 }
