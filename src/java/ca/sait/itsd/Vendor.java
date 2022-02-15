@@ -24,7 +24,7 @@ public class Vendor implements Serializable {
         this.name = name;
     }
 
-    public Vendor(int vendorID, String vendorEmail, int vendorPhoneNumber) {
+    public Vendor(int vendorID, String vendorEmail, String vendorPhoneNumber) {
         this.vendorID = vendorID;
         this.vendorEmail = vendorEmail;
         this.vendorPhoneNumber = vendorPhoneNumber;

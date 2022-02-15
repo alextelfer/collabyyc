@@ -241,4 +241,36 @@ public class DBOperations {
         }
         return result;
     }
+    
+    public boolean updateVendor(Vendor vendor) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {
+            String sql = "update collabyyc.vendors set vendorName=?, vendorEmail=?, vendorPhone=? where vendorID=?";
+            Connection conn = pool.getConnection();
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            String vendorID = Integer.toString(vendor.getVendorID());
+            String vendorName = vendor.getName();
+            String vendorEmail = vendor.getVendorEmail();
+            String vendorPhoneNumber = vendor.getVendorPhoneNumber();
+
+            st.setString(1, vendorName);
+            st.setString(2, vendorEmail);
+            st.setString(3, vendorPhoneNumber);
+            st.setString(4, vendorID);
+
+            int rowAffected = st.executeUpdate();
+            result = (rowAffected > 0);
+            
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
 }
