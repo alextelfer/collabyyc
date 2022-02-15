@@ -6,10 +6,8 @@
 package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
-import ca.sait.itsd.Item;
 import ca.sait.itsd.Vendor;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author 857421
  */
-public class FrontController extends HttpServlet {
+public class AddVendor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,51 +32,16 @@ public class FrontController extends HttpServlet {
             throws ServletException, IOException {
         
         DBOperations dbOps = new DBOperations();
-                
-        ArrayList<Vendor> vendors = dbOps.getVendors();
-        request.getSession().setAttribute("vendorlist", vendors);
         
-        ArrayList<Item> items = dbOps.getItems();
-        request.getSession().setAttribute("itemlist", items);        
+        Vendor vendor = (Vendor) request.getSession().getAttribute("newvendor");
         
-        //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
-        String action = request.getParameter("action");
-        if(action == null) action = "";
-        
-        switch(action) {
-            
-            case "additem":            
-                //Getting values from jsp to build item
-                int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
-                int vendorID = Integer.parseInt(request.getParameter("vendor"));
-                String name = request.getParameter("name");
-                double price = Double.parseDouble(request.getParameter("price"));
-                int quantity = 1;
-                String category = request.getParameter("category");
-                
-                Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
-                
-                request.getSession().setAttribute("newitem", newItem);                
-                response.sendRedirect("AddItem");
-                break;
-                
-            case "addvendor":
-                int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
-                String vendorName = request.getParameter("vendorname");
-                String email = request.getParameter("email");
-                String phoneNo = request.getParameter("phoneno");
-                
-                Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
-                request.getSession().setAttribute("newvendor", newVendor);
-                response.sendRedirect("AddVendor");
-                break;
-                
-            default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-                break;
+        if(vendor != null) {
+            dbOps.addVendor(vendor);
+            request.getSession().setAttribute("newvendor", null);
         }
         
-        
+        //request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+        response.sendRedirect("FrontController");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

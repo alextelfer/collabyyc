@@ -1,10 +1,28 @@
 package ca.sait.itsd;
 
-public class Vendor {
+import java.io.Serializable;
+
+public class Vendor implements Serializable {
     
     int vendorID;
+    String name;
     String vendorEmail;
-    int vendorPhoneNumber;
+    String vendorPhoneNumber;
+    
+    public Vendor(int vendorID, String name, String vendorEmail, String vendorPhoneNumber) {
+        this.vendorID = vendorID;
+        this.name = name;
+        this.vendorEmail = vendorEmail;
+        this.vendorPhoneNumber = vendorPhoneNumber;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Vendor(int vendorID, String vendorEmail, int vendorPhoneNumber) {
         this.vendorID = vendorID;
@@ -32,11 +50,11 @@ public class Vendor {
         this.vendorEmail = vendorEmail;
     }
 
-    public int getVendorPhoneNumber() {
+    public String getVendorPhoneNumber() {
         return this.vendorPhoneNumber;
     }
 
-    public void setVendorPhoneNumber(int vendorPhoneNumber) {
+    public void setVendorPhoneNumber(String vendorPhoneNumber) {
         this.vendorPhoneNumber = vendorPhoneNumber;
     }
 

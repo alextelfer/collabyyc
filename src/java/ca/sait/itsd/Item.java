@@ -1,6 +1,8 @@
 package ca.sait.itsd;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
 
     int itemID;
     int vendorID;
@@ -8,6 +10,15 @@ public class Item {
     double price;
     int quantity;
     String category;
+    
+    // public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
+    //     this.itemID = itemID;
+    //     this.vendorID = vendorID;
+    //     this.name = name;
+    //     this.price = price;
+    //     this.quantity = quantity;
+    //     this.category = category;
+    // }
 
     public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
         this.itemID = itemID;
@@ -21,7 +32,8 @@ public class Item {
     public Item() {}
         
     public Vendor getVendorFinance() {
-        Vendor vendorInfo = new Vendor();
+        //dummy vendor
+        Vendor vendorInfo = new Vendor(0, "", "", "");
         return vendorInfo;
     } 
 
