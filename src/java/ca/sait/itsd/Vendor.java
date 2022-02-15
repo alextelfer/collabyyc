@@ -6,6 +6,16 @@ public class Vendor {
     String vendorEmail;
     int vendorPhoneNumber;
 
+    public Vendor(int vendorID, String vendorEmail, int vendorPhoneNumber) {
+        this.vendorID = vendorID;
+        this.vendorEmail = vendorEmail;
+        this.vendorPhoneNumber = vendorPhoneNumber;
+    }
+
+    public Vendor() {
+
+    }
+
     public int getVendorID() {
         return this.vendorID;
     }
