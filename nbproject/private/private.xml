@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/ConnectionPool.java</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/Item.java</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/DBOperations.java</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/servlets/AddItem.java</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/web/WEB-INF/index.jsp</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/web/META-INF/context.xml</file>
-            <file>file:/C:/Users/840303/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/servlets/FrontController.java</file>
+            <file>file:/C:/SAIT/Semester_4/PROJ-354/CapstoneProject/Project/collabyyc/DBScript/Create_DB.sql</file>
+            <file>file:/C:/SAIT/Semester_4/PROJ-354/CapstoneProject/Project/collabyyc/web/WEB-INF/index.jsp</file>
+            <file>file:/C:/SAIT/Semester_4/PROJ-354/CapstoneProject/Project/collabyyc/src/java/ca/sait/itsd/DBOperations.java</file>
+            <file>file:/C:/SAIT/Semester_4/PROJ-354/CapstoneProject/Project/collabyyc/src/java/ca/sait/itsd/ConnectionPool.java</file>
+            <file>file:/C:/SAIT/Semester_4/PROJ-354/CapstoneProject/Project/collabyyc/src/java/ca/sait/itsd/Vendor.java</file>
         </group>
     </open-files>
 </project-private>
