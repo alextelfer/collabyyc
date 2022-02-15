@@ -15,6 +15,14 @@ public class Vendor implements Serializable {
         this.vendorEmail = vendorEmail;
         this.vendorPhoneNumber = vendorPhoneNumber;
     }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getVendorID() {
         return this.vendorID;
