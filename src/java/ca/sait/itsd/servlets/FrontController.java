@@ -38,20 +38,8 @@ public class FrontController extends HttpServlet {
         ArrayList<Vendor> vendors = dbOps.getVendors();
         request.getSession().setAttribute("vendorlist", vendors);
         
-        ArrayList<Item> items = new ArrayList<>();
-        //Building dummy items for testing
-        items.add(new Item(0, 0, "item1", 1.50, 1, "cat1"));
-        items.add(new Item(2, 0, "item1", 1.50, 1, "cat1"));
-        items.add(new Item(3, 1, "item1", 1.50, 1, "cat1"));
-        items.add(new Item(4, 2, "item1", 1.50, 1, "cat2"));
-        items.add(new Item(5, 3, "item1", 1.50, 1, "cat3"));
-        items.add(new Item(6, 4, "item1", 1.50, 1, "cat4"));
-        items.add(new Item(7, 4, "item1", 1.50, 1, "cat5"));
-        items.add(new Item(8, 4, "item1", 1.50, 1, "cat6"));
-        items.add(new Item(9, 5, "item1", 1.50, 1, "cat3"));
-        items.add(new Item(10, 5, "item1", 1.50, 1, "cat4"));
-        
-        request.getSession().setAttribute("itemlist", items);
+        ArrayList<Item> items = dbOps.getItems();
+        request.getSession().setAttribute("itemlist", items);        
         
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");

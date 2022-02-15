@@ -19,8 +19,7 @@ public class DBOperations {
     
     public ArrayList<Vendor> getVendors() {
         
-        ArrayList<Vendor> vendors = new ArrayList<Vendor>();
-        vendors.add(new Vendor(0, "", "", ""));
+        ArrayList<Vendor> vendors = new ArrayList<>();        
         
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         
@@ -38,8 +37,7 @@ public class DBOperations {
                     String email = rs.getString("vendorEmail");
                     String phone = rs.getString("vendorPhone");
                     Vendor vendor = new Vendor(vendorID, name, email, phone);
-                    vendors.add(vendor);
-                    System.out.println("adding");
+                    vendors.add(vendor);                    
                 }
                 
                 connectionPool.freeConnection(conn);
@@ -51,6 +49,42 @@ public class DBOperations {
                
         return vendors;
     }
+    
+    public ArrayList<Item> getItems() {
+        
+        ArrayList<Item> items = new ArrayList<>();        
+        
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        
+        try {
+            
+            Connection conn = connectionPool.getConnection();
+            
+            String sql = "SELECT * FROM collabyyc.items";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    int itemID = rs.getInt("itemID");
+                    int vendorID = rs.getInt("vendorID");
+                    String name = rs.getString("nameProducts");
+                    Double price = rs.getDouble("price");
+                    int quantity = rs.getInt("quantity");
+                    String category = rs.getString("category");
+                    Item item = new Item(itemID, vendorID, name, price, quantity, category);
+                    items.add(item);                    
+                }
+                
+                connectionPool.freeConnection(conn);
+            }
+            
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+               
+        return items;
+    }
+    
      public String getInventory() {
         String result = "";
         ConnectionPool pool = ConnectionPool.getInstance();
