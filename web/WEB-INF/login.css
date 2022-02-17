@@ -1,0 +1,23 @@
+    body {
+        background-color: rgb(235, 235, 235);
+        background-image: url(bg.jpg);
+        background-size: cover;
+        opacity: 100;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri;
+        font-size: 30px;
+        color: black;
+        text-align: center;
+        display: block;
+        position: relative;
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: auto;
+    }
+    
+    table {
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: auto;
+    }
