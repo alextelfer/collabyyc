@@ -102,15 +102,37 @@ public class DBOperations {
         return result;
     }
      
-    public boolean deleteItem(String itemName) {
+    public boolean deleteItem(String itemID) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();   
         try {
-            String sql = "delete from collabyyc.items where name=?";
+            String sql = "delete from collabyyc.items where itemID=?";
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
-            st.setString(1, itemName);
+            st.setString(1, itemID);
+            int rowAffected = st.executeUpdate();
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+    
+    public boolean deleteVendor(String vendorID) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();   
+        try {
+            String sql = "delete from collabyyc.vendors where vendorID=?";
+            Connection conn = pool.getConnection();
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, vendorID);
             int rowAffected = st.executeUpdate();
             result = (rowAffected > 0);
 

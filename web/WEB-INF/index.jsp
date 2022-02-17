@@ -81,6 +81,11 @@
             </form>
         </div>
 
+        <form action="FrontController" method="GET">
+            Item ID: <input type="number" name="deleteID" />
+            <input type="hidden" name="action" value="deleteitem" />
+            <input type="submit" value="Delete Item" />
+        </form>
 
     </body>
 </html>
