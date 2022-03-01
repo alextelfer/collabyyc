@@ -73,6 +73,18 @@ public class FrontController extends HttpServlet {
                 response.sendRedirect("AddVendor");
                 break;
                 
+            case "deleteitem":
+                String itemID1 = request.getParameter("deleteID");
+                dbOps.deleteItem(itemID1);
+                response.sendRedirect("FrontController");
+                break;
+                
+            case "deletevendor":
+                String vendorID2 = request.getParameter("deleteID");
+                dbOps.deleteVendor(vendorID2);
+                response.sendRedirect("FrontController");
+                break;
+                
             default:
                 request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
                 break;
