@@ -5,82 +5,83 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="./index.css">
-        <title>CollabYYC Home</title>
-    </head>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="./index.css">
+<title>CollabYYC Home</title>
+</head>
 
-    <body>
+<body>
+	<div class="inventory">
+		<img src="collabyyc.png">
+		<h1>Inventory</h1>
 
+		<table id="contents">
+			<tr>
+				<td><h3>Menu</h3></td>
+			</tr>
+			<tr>
+				<td id="cellContents"><a href="">Logout</a></td>
+			</tr>
+			<tr>
+				<td id="cellContents"><a href="./vendors.jsp">Vendors</a></td>
+			</tr>
+			<tr>
+				<td id="cellContents"><a href="">Sales</td>
+			</tr>
+			<tr>
+				<td id="cellContents"><a href="">Inventory</a></td>
+			</tr>
 
-        <div class="inventory">
-            <h1>Inventory</h1>
+			<form action="FrontController" method="GET">
+				<tr>
+					<td><h3>Add Item</h3></td>
+				</tr>
+				<tr>
+					<td>Item ID: <input type="number" name="itemid" /></td>
+				</tr>
+				<tr>
+					<td>Name: <input type="text" name="name" /></td>
+				</tr>
+				<tr>
+					<td>Vendor ID: <input type="number" name="vendor" /></td>
+				</tr>
+				<tr>
+					<td>Category: <input type="text" name="category" /></td>
+				</tr>
+				<tr>
+					<td>Price: <input type="number" name="price" /></td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="action" value="additem" /> <input
+						type="submit" value="Add Item" /></td>
+				</tr>
+			</form>
+		</table>
 
-            <table id="contents">
-                <tr><td id="cellContents"><a href="./vendors.jsp">Vendors</a></td></tr>
-            </table>
-
-            <table>
-                <tr>
-                    <th>Item ID</th>
-                    <th>Vendor ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Category</th>
-                </tr>
-
-                <c:forEach items="${itemlist}" var="item">
-                    <tr>
-                        <td>${item.itemID}</td>
-                        <td>${item.vendorID}</td>
-                        <td>${item.name}</td>
-                        <td>${item.price}</td>
-                        <td>${item.quantity}</td>
-                        <td>${item.category}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
-
-
-
-
-
-        <div class="form">
-            <h3>Add Item</h3>
-            <form action="FrontController" method="GET">
-
-                <table>
-                    <tr>
-                        <td>Item ID:</td>
-                        <td><input type="number" name="itemid" /></td>
-
-                        <td>Name:</td>
-                        <td><input type="text" name="name" /></td>
-
-                        <td>Vendor ID:</td>
-                        <td><input type="number" name="vendor" /></td>
-
-                        <td>Category:</td>
-                        <td><input type="text" name="category" /></td>
-
-                        <td>Price:</td>
-                        <td><input type="number" name ="price" /></td>
-                    </tr>  
-                </table>
-
-                <input type="hidden" name="action" value="additem" />
-                <input type="submit" value="Add Item" />
-
-
-            </form>
-        </div>
-
-
-    </body>
+		<table id="allItems" style="overflow-y: auto">
+			<c:forEach items="${itemlist}" var="item">
+				<table id="eachItem">
+					<tr></tr>
+					<tr>
+						<td>ID: ${item.itemID}</td>
+						<td>Name: ${item.name}</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Vendor ID: ${item.vendorID}</td>
+						<td>Category: ${item.category}</td>
+						<td>Price: {item.price}</td>
+						<td>Quantity: {item.quantity}</td>
+						<td><a href="">Delete</a></td>
+					</tr>
+				</table>
+			</c:forEach>
+			</div>
+</body>
 </html>

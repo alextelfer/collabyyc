@@ -1,15 +1,5 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : Feb. 16, 2022, 9:08:46 p.m.
-    Author     : corbi
-*/
-
 body {
     background-color: rgb(235, 235, 235);
-    background-image: url(bg.jpg);
     background-size: cover;
     opacity: 100;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri;
@@ -18,34 +8,47 @@ body {
     display: block;
     position: relative;
     margin-top: 3%;
-    margin-left: 5%;
+    margin-left: 3%;
     margin-right: auto;
     margin-bottom: auto;
+    margin-right: auto;
 }
 
-#contents{
-    
-    margin-right: 10%;
+img {
+    width: 250px;
+    margin-bottom: 30px;
+}
+
+table {
+    background-color: white;
+    border-collapse: separate;
+    border: solid black 1px;
+    border-radius: 20px;
+}
+
+td {
+    padding: 10px;
+    width: 100px;
+}
+
+#contents {
+    display: block;
     float: right;
-  
+    position: static;
+    margin-right: 10%;
+    border: 1px solid;
+    padding: 5px;
+    width: 12%;
 }
 
-#cellContents{
+#cellContents {
     padding: 20px;
 }
 
-
-table, th, td{
+#eachItem {
     border: 1px solid;
-}
-td{
     padding: 5px;
+    width: 70%;
+    overflow: scroll;
+    position: static;
 }
-
-div{
-    padding-bottom: 40px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 5px;
-}
-
