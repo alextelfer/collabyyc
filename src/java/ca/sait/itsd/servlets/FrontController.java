@@ -57,9 +57,8 @@ public class FrontController extends HttpServlet {
                 String category = request.getParameter("category");
                 
                 Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
-                
                 request.getSession().setAttribute("newitem", newItem);                
-                response.sendRedirect("AddItem");
+                response.sendRedirect("/CollabYYC/AddItem");
                 break;
                 
             case "addvendor":
@@ -70,26 +69,26 @@ public class FrontController extends HttpServlet {
                 
                 Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
                 request.getSession().setAttribute("newvendor", newVendor);
-                response.sendRedirect("AddVendor");
+                response.sendRedirect("/CollabYYC/AddVendor");
                 break;
                 
             case "deleteitem":
                 String itemID1 = request.getParameter("deleteID");
                 dbOps.deleteItem(itemID1);
-                response.sendRedirect("FrontController");
+                response.sendRedirect("/CollabYYC/FrontController");
                 break;
                 
             case "deletevendor":
                 String vendorID2 = request.getParameter("deleteID");
                 dbOps.deleteVendor(vendorID2);
-                response.sendRedirect("FrontController");
+                response.sendRedirect("/CollabYYC/FrontController");
                 break;
                 
             default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
                 break;
         }
-        
+        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
         
     }
 
