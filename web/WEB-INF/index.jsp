@@ -57,35 +57,52 @@
 
                 <table>
                     <tr>
-                        <td>Item ID:</td>
-                        <td><input type="number" name="itemid" /></td>
+                        <td>Item ID:<input type="number" name="itemid"/></td>
 
-                        <td>Name:</td>
-                        <td><input type="text" name="name" /></td>
 
-                        <td>Vendor ID:</td>
-                        <td><input type="number" name="vendor" /></td>
+                        <td>Name:<input type="text" name="name"/></td>
 
-                        <td>Category:</td>
-                        <td><input type="text" name="category" /></td>
 
-                        <td>Price:</td>
-                        <td><input type="number" name ="price" /></td>
+                        <td>Vendor ID:<input type="number" name="vendor"/></td>
+
+
+                        <td>Category:<input type="text" name="category"/></td>
+
+
+                        <td>Price:<input type="number" name ="price"/></td>
+                        <td><input type="hidden" name="action" value="additem" />
+                            <input type="submit" value="Add Item" /></td>
                     </tr>  
+
                 </table>
 
-                <input type="hidden" name="action" value="additem" />
-                <input type="submit" value="Add Item" />
+
 
 
             </form>
         </div>
+        <div class="form">
+            <h3>Delete Item</h3>
+            <table>
+                <form action="FrontController" method="GET">
+                    <tr>
+                        <td>Item ID: 
+                            <select name="deleteID">
+                                <option disabled selected value>Select an Item</option>
+                                <c:forEach items="${itemlist}" var="item">
+                                    <option value="${item.itemID}">${item.name}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td>  
+                            <input type="hidden" name="action" value="deleteitem"/>
+                            <input type="submit" value="Delete Item" onclick="return confirm('Delete item?')"/>
+                        </td>
 
-        <form action="FrontController" method="GET">
-            Item ID: <input type="number" name="deleteID" />
-            <input type="hidden" name="action" value="deleteitem" />
-            <input type="submit" value="Delete Item" />
-        </form>
+                    </tr>
 
+                </form>
+            </table>
+        </div>
     </body>
 </html>
