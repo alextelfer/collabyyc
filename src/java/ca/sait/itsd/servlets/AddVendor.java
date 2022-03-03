@@ -41,7 +41,7 @@ public class AddVendor extends HttpServlet {
         }
         
         //request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-        response.sendRedirect("FrontController");
+        response.sendRedirect("/FrontController");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

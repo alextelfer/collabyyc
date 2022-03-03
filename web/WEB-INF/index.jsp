@@ -21,7 +21,10 @@
             <h1>Inventory</h1>
 
             <table id="contents">
-                <tr><td id="cellContents"><a href="./vendors.jsp">Vendors</a></td></tr>
+                <tr><td>
+                        <%@ include file="jspf/segment.jspf" %>
+                    </td>
+                </tr>
             </table>
 
             <table>
