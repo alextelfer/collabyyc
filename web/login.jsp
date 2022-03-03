@@ -16,8 +16,8 @@
 
         </tr>
     </table>
-    <table>
-        <form onsubmit="">
+        <form action="LoginServlet" method="POST">
+            <table>
             <tr>
                 <td>
                     <input name="username" type="text" placeholder="Username">
@@ -31,9 +31,11 @@
                 <td>
                     <input type="submit" value="Login">
                 </td>
+                <input type="hidden" name="action" value="login">
             </tr>
+            </table>
         </form>
-    </table>
+        ${invalidLogin}
 </body>
 
 </html>

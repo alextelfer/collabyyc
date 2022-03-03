@@ -81,6 +81,39 @@ public class DBOperations {
         return items;
     }
     
+    public ArrayList<User> getUsers(){
+        
+        ArrayList<User> users = new ArrayList<>();        
+        
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        
+        try {
+            
+            Connection conn = connectionPool.getConnection();
+            
+            String sql = "SELECT * FROM collabyyc.users";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    String userName = rs.getString("userName");
+                    String password = rs.getString("password");
+                    int userType = rs.getInt("userType");
+                    User user = new User(userName, password, userType);
+                    users.add(user);                    
+                }
+                
+                connectionPool.freeConnection(conn);
+            }
+            
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+               
+        return users;
+        
+    }
+    
      public String getInventory() {
         String result = "";
         ConnectionPool pool = ConnectionPool.getInstance();
