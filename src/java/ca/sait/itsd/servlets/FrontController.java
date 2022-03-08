@@ -65,6 +65,7 @@ public class FrontController extends HttpServlet {
 
         } else {
 
+         
             switch (action) {
 
                 case "additem":
@@ -76,10 +77,23 @@ public class FrontController extends HttpServlet {
                     int quantity = 1;
                     String category = request.getParameter("category");
 
-                    Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
+                    try {
+                        if (InputVerifier.checkString(name)) {
+                            throw new BadStringException(name);
+                        }
+                        if (InputVerifier.checkString(category)) {
+                            throw new BadStringException(category);
+                        }
 
-                    request.getSession().setAttribute("newitem", newItem);
-                    response.sendRedirect("AddItem");
+                        Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
+                        request.getSession().setAttribute("newitem", newItem);
+                        response.sendRedirect("AddItem");
+
+                    } catch (BadStringException bse) {
+                        request.getSession().setAttribute("exceptionmessage", bse.getMessage());
+                        response.sendRedirect("FrontController");
+                    }
+
                     break;
 
                 case "addvendor":
@@ -88,9 +102,39 @@ public class FrontController extends HttpServlet {
                     String email = request.getParameter("email");
                     String phoneNo = request.getParameter("phoneno");
 
-                    Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
-                    request.getSession().setAttribute("newvendor", newVendor);
-                    response.sendRedirect("AddVendor");
+                    try {
+                        if (InputVerifier.checkString(vendorName)) {
+                            throw new BadStringException("vendorName");
+                        }
+                        if (InputVerifier.checkString(email)) {
+                            throw new BadStringException("email");
+                        }
+                        if (InputVerifier.checkString(phoneNo)) {
+                            throw new BadStringException("phoneNo");
+                        }
+
+                        Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
+                        request.getSession().setAttribute("newvendor", newVendor);
+                        response.sendRedirect("AddVendor");
+
+                    } catch (BadStringException bse) {
+                        request.getSession().setAttribute("exceptionmessage", bse.getMessage());
+                        response.sendRedirect("FrontController");
+                    }
+
+                    break;
+
+                case "updateItem":
+                    String updatedItemID = request.getParameter("updatedItemID");
+                    String updatedItemName = request.getParameter("updatedItemName");
+                    String updatedVendorID = request.getParameter("updatedVendorID");
+                    String updatedPrice = request.getParameter("updatedPrice");
+                    String updatedCategory = request.getParameter("updatedCategory");
+                    String updatedQuantity = request.getParameter("updatedQuantity");
+                    String oldID = request.getParameter("oldID");
+                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldID);
+                    System.out.println(updatedPrice);
+                    response.sendRedirect("FrontController");
                     break;
 
                 case "deleteitem":
@@ -105,94 +149,12 @@ public class FrontController extends HttpServlet {
                     response.sendRedirect("FrontController");
                     break;
 
-                case "updateItem":
-                    String updatedItemID = request.getParameter("updatedItemID");
-                    String updatedItemName = request.getParameter("updatedItemName");
-                    String updatedVendorID = request.getParameter("updatedVendorID");
-                    String updatedPrice = request.getParameter("updatedPrice");
-                    String updatedCategory = request.getParameter("updatedCategory");
-                    String updatedQuantity = request.getParameter("updatedQuantity");
-                    String oldID = request.getParameter("oldID");
-                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldID);
-                    System.out.println(updatedPrice);
-                    response.sendRedirect("FrontController");
-//                    String modifiedItem = (String)request.getSession().getAttribute(modifyItem);
-//                    System.out.println(modifiedItem);
-//                    ArrayList<Item> updatedItem = new ArrayList<Item>(dbOps.retrieveItem(Integer.parseInt(modifiedItem)));
-//                    dbOps.modifyItem(updatedItem.get(0));
-//                    response.sendRedirect("FrontController");
-                    break;
-
                 default:
                     request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
                     break;
             }
 
-        switch (action) {
-
-            case "additem":
-                //Getting values from jsp to build item
-                int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
-                int vendorID = Integer.parseInt(request.getParameter("vendor"));
-                String name = request.getParameter("name");
-                double price = Double.parseDouble(request.getParameter("price"));
-                int quantity = 1;
-                String category = request.getParameter("category");
-                
-                try {
-                    if(InputVerifier.checkString(name)) throw new BadStringException(name);
-                    if(InputVerifier.checkString(category)) throw new BadStringException(category);
-                    
-                    Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
-                    request.getSession().setAttribute("newitem", newItem);                
-                    response.sendRedirect("AddItem");
-                    
-                } catch(BadStringException bse) {
-                    request.getSession().setAttribute("exceptionmessage", bse.getMessage());
-                    response.sendRedirect("FrontController");
-                }
-                
-                break;
-
-            case "addvendor":
-                int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
-                String vendorName = request.getParameter("vendorname");
-                String email = request.getParameter("email");
-                String phoneNo = request.getParameter("phoneno");
-                
-                try {
-                    if(InputVerifier.checkString(vendorName)) throw new BadStringException("vendorName");
-                    if(InputVerifier.checkString(email)) throw new BadStringException("email");
-                    if(InputVerifier.checkString(phoneNo)) throw new BadStringException("phoneNo");
-                    
-                    Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
-                    request.getSession().setAttribute("newvendor", newVendor);
-                    response.sendRedirect("AddVendor");
-                    
-                } catch(BadStringException bse) {
-                    request.getSession().setAttribute("exceptionmessage", bse.getMessage());
-                    response.sendRedirect("FrontController");
-                }
-                
-                break;
-
-            case "deleteitem":
-                String itemID1 = request.getParameter("deleteID");
-                dbOps.deleteItem(itemID1);
-                response.sendRedirect("FrontController");
-                break;
-
-            case "deletevendor":
-                String vendorID2 = request.getParameter("deleteID");
-                dbOps.deleteVendor(vendorID2);
-                response.sendRedirect("FrontController");
-                break;
-
-            default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-                break;
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

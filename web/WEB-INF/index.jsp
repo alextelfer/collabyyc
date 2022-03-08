@@ -20,12 +20,9 @@
         <div class="inventory">
             <h1>Inventory</h1>
 
-            <table id="contents">
-                <tr><td>
-                        <%@ include file="jspf/segment.jspf" %>
-                    </td>
-                </tr>
-            </table>
+            <%@ include file="jspf/segment.jspf" %>
+
+
 
             <table>
                 <tr>

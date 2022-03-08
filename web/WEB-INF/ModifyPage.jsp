@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="./index.css">
         <title>JSP Page</title>
     </head>
     <body>
@@ -19,25 +20,25 @@
             <c:forEach items="${singleItem}" var="item">
                 <table>
                     <tr>
-                        <td>Item ID:</td>
-                        <td><input type="number" name="updatedItemID" value="${item.itemID}" /></td>
+                        <td>Item ID:
+                        <input type="number" name="updatedItemID" value="${item.itemID}" /></td>
 
-                        <td>Name:</td>
-                        <td><input type="text" name="updatedItemName" value="${item.name}" /></td>
+                        <td>Name:
+                        <input type="text" name="updatedItemName" value="${item.name}" /></td>
 
-                        <td>Vendor ID:</td>
-                        <td><input type="number" name="updatedVendorID" value="${item.vendorID}" /></td>
+                        <td>Vendor ID:
+                        <input type="number" name="updatedVendorID" value="${item.vendorID}" /></td>
 
-                        <td>Category:</td>
-                        <td><input type="text" name="updatedCategory" value="${item.category}" /></td>
-                        
-                        <td>Quantity:</td>
-                        <td><input type="number" name ="updatedQuantity" value="${item.quantity}" /></td>
+                        <td>Category:
+                        <input type="text" name="updatedCategory" value="${item.category}" /></td>
 
-                        <td>Price:</td>
-                        <td><input type="number" name ="updatedPrice" value="${item.price}" /></td>
-                        <input type ="hidden" name="oldID" value="${item.itemID}" />
-                      
+                        <td>Quantity:
+                        <input type="number" name ="updatedQuantity" value="${item.quantity}" /></td>
+
+                        <td>Price:
+                        <input type="number" name ="updatedPrice" value="${item.price}" /></td>
+                    <input type ="hidden" name="oldID" value="${item.itemID}" />
+
                     </tr>  
                 </table>
             </c:forEach>
