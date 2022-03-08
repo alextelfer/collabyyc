@@ -24,6 +24,28 @@ Create table Items (
     FOREIGN KEY (VendorID) REFERENCES VENDORS (VendorID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+Create table Sale (
+    transactionID int(10),
+    customerID int(5),
+    paymentDate TIMESTAMP NOT NULL;
+    saleAmount decimal(4,2) NOT NULL,
+    payVendorAmount decimal(4,2) NOT NULL,
+    soldItems VARCHAR (10000) NOT NULL,
+    shippingSentDate DATE;
+    shippingAddress VARCHAR(60),
+    pickupDate DATE;
+    PRIMARY KEY (transactionID),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+Create table EmployeeAccounts (
+    employeeID int(5),
+    employeePassword VARCHAR (20), NOT NULL
+    employeeName VARCHAR(50) NOT NULL,
+    employeeEmail VARCHAR(50) NOT NULL,
+    employeePhone int(10) NOT NULL,
+    PRIMARY KEY (employeeID),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
 VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472);
 

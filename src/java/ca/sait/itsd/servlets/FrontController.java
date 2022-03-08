@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +34,8 @@ public class FrontController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
         DBOperations dbOps = new DBOperations();
 
         ArrayList<Vendor> vendors = dbOps.getVendors();
@@ -47,51 +50,83 @@ public class FrontController extends HttpServlet {
             action = "";
         }
 
-        switch (action) {
+        String modifyItem = request.getParameter("modifyItem");
 
-            case "additem":
-                //Getting values from jsp to build item
-                int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
-                int vendorID = Integer.parseInt(request.getParameter("vendor"));
-                String name = request.getParameter("name");
-                double price = Double.parseDouble(request.getParameter("price"));
-                int quantity = 1;
-                String category = request.getParameter("category");
+        if (modifyItem != null && !modifyItem.equals("")) {
+            System.out.println(modifyItem);
+            dbOps.retrieveItem(Integer.parseInt(modifyItem));
+            ArrayList<Item> singleItem = dbOps.retrieveItem(Integer.parseInt(modifyItem));
+            request.getSession().setAttribute("singleItem", singleItem);
+            System.out.println(singleItem);
+            request.getSession().setAttribute("modifyItem", modifyItem);
+            request.getRequestDispatcher("WEB-INF/ModifyPage.jsp").forward(request, response);
 
-                Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
+        } else {
 
-                request.getSession().setAttribute("newitem", newItem);                
-                response.sendRedirect("AddItem");
-                break;
+            switch (action) {
 
-            case "addvendor":
-                int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
-                String vendorName = request.getParameter("vendorname");
-                String email = request.getParameter("email");
-                String phoneNo = request.getParameter("phoneno");
+                case "additem":
+                    //Getting values from jsp to build item
+                    int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
+                    int vendorID = Integer.parseInt(request.getParameter("vendor"));
+                    String name = request.getParameter("name");
+                    double price = Double.parseDouble(request.getParameter("price"));
+                    int quantity = 1;
+                    String category = request.getParameter("category");
 
-                Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
-                request.getSession().setAttribute("newvendor", newVendor);
-                response.sendRedirect("AddVendor");
-                break;
+                    Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
 
-            case "deleteitem":
-                String itemID1 = request.getParameter("deleteID");
-                dbOps.deleteItem(itemID1);
-                response.sendRedirect("FrontController");
-                break;
+                    request.getSession().setAttribute("newitem", newItem);
+                    response.sendRedirect("AddItem");
+                    break;
 
-            case "deletevendor":
-                String vendorID2 = request.getParameter("deleteID");
-                dbOps.deleteVendor(vendorID2);
-                response.sendRedirect("FrontController");
-                break;
+                case "addvendor":
+                    int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
+                    String vendorName = request.getParameter("vendorname");
+                    String email = request.getParameter("email");
+                    String phoneNo = request.getParameter("phoneno");
 
-            default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-                break;
+                    Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
+                    request.getSession().setAttribute("newvendor", newVendor);
+                    response.sendRedirect("AddVendor");
+                    break;
+
+                case "deleteitem":
+                    String itemID1 = request.getParameter("deleteID");
+                    dbOps.deleteItem(itemID1);
+                    response.sendRedirect("FrontController");
+                    break;
+
+                case "deletevendor":
+                    String vendorID2 = request.getParameter("deleteID");
+                    dbOps.deleteVendor(vendorID2);
+                    response.sendRedirect("FrontController");
+                    break;
+
+                case "updateItem":
+                    String updatedItemID = request.getParameter("updatedItemID");
+                    String updatedItemName = request.getParameter("updatedItemName");
+                    String updatedVendorID = request.getParameter("updatedVendorID");
+                    String updatedPrice = request.getParameter("updatedPrice");
+                    String updatedCategory = request.getParameter("updatedCategory");
+                    String updatedQuantity = request.getParameter("updatedQuantity");
+                    String oldID = request.getParameter("oldID");
+                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldID);
+                    System.out.println(updatedPrice);
+                    response.sendRedirect("FrontController");
+//                    String modifiedItem = (String)request.getSession().getAttribute(modifyItem);
+//                    System.out.println(modifiedItem);
+//                    ArrayList<Item> updatedItem = new ArrayList<Item>(dbOps.retrieveItem(Integer.parseInt(modifiedItem)));
+//                    dbOps.modifyItem(updatedItem.get(0));
+//                    response.sendRedirect("FrontController");
+                    break;
+
+                default:
+                    request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+                    break;
+            }
+
         }
-//        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 
     }
 
