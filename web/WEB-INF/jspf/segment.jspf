@@ -2,12 +2,12 @@
 <%@ page pageEncoding="UTF-8" %>
 <table id = "contents">
     <tr>
-        <td><a href="../inventory.jsp">Inventory</a></td>
-        <td><a href="../sales.jsp">Sales</a></td>
+        <td><a href="Director?direction=inventory">Inventory</a></td>
+        <td><a href="Director?direction=sales">Sales</a></td>
     </tr>
     <tr>
-        <td><a href="../reports.jsp">Reports</a></td>
-        <td><a href="../vendors.jsp">Vendors</a></td>
+        <td><a href="Director?direction=reports">Reports</a></td>
+        <td><a href="Director?direction=vendors">Vendors</a></td>
     </tr>
     <tr>
         <td><a href="">Logout</a></td>
