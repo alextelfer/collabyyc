@@ -3,7 +3,7 @@
     Created on : Feb 10, 2022, 1:25:02 AM
     Author     : 857421
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -61,19 +61,12 @@
                 <table>
                     <tr>
                         <td>Item ID:<input type="number" name="itemid"/></td>
-
-
-                        <td>Name:<input type="text" name="name"/></td>
-
-
                         <td>Vendor ID:<input type="number" name="vendor"/></td>
-
-
-                        <td>Category:<input type="text" name="category"/></td>
-
-
+                        <td>Name:<input type="text" name="name"/></td>
                         <td>Price:<input type="number" name ="price"/></td>
-                        <td><input type="hidden" name="action" value="additem" />
+                        <td>Quantity:<input type="number" name ="quantity"/></td>
+                        <td>Category:<input type="text" name="category"/></td>
+                        <td><input type="hidden" name="action" value="additem"/>
                             <input type="submit" value="Add Item" /></td>
                     </tr>  
 
