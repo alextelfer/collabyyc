@@ -15,12 +15,35 @@ public class InputVerifier {
     
     private InputVerifier() {}        
     
-    public static boolean checkString(String s) {
+    public static boolean checkBadString(String s) {
         
         boolean badString = false;
         
         for (String badCharacter : badCharacters) {
             if (s.contains(badCharacter)) {
+                badString = true;
+            }
+        }
+        
+        return badString;
+    }
+    
+    public static boolean checkEmail(String s) {
+        
+        boolean badString = false;
+        
+        if(s.contains("@") && s.contains(".")) badString = true;
+        
+        return badString;
+    }
+    
+    public static boolean checkPhoneNo(String s) {
+        
+        boolean badString = false;
+        
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(!Character.isDigit(c)) {
                 badString = true;
             }
         }

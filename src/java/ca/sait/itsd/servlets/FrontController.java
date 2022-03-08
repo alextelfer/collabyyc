@@ -8,6 +8,8 @@ package ca.sait.itsd.servlets;
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
 import ca.sait.itsd.Vendor;
+import ca.sait.itsd.exceptions.BadEmailException;
+import ca.sait.itsd.exceptions.BadPhoneNoException;
 import ca.sait.itsd.exceptions.BadStringException;
 import ca.sait.itsd.utilities.InputVerifier;
 import java.io.IOException;
