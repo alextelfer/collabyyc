@@ -8,6 +8,8 @@ package ca.sait.itsd.servlets;
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
 import ca.sait.itsd.Vendor;
+import ca.sait.itsd.exceptions.BadEmailException;
+import ca.sait.itsd.exceptions.BadPhoneNoException;
 import ca.sait.itsd.exceptions.BadStringException;
 import ca.sait.itsd.utilities.InputVerifier;
 import java.io.IOException;
@@ -61,8 +63,8 @@ public class FrontController extends HttpServlet {
                 String category = request.getParameter("category");
                 
                 try {
-                    if(InputVerifier.checkString(name)) throw new BadStringException(name);
-                    if(InputVerifier.checkString(category)) throw new BadStringException(category);
+                    if(InputVerifier.checkBadString(name)) throw new BadStringException(name);
+                    if(InputVerifier.checkBadString(category)) throw new BadStringException(category);
                     
                     Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
                     request.getSession().setAttribute("newitem", newItem);                
@@ -82,9 +84,9 @@ public class FrontController extends HttpServlet {
                 String phoneNo = request.getParameter("phoneno");
                 
                 try {
-                    if(InputVerifier.checkString(vendorName)) throw new BadStringException("vendorName");
-                    if(InputVerifier.checkString(email)) throw new BadStringException("email");
-                    if(InputVerifier.checkString(phoneNo)) throw new BadStringException("phoneNo");
+                    if(InputVerifier.checkBadString(vendorName)) throw new BadStringException("vendorName");
+                    if(InputVerifier.checkEmail(email)) throw new BadEmailException();
+                    if(InputVerifier.checkPhoneNo(phoneNo)) throw new BadPhoneNoException();
                     
                     Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
                     request.getSession().setAttribute("newvendor", newVendor);
@@ -93,6 +95,15 @@ public class FrontController extends HttpServlet {
                 } catch(BadStringException bse) {
                     request.getSession().setAttribute("exceptionmessage", bse.getMessage());
                     response.sendRedirect("FrontController");
+                    
+                } catch(BadEmailException bea) {
+                    request.getSession().setAttribute("exceptionmessage", bea.getMessage());
+                    response.sendRedirect("FrontController");
+                    
+                } catch(BadPhoneNoException bpe) {
+                    request.getSession().setAttribute("exceptionmessage", bpe.getMessage());
+                    response.sendRedirect("FrontController");
+                    
                 }
                 
                 break;
