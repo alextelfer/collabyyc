@@ -3,6 +3,7 @@ USE `collabyyc`;
 
 Drop Table if exists Items;
 Drop Table if exists Vendors;
+Drop Table if exists Users;
 
 
 Create table Vendors (
@@ -44,6 +45,11 @@ Create table EmployeeAccounts (
     employeeEmail VARCHAR(50) NOT NULL,
     employeePhone int(10) NOT NULL,
     PRIMARY KEY (employeeID),
+Create table Users (
+    userName VARCHAR(40) NOT NULL,
+    password VARCHAR(40) NOT NULL, 
+    userType INT(1) NOT NULL,
+    PRIMARY KEY (userName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
@@ -57,3 +63,9 @@ VALUES(00000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
 
 INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
 VALUES(00000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
+
+INSERT INTO Users (userName, password, userType)
+VALUES('user01', 'password', 0);
+
+INSERT INTO Users (userName, password, userType)
+VALUES('user02', 'password', 1);

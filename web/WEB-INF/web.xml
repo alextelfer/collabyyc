@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>ca.sait.itsd.filters.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <servlet-name>FrontController</servlet-name>
+    </filter-mapping>
     <servlet>
         <servlet-name>FrontController</servlet-name>
         <servlet-class>ca.sait.itsd.servlets.FrontController</servlet-class>
@@ -12,6 +20,10 @@
         <servlet-name>AddVendor</servlet-name>
         <servlet-class>ca.sait.itsd.servlets.AddVendor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>ca.sait.itsd.servlets.LoginServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/FrontController</url-pattern>
@@ -23,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>AddVendor</servlet-name>
         <url-pattern>/AddVendor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
