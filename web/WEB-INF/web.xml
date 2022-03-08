@@ -21,8 +21,13 @@
         <servlet-class>ca.sait.itsd.servlets.AddVendor</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< Updated upstream
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>ca.sait.itsd.servlets.LoginServlet</servlet-class>
+=======
+        <servlet-name>Director</servlet-name>
+        <servlet-class>ca.sait.itsd.servlets.Director</servlet-class>
+>>>>>>> Stashed changes
     </servlet>
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
@@ -37,8 +42,13 @@
         <url-pattern>/AddVendor</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+<<<<<<< Updated upstream
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
+=======
+        <servlet-name>Director</servlet-name>
+        <url-pattern>/Director</url-pattern>
+>>>>>>> Stashed changes
     </servlet-mapping>
     <session-config>
         <session-timeout>
