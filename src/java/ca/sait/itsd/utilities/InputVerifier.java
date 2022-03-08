@@ -11,7 +11,7 @@ package ca.sait.itsd.utilities;
  */
 public class InputVerifier {        
     
-    private static String[] badCharacters = {"\"", "\'", "<", ">", "\\", "/", ";", "(", ")"};
+    private static final String[] badCharacters = {"\"", "\'", "<", ">", "\\", "/", ";", "(", ")"};
     
     private InputVerifier() {}        
     

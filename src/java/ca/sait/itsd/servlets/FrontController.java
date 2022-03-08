@@ -8,6 +8,8 @@ package ca.sait.itsd.servlets;
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
 import ca.sait.itsd.Vendor;
+import ca.sait.itsd.exceptions.BadStringException;
+import ca.sait.itsd.utilities.InputVerifier;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -57,11 +59,20 @@ public class FrontController extends HttpServlet {
                 double price = Double.parseDouble(request.getParameter("price"));
                 int quantity = 1;
                 String category = request.getParameter("category");
-
-                Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
-
-                request.getSession().setAttribute("newitem", newItem);                
-                response.sendRedirect("AddItem");
+                
+                try {
+                    if(InputVerifier.checkString(name)) throw new BadStringException(name);
+                    if(InputVerifier.checkString(category)) throw new BadStringException(category);
+                    
+                    Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
+                    request.getSession().setAttribute("newitem", newItem);                
+                    response.sendRedirect("AddItem");
+                    
+                } catch(BadStringException bse) {
+                    request.getSession().setAttribute("exceptionmessage", bse.getMessage());
+                    response.sendRedirect("FrontController");
+                }
+                
                 break;
 
             case "addvendor":
@@ -69,10 +80,21 @@ public class FrontController extends HttpServlet {
                 String vendorName = request.getParameter("vendorname");
                 String email = request.getParameter("email");
                 String phoneNo = request.getParameter("phoneno");
-
-                Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
-                request.getSession().setAttribute("newvendor", newVendor);
-                response.sendRedirect("AddVendor");
+                
+                try {
+                    if(InputVerifier.checkString(vendorName)) throw new BadStringException("vendorName");
+                    if(InputVerifier.checkString(email)) throw new BadStringException("email");
+                    if(InputVerifier.checkString(phoneNo)) throw new BadStringException("phoneNo");
+                    
+                    Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
+                    request.getSession().setAttribute("newvendor", newVendor);
+                    response.sendRedirect("AddVendor");
+                    
+                } catch(BadStringException bse) {
+                    request.getSession().setAttribute("exceptionmessage", bse.getMessage());
+                    response.sendRedirect("FrontController");
+                }
+                
                 break;
 
             case "deleteitem":
