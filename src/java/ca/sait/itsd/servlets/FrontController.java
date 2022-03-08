@@ -47,7 +47,7 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Item> items = dbOps.getItems();
         request.getSession().setAttribute("itemlist", items);
-
+        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -80,10 +80,10 @@ public class FrontController extends HttpServlet {
                     String category = request.getParameter("category");
 
                     try {
-                        if (InputVerifier.checkString(name)) {
+                        if (InputVerifier.checkBadString(name)) {
                             throw new BadStringException(name);
                         }
-                        if (InputVerifier.checkString(category)) {
+                        if (InputVerifier.checkBadString(category)) {
                             throw new BadStringException(category);
                         }
 
@@ -105,13 +105,13 @@ public class FrontController extends HttpServlet {
                     String phoneNo = request.getParameter("phoneno");
 
                     try {
-                        if (InputVerifier.checkString(vendorName)) {
+                        if (InputVerifier.checkBadString(vendorName)) {
                             throw new BadStringException("vendorName");
                         }
-                        if (InputVerifier.checkString(email)) {
+                        if (InputVerifier.checkBadString(email)) {
                             throw new BadStringException("email");
                         }
-                        if (InputVerifier.checkString(phoneNo)) {
+                        if (InputVerifier.checkBadString(phoneNo)) {
                             throw new BadStringException("phoneNo");
                         }
 
