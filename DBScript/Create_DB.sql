@@ -28,23 +28,26 @@ Create table Items (
 Create table Sale (
     transactionID int(10),
     customerID int(5),
-    paymentDate TIMESTAMP NOT NULL;
+    paymentDate TIMESTAMP NOT NULL,
     saleAmount decimal(4,2) NOT NULL,
     payVendorAmount decimal(4,2) NOT NULL,
     soldItems VARCHAR (10000) NOT NULL,
-    shippingSentDate DATE;
+    shippingSentDate DATE,
     shippingAddress VARCHAR(60),
-    pickupDate DATE;
-    PRIMARY KEY (transactionID),
+    pickupDate DATE,
+    PRIMARY KEY (transactionID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 Create table EmployeeAccounts (
     employeeID int(5),
-    employeePassword VARCHAR (20), NOT NULL
+    employeePassword VARCHAR (20) NOT NULL,
     employeeName VARCHAR(50) NOT NULL,
     employeeEmail VARCHAR(50) NOT NULL,
     employeePhone int(10) NOT NULL,
-    PRIMARY KEY (employeeID),
+    PRIMARY KEY (employeeID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 Create table Users (
     userName VARCHAR(40) NOT NULL,
     password VARCHAR(40) NOT NULL, 
