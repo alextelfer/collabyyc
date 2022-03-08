@@ -47,7 +47,7 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Item> items = dbOps.getItems();
         request.getSession().setAttribute("itemlist", items);
-
+        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
