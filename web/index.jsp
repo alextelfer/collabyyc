@@ -22,6 +22,7 @@
 
             <table id="contents">
                 <tr><td id="cellContents"><a href="./vendors.jsp">Vendors</a></td></tr>
+                <tr><td id="cellContents"><a href="./sales.jsp">Sales</a></td></tr>
             </table>
 
             <table>
@@ -81,6 +82,11 @@
             </form>
         </div>
 
+        <form action="FrontController" method="GET">
+            Item ID: <input type="number" name="deleteID" />
+            <input type="hidden" name="action" value="deleteitem" />
+            <input type="submit" value="Delete Item" />
+        </form>
 
     </body>
 </html>

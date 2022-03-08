@@ -63,12 +63,12 @@
                 <input type="hidden" name="action" value="addvendor" />
             </form>
         </div>
-        
+
         <form action="FrontController" method="GET">
             Vendor ID: <input type="number" name="deleteID" />
             <input type="hidden" name="action" value="deletevendor" />
             <input type="submit" value="Delete Vendor" />
         </form>
-        
+
     </body>
 </html>

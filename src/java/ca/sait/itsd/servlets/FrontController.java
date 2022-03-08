@@ -85,8 +85,10 @@ public class FrontController extends HttpServlet {
                 response.sendRedirect("FrontController");
                 break;
                 
+            
+                
             default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
         }
         
