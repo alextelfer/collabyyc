@@ -11,7 +11,7 @@
     <table>
         <tr>
             <td>
-                <img src="collabyyc.png">
+                <img src=".\Resources\photos\collabyyc.png">
             </td>
 
         </tr>
