@@ -51,3 +51,7 @@ td {
     overflow: scroll;
     position: static;
 }
+
+.header {
+    border-bottom: 5px solid black;
+}
