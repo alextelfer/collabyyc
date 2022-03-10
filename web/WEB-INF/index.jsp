@@ -44,9 +44,11 @@
                         <td>${item.price}</td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
-                    <form action="FrontController" method="GET"><td>
-                            <input type="hidden" name="modifyItem" value=${item.itemID}>
-                            <input type="submit" value="Edit"></td></form>
+                        
+                        <form action="FrontController" method="GET"><td>
+                                <input type="hidden" name="modifyItem" value=${item.itemID}>
+                                <input type="submit" value="Edit"></td>
+                        </form>
                     </tr>
                 </c:forEach>
             </table>

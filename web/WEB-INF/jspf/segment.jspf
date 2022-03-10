@@ -10,7 +10,7 @@
         <td><a href="Director?direction=vendors">Vendors</a></td>
     </tr>
     <tr>
-        <td><a href="">Logout</a></td>
+        <td><a href="Logout">Logout</a></td>
     </tr>
     
 </table>
