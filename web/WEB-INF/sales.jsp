@@ -9,17 +9,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="./sales.css">
+        <link rel="stylesheet" type="text/css" href="./index.css">
         <title>Sales Page</title>
     </head>
     <body>
 
+        <div class="header">
+            <img src=".\Resources\photos\collabyyc.png">
+            <%@ include file="jspf/segment.jspf" %>
+            
+        </div>
+            
         <div class="sales">
             <h1>Sale Page</h1>    
-
-            <table id="contents">
-                <tr><td id="cellContents"><a href="index.jsp">Inventory</a></td></tr>
-            </table>
 
             <table>
                 <tr>
@@ -77,10 +79,9 @@
                 var newPrice = document.getElementById("priceSalesPage").value;
                 var newQuantity = document.getElementById("quantitySalesPage").value;
 
-                var newBeforeTax document.getElementById("totalBeforeTax").value = total + (newPrice * newQuantity);
-                        var newTax document.getElementById("totalTax").value = (total * 0.05) + (newPrice * newQuantity);
-                        var newAfterTax
-                document.getElementById("totalAfterTax").value = (total * 0.05) + (newPrice * newQuantity) + total;
+                var newBeforeTax = document.getElementById("totalBeforeTax").value = total + (newPrice * newQuantity);
+                var newTax = document.getElementById("totalTax").value = (total * 0.05) + (newPrice * newQuantity);
+                var newAfterTax = document.getElementById("totalAfterTax").value = (total * 0.05) + (newPrice * newQuantity) + total;
 
                 newPrice.value = newPrice.value.
             }
