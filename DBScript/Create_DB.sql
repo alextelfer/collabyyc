@@ -4,7 +4,8 @@ USE `collabyyc`;
 Drop Table if exists Items;
 Drop Table if exists Vendors;
 Drop Table if exists Users;
-
+drop table if exists sale;
+drop table if exists EmployeeAccounts;
 
 Create table Vendors (
     vendorID int(5),
@@ -15,7 +16,7 @@ Create table Vendors (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 Create table Items (
-    itemID int(8),
+    itemID int(8) auto_increment,
     vendorID int(5),
     nameProducts VARCHAR(30) NOT NULL,
     price decimal(4,2) NOT NULL,
@@ -26,9 +27,9 @@ Create table Items (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 Create table Sale (
-    transactionID int(10),
+    transactionID int(10) auto_increment,
     customerID int(5),
-    paymentDate TIMESTAMP NOT NULL,
+    paymentDate datetime default current_timestamp NOT NULL,
     saleAmount decimal(4,2) NOT NULL,
     payVendorAmount decimal(4,2) NOT NULL,
     soldItems VARCHAR (10000) NOT NULL,
@@ -72,3 +73,9 @@ VALUES('user01', 'password', 0);
 
 INSERT INTO Users (userName, password, userType)
 VALUES('user02', 'password', 1);
+
+INSERT INTO sale (transactionID, saleAmount, payVendorAmount, soldItems)
+VALUES(1, 75.25, 42.22, 'Cookies, Scrunchies');
+
+INSERT INTO sale (transactionID, saleAmount, payVendorAmount, soldItems)
+VALUES(2, 22.45, 7.77, 'Candles, Pickles');

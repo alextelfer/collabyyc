@@ -7,6 +7,7 @@ package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
+import ca.sait.itsd.Sale;
 import ca.sait.itsd.Vendor;
 import ca.sait.itsd.exceptions.BadEmailException;
 import ca.sait.itsd.exceptions.BadPhoneNoException;
@@ -47,6 +48,9 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Item> items = dbOps.getItems();
         request.getSession().setAttribute("itemlist", items);
+        
+        ArrayList<Sale> sales = dbOps.getSales();
+        request.getSession().setAttribute("saleslist", sales);
         
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
