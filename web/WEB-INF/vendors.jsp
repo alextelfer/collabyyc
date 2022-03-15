@@ -3,18 +3,19 @@
     Created on : Mar 8, 2022, 10:39:35 AM
     Author     : 857421
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link rel="stylesheet" href="index.css">
     <title>Vendors Page</title>
 </head>
 
 <body>
+
     <div class="header">
         <img src=".\Resources\photos\collabyyc.png">
         <%@ include file="jspf/segment.jspf" %>
@@ -32,8 +33,21 @@
                     <td>Vendor email: ${vendor.vendorEmail}</td>
                     <td id="vendorPhoneSpace">Vendor phone number: ${vendor.vendorPhoneNumber}</td>
                 </tr>
+            
+        <tr>
+            <th>Vendor name</th>
+            <th>Vendor ID</th>
+            <th>Vendor email</th>
+            <th>Vendor phone number</th>
+        </tr>
 
+            <c:forEach vendors="${vendorList}" var="vendor">
                 <tr>
+                    <td>${vendor.name}</td>
+                    <td> ${vendor.vendorID}</td>
+                    <td> ${vendor.vendorEmail}</td>
+                    <td> ${vendor.vendorPhoneNumber}</td>
+                
                     <td>
                         <form action="FrontController" method="GET">
                             <input type="hidden" name="deleteVendor" value=${vendor.vendorID}>
@@ -41,11 +55,6 @@
                         </form>
                     </td>
                 </tr>
-
-                <tr id="separator">
-                    <!--this is where the line that seperates the vendors is-->
-                </tr>
-
             </c:forEach>
         </table>
     </div>
