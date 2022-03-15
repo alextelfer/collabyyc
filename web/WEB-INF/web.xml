@@ -28,6 +28,10 @@
         <servlet-name>Director</servlet-name>
         <servlet-class>ca.sait.itsd.servlets.Director</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>ca.sait.itsd.servlets.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/FrontController</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>Director</servlet-name>
         <url-pattern>/Director</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

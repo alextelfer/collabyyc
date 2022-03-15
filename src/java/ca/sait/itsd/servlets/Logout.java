@@ -5,20 +5,18 @@
  */
 package ca.sait.itsd.servlets;
 
-import ca.sait.itsd.Sale;
 import java.io.IOException;
-import java.util.Date;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author 857421
  */
-public class Director extends HttpServlet {
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,43 +30,10 @@ public class Director extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String direction = request.getParameter("direction");
-        
-        switch(direction) {
-            
-            case "vendors":
-                request.getRequestDispatcher("WEB-INF/vendors.jsp").forward(request, response);
-                break;
-                
-            case "inventory":
-                request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
-                break;
-                
-            case "sales":
-                sendToSales(request, response);
-                break;
-                
-            case "reports":
-                request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
-                break;
-                
-            default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
-                break;
-        }
+        HttpSession session = request.getSession();
+//        session = null;
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
-    
-    private void sendToSales(HttpServletRequest request, HttpServletResponse response) 
-        throws ServletException, IOException {
-        
-        ArrayList<Sale> sales = new ArrayList<>();
-        
-        sales.add(new Sale(1, 10.00f, new Date()));
-        
-        request.getSession().setAttribute("salelist", sales);
-        
-        request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
-    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
