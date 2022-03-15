@@ -67,7 +67,24 @@
                         <td>Name:<input type="text" name="name"/></td>
                         <td>Price:<input type="number" name ="price"/></td>
                         <td>Quantity:<input type="number" name ="quantity"/></td>
-                        <td>Category:<input type="text" name="category"/></td>
+                        <td>Category:<select name="category">
+                                <option>Accessories</option>
+                                <option>Apparel</option>
+                                <option>Art & Prints</option>
+                                <option>Bath & Body</option>
+                                <option>Ceramics</option>
+                                <option>Collab Exclusives</option>
+                                <option>DIY Kits</option>
+                                <option>Food and Drink</option>
+                                <option>For the Home</option>
+                                <option>Fundraiser</option>
+                                <option>Jewelry</option>
+                                <option>Kiddos & Baby</option>
+                                <option>Other</option>
+                                <option>Pets</option>
+                                <option>Seasonal</option>
+                                <option>Stationary</option>
+                            </select></td>
                         <td><input type="hidden" name="action" value="additem"/>
                             <input type="submit" value="Add Item" /></td>
                     </tr>  
