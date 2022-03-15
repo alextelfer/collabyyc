@@ -15,15 +15,17 @@
     </head>
 
     <body>
+        
+        <div class="header">
+            <img src=".\Resources\photos\collabyyc.png">
+            
+            <%@ include file="jspf/segment.jspf" %>
+        </div>
 
 
         <div class="inventory">
             <h1>Inventory</h1>
-
-            <%@ include file="jspf/segment.jspf" %>
-
-
-
+           
             <table>
                 <tr>
                     <th>Item ID</th>

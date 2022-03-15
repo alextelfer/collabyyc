@@ -28,12 +28,14 @@ public class InputVerifier {
         return badString;
     }
     
-    public static boolean checkEmail(String s) {
+    public static boolean checkEmail(String s) {              
         
         boolean badString = false;
         
-        if(s.contains("@") && s.contains(".")) badString = true;
-        
+        if(!checkBadString(s)) {
+            if(!s.contains("@") || !s.contains(".")) badString = true;
+        }
+                        
         return badString;
     }
     
@@ -41,13 +43,16 @@ public class InputVerifier {
         
         boolean badString = false;
         
-        for(int i = 0; i < s.length(); i++) {
+        if(!checkBadString(s)) {
+            
+            for(int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if(!Character.isDigit(c)) {
-                badString = true;
+                if(!Character.isDigit(c)) {
+                    badString = true;
+                }
             }
         }
-        
+                        
         return badString;
     }
 

@@ -1,6 +1,7 @@
 package ca.sait.itsd;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -383,4 +384,44 @@ public class DBOperations {
         }
         return result;
     }
+    
+    public ArrayList<Sale> getSales() {
+
+        ArrayList<Sale> sales = new ArrayList<>();
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.sale";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int transactionID = rs.getInt("transactionID");
+                    int customerID = rs.getInt("customerID");
+                    Date paymentDate = rs.getDate("paymentDate");
+                    double saleAmount = rs.getDouble("saleAmount");
+                    double payVendorAmount = rs.getDouble("payVendorAmount");
+                    String soldItems = rs.getString("soldItems");
+                    Date sentShippingDate = rs.getDate("shippingSentDate");
+                    String shippingAddress = rs.getString("shippingAddress");
+                    Date pickupDate = rs.getDate("pickupDate");
+                    
+                    Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
+                    sales.add(sale);
+                }
+
+                connectionPool.freeConnection(conn);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sales;
+    }
+    
 }
