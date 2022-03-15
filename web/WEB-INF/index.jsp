@@ -63,7 +63,11 @@
                 <table>
                     <tr>
                         <td>SKU:<input type="number" name="sku"/></td>
-                        <td>Vendor ID:<input type="number" name="vendor"/></td>
+                        <td>Vendor Name:<select name="vendorName">
+                            <c:forEach items="${vendorlist}" var="vendor">
+                                <option>${vendor.name}</option>
+                            </c:forEach>
+                        </select></td>
                         <td>Name:<input type="text" name="name"/></td>
                         <td>Price:<input type="number" name ="price"/></td>
                         <td>Quantity:<input type="number" name ="quantity"/></td>
