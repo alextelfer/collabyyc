@@ -3,14 +3,14 @@
     Created on : Mar 8, 2022, 10:39:35 AM
     Author     : 857421
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./index.css">
     <title>Vendors Page</title>
 </head>
 
@@ -24,16 +24,7 @@
 
     <div>
         <table class="vendorTable">
-            <c:forEach items="${vendorlist}" var="vendor">
-                <tr>
-                    <td>Vendor name: ${vendor.name}</td>
-                    <td id="vendorIDSpace">Vendor ID: ${vendor.vendorID}</td>
-                </tr>
-                <tr>
-                    <td>Vendor email: ${vendor.vendorEmail}</td>
-                    <td id="vendorPhoneSpace">Vendor phone number: ${vendor.vendorPhoneNumber}</td>
-                </tr>
-            
+          
         <tr>
             <th>Vendor name</th>
             <th>Vendor ID</th>
@@ -41,7 +32,7 @@
             <th>Vendor phone number</th>
         </tr>
 
-            <c:forEach vendors="${vendorList}" var="vendor">
+            <c:forEach items="${vendorlist}" var="vendor">
                 <tr>
                     <td>${vendor.name}</td>
                     <td> ${vendor.vendorID}</td>
@@ -59,25 +50,6 @@
         </table>
     </div>
 
-    <!--
-            <form action="FrontController" method="GET">
-                <table class="searchTable">
-                    <td>Search Vendor</td>
-                    <tr>
-                        <td>Vendor ID:<input type="text" name="searchID"></td>
-                        <td>Name:<input type="text" name="searchName"></td>
-                        <td>Email:<input type="text" name="searchEmail"></td>
-                        <td><input type="submit" id="searchButton" name="search" value="Search"></td>
-                    </tr>
-                </table>
-            </form>
--->
-    <div class="navigation">
-        <h3><b>Navigation Dashboard</b></h2>
-            <a href="sales.jsp">Sales Page</a> <br><br><br>
-            <a href="inventory.jsp">Inventory</a> <br><br><br>
-            <a id="salesPageLink" href="reports.jsp">Sale Reports</a> <br><br><br>
-    </div>
 
     <div class="twoButtons">
         <form action="FrontController" method="GET">
