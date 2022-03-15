@@ -29,7 +29,7 @@
             <table>
                 <tr>
                     <th>SKU</th>
-                    <th>Vendor ID</th>
+                    <th>Vendor Name</th>
                     <th>Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -39,7 +39,7 @@
                 <c:forEach items="${itemlist}" var="item">
                     <tr>
                         <td>${item.sku}</td>
-                        <td>${item.vendorID}</td>
+                        <td>${item.vendorName}</td>
                         <td>${item.name}</td>
                         <td>\$${item.price}</td>
                         <td>${item.quantity}</td>
@@ -49,7 +49,6 @@
                             <input type="submit" value="Edit"></td></form>
                     </tr>
                 </c:forEach>
-
             </table>
 
         </div>
@@ -65,7 +64,11 @@
                 <table>
                     <tr>
                         <td>SKU:<input type="number" name="sku"/></td>
-                        <td>Vendor ID:<input type="number" name="vendor"/></td>
+                        <td>Vendor Name:<select name="vendorName">
+                                <c:forEach items="${vendorlist}" var="vendor">
+                                    <option>${vendor.name}</option>
+                                </c:forEach>
+                            </select></td>
                         <td>Name:<input type="text" name="name"/></td>
                         <td>Price:<input type="number" name ="price"/></td>
                         <td>Quantity:<input type="number" name ="quantity"/></td>

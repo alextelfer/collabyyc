@@ -56,18 +56,18 @@ public class DBOperations {
 
             Connection conn = connectionPool.getConnection();
 
-            String sql = "SELECT * FROM collabyyc.items";
+            String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items inner join vendors on collabyyc.items.vendorID=collabyyc.vendors.vendorID";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int sku = rs.getInt("sku");
-                    int vendorID = rs.getInt("vendorID");
+                    int sku = rs.getInt("sku");                    
                     String name = rs.getString("nameProducts");
                     Double price = rs.getDouble("price");
                     int quantity = rs.getInt("quantity");
                     String category = rs.getString("category");
-                    Item item = new Item(sku, vendorID, name, price, quantity, category);
+                    String vendorName = rs.getString("vendorName");
+                    Item item = new Item(sku, vendorName, name, price, quantity, category);
                     items.add(item);
                 }
 
@@ -263,12 +263,12 @@ public class DBOperations {
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int itemID = rs.getInt("itemID");
-                    int vendorID = rs.getInt("vendorID");
+                    String vendorName = rs.getString("vendorName");
                     String name = rs.getString("nameProducts");
                     Double price = rs.getDouble("price");
                     int quantity = rs.getInt("quantity");
                     String category = rs.getString("category");
-                    Item item = new Item(itemID, vendorID, name, price, quantity, category);
+                    Item item = new Item(itemID, vendorName, name, price, quantity, category);
                     singleItem.add(item);
 
                 }

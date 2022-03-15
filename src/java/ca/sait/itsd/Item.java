@@ -7,6 +7,7 @@ public class Item implements Serializable {
     int itemID;
     int sku;
     int vendorID;
+    String vendorName;
     String name;
     double price;
     int quantity;
@@ -21,14 +22,14 @@ public class Item implements Serializable {
     //     this.category = category;
     // }
 
-    public Item(int sku, int vendorID, String name, double price, int quantity, String category) {
+    public Item(int sku, String vendorName, String name, double price, int quantity, String category) {
      //   this.itemID = itemID;
         this.sku = sku;
-        this.vendorID = vendorID;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
+        this.vendorName = vendorName;
     }
 
     public int getSku() {
@@ -94,7 +95,13 @@ public class Item implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-
     
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
 
 }

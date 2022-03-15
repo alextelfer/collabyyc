@@ -78,7 +78,7 @@ public class FrontController extends HttpServlet {
                     //Getting values from jsp to build item
                     
                     int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
-                    int vendorID = Integer.parseInt(request.getParameter("vendor"));
+                    String vendorName = request.getParameter("vendorName");
                     String name = request.getParameter("name");
                     double price = Double.parseDouble(request.getParameter("price"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -92,7 +92,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(sku, vendorID, name, price, quantity, category);
+                        Item newItem = new Item(sku, vendorName, name, price, quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
@@ -105,7 +105,7 @@ public class FrontController extends HttpServlet {
 
                 case "addvendor":
                     int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
-                    String vendorName = request.getParameter("vendorname");
+                    vendorName = request.getParameter("vendorName");
                     String email = request.getParameter("email");
                     String phoneNo = request.getParameter("phoneno");
 
