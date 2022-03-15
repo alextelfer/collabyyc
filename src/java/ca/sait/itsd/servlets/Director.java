@@ -53,7 +53,7 @@ public class Director extends HttpServlet {
                 break;
                 
             default:
-                request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
                 break;
         }
     }

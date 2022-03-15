@@ -15,17 +15,17 @@
     </head>
 
     <body>
-        
+
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
-            
-            <%@ include file="jspf/segment.jspf" %>
+
+
         </div>
 
 
         <div class="inventory">
             <h1>Inventory</h1>
-           
+            <%@ include file="jspf/segment.jspf" %>
             <table>
                 <tr>
                     <th>SKU</th>
@@ -49,7 +49,9 @@
                             <input type="submit" value="Edit"></td></form>
                     </tr>
                 </c:forEach>
+
             </table>
+
         </div>
 
 

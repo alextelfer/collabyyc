@@ -11,7 +11,7 @@
     </tr>
     <tr>
         <td><a href="Logout">Logout</a></td>
-        <td><a href="Director?direction=default">Index</a></td>
+        
     </tr>
     
 </table>
