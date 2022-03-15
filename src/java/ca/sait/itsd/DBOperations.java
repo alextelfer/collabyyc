@@ -61,13 +61,13 @@ public class DBOperations {
 
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int itemID = rs.getInt("itemID");
+                    int sku = rs.getInt("sku");
                     int vendorID = rs.getInt("vendorID");
                     String name = rs.getString("nameProducts");
                     Double price = rs.getDouble("price");
                     int quantity = rs.getInt("quantity");
                     String category = rs.getString("category");
-                    Item item = new Item(itemID, vendorID, name, price, quantity, category);
+                    Item item = new Item(sku, vendorID, name, price, quantity, category);
                     items.add(item);
                 }
 
@@ -139,7 +139,7 @@ public class DBOperations {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
         try {
-            String sql = "delete from collabyyc.items where itemID=?";
+            String sql = "delete from collabyyc.items where sku=?";
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
@@ -184,29 +184,17 @@ public class DBOperations {
         ConnectionPool pool = ConnectionPool.getInstance();
 
         try {
-            String sql = "insert into collabyyc.items set ItemID=?, VendorID=?, NameProducts=?, Price=?, Quantity=?, Category=?";
+            String sql = "insert into collabyyc.items set sku=?, VendorID=?, NameProducts=?, Price=?, Quantity=?, Category=?";
 
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
-            // String itemID = Integer.toString(item.getItemID());
-            // String vendorID = Integer.toString(item.getVendorID());
-            // String itemName = item.getName();
-            // String price = Double.toString(item.getPrice());
-            // String quantity = Integer.toString(item.getQuantity());
-            // String category = item.getCategory();
-            // st.setString(1, itemID);
-            // st.setString(2, vendorID);
-            // st.setString(3, itemName);
-            // st.setString(4, price);
-            // st.setString(5, quantity);
-            // st.setString(6, category);
-            String ItemIDStr = Integer.toString(item.itemID);
+            String skuStr = Integer.toString(item.sku);
             String VendorIDStr = Integer.toString(item.vendorID);
             String PriceStr = Double.toString(item.price);
             String QuantityStr = Integer.toString(item.quantity);
 
-            st.setString(1, ItemIDStr);
+            st.setString(1, skuStr);
             st.setString(2, VendorIDStr);
             st.setString(3, item.name);
             st.setString(4, PriceStr);
@@ -259,7 +247,6 @@ public class DBOperations {
         return result;
 
     }
-//    String sql = "SELECT * FROM collabyyc.items WHERE itemID=?";
 
     public ArrayList<Item> retrieveItem(int modifyItem) {
         ArrayList<Item> singleItem = new ArrayList<>();
@@ -296,12 +283,12 @@ public class DBOperations {
         return singleItem;
     }
 
-    public boolean modifyItem(String itemID, String vendorID, String itemName, String price, String quantity, String category, String oldID) {
+    public boolean modifyItem(String sku, String vendorID, String itemName, String price, String quantity, String category, String oldSKU) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
 
         try {
-            String sql = "update collabyyc.items set itemID=?, vendorID=?, nameProducts=?, price=?, quantity=?, category=? where itemID=?";
+            String sql = "update collabyyc.items set sku=?, vendorID=?, nameProducts=?, price=?, quantity=?, category=? where sku=?";
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
@@ -313,13 +300,13 @@ public class DBOperations {
 //            String category = item.getCategory();
 //            String oldIDStr = Integer.toString(oldID);
 
-            st.setString(1, itemID);
+            st.setString(1, sku);
             st.setString(2, vendorID);
             st.setString(3, itemName);
             st.setString(4, price);
             st.setString(5, quantity);
             st.setString(6, category);
-            st.setString(7, oldID);
+            st.setString(7, oldSKU);
 
             int rowsAffected = st.executeUpdate();
             result = (rowsAffected > 0);

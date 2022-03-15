@@ -17,6 +17,7 @@ Create table Vendors (
 
 Create table Items (
     itemID int(8) auto_increment,
+    sku int(7) NOT NULL,
     vendorID int(5),
     nameProducts VARCHAR(30) NOT NULL,
     price decimal(4,2) NOT NULL,
@@ -62,11 +63,11 @@ VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472
 INSERT INTO Vendors (VendorID, VendorName, VendorEmail, VendorPhone)
 VALUES(00002, 'Erin Baer Ceramics', 'erin@erinbaerceramics.com', 4033740619);
 
-INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
-VALUES(00000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
+INSERT INTO ITEMS (sku, VendorID, nameproducts, Price, Quantity, Category)
+VALUES(0000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
 
-INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
-VALUES(00000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
+INSERT INTO ITEMS (sku, VendorID, nameproducts, Price, Quantity, Category)
+VALUES(0000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
 
 INSERT INTO Users (userName, password, userType)
 VALUES('user01', 'password', 0);
@@ -79,3 +80,7 @@ VALUES(1, 75.25, 42.22, 'Cookies, Scrunchies');
 
 INSERT INTO sale (transactionID, saleAmount, payVendorAmount, soldItems)
 VALUES(2, 22.45, 7.77, 'Candles, Pickles');
+
+INSERT INTO sale (saleAmount, payVendorAmount, soldItems)
+VALUES(40, 22, 'Socks')
+

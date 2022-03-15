@@ -17,12 +17,13 @@
 <body>
     <div class="header">
         <img src=".\Resources\photos\collabyyc.png">
+        <%@ include file="jspf/segment.jspf" %>
         <h1>Vendors</h1>
     </div>
 
     <div>
         <table class="vendorTable">
-            <c:forEach items="${vendorList}" var="vendor">
+            <c:forEach items="${vendorlist}" var="vendor">
                 <tr>
                     <td>Vendor name: ${vendor.name}</td>
                     <td id="vendorIDSpace">Vendor ID: ${vendor.vendorID}</td>

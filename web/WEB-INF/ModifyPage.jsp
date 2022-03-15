@@ -20,8 +20,8 @@
             <c:forEach items="${singleItem}" var="item">
                 <table>
                     <tr>
-                        <td>Item ID:
-                        <input type="number" name="updatedItemID" value="${item.itemID}" /></td>
+                        <td>SKU:
+                        <input type="number" name="updatedSKU" value="${item.sku}" /></td>
 
                         <td>Name:
                         <input type="text" name="updatedItemName" value="${item.name}" /></td>
@@ -37,7 +37,7 @@
 
                         <td>Price:
                         <input type="number" name ="updatedPrice" value="${item.price}" /></td>
-                    <input type ="hidden" name="oldID" value="${item.itemID}" />
+                    <input type ="hidden" name="oldSKU" value="${item.sku}" />
 
                     </tr>  
                 </table>

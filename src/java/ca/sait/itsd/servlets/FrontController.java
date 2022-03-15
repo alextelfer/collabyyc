@@ -76,11 +76,12 @@ public class FrontController extends HttpServlet {
 
                 case "additem":
                     //Getting values from jsp to build item
-                    int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
+                    
+                    int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
                     int vendorID = Integer.parseInt(request.getParameter("vendor"));
                     String name = request.getParameter("name");
                     double price = Double.parseDouble(request.getParameter("price"));
-                    int quantity = 1;
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
                     String category = request.getParameter("category");
 
                     try {
@@ -91,7 +92,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
+                        Item newItem = new Item(sku, vendorID, name, price, quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
@@ -131,14 +132,14 @@ public class FrontController extends HttpServlet {
                     break;
 
                 case "updateItem":
-                    String updatedItemID = request.getParameter("updatedItemID");
+                    String updatedItemID = request.getParameter("updatedSKU");
                     String updatedItemName = request.getParameter("updatedItemName");
                     String updatedVendorID = request.getParameter("updatedVendorID");
                     String updatedPrice = request.getParameter("updatedPrice");
                     String updatedCategory = request.getParameter("updatedCategory");
                     String updatedQuantity = request.getParameter("updatedQuantity");
-                    String oldID = request.getParameter("oldID");
-                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldID);
+                    String oldSKU = request.getParameter("oldSKU");
+                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
                     System.out.println(updatedPrice);
                     response.sendRedirect("FrontController");
                     break;
