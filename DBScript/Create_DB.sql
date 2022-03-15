@@ -4,6 +4,9 @@ USE `collabyyc`;
 Drop Table if exists Items;
 Drop Table if exists Vendors;
 Drop Table if exists Users;
+Drop Table if exists Sale;
+Drop Table if exists EmployeeAccounts;
+
 
 
 Create table Vendors (
