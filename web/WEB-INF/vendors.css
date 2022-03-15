@@ -59,15 +59,15 @@
 }*/
 
 .twoButtons {
-    margin-top: 18%;
-    margin-right: 11.5%;
+    margin-top: 20%;
+    margin-right: 7%;
 }
 
 .navigation {
     border: 2px solid rgb(214, 214, 214, 0.616);
     background-color: rgb(185, 185, 185);
     padding: 0px 40px 40px 40px;
-    margin-right: 10%;
+    margin-right: 1%;
     margin-top: -1%;
     float: right;
 }
