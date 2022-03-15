@@ -63,7 +63,7 @@ public class Director extends HttpServlet {
         
         ArrayList<Sale> sales = new ArrayList<>();
         
-        sales.add(new Sale(1, 10.00f, new Date()));
+        //sales.add(new Sale(1, 10.00f, new Date()));
         
         request.getSession().setAttribute("salelist", sales);
         
