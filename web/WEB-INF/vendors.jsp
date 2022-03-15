@@ -3,26 +3,26 @@
     Created on : Mar 8, 2022, 10:39:35 AM
     Author     : 857421
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="vendors.css">
+    <link rel="stylesheet" type="text/css" href="./index.css">
     <title>Vendors Page</title>
 </head>
 
 <body>
-    <div class="titleLogo">
+    <div class="header">
         <img src=".\Resources\photos\collabyyc.png">
         <h1>Vendors</h1>
     </div>
 
     <div>
         <table class="vendorTable">
-            <c:forEach vendors="${vendorList}" var="vendor">
+            <c:forEach items="${vendorList}" var="vendor">
                 <tr>
                     <td>Vendor name: ${vendor.name}</td>
                     <td id="vendorIDSpace">Vendor ID: ${vendor.vendorID}</td>
