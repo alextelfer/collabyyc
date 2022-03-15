@@ -52,6 +52,13 @@ td {
     position: static;
 }
 
+#deleteButton {
+    background-color: white;
+    height: 36px;
+    width: 36px;
+    padding-right: -100px;
+}
+
 .header {
     border-bottom: 5px solid black;
 }
