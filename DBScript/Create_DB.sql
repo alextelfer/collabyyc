@@ -67,6 +67,9 @@ VALUES(00000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
 INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
 VALUES(00000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
 
+INSERT INTO EmployeeAccounts (employeeID, employeePassword, employeeName, employeeEmail, employeePhone)
+VALUES(12345, 'password', 'Employee', 'employee@gmail.com', 1234567890);
+
 INSERT INTO Users (userName, password)
 VALUES('user01', 'password');
 
