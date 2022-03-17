@@ -147,8 +147,11 @@ public class Sale implements Serializable {
         for(Item item : items) {
             this.saleAmount += item.getPrice();
             VendorShare vendorShare = new VendorShare((item.getPrice() * 0.55), item.getVendorID());
-            shares.add(vendorShare);
-        }        
+            this.shares.add(vendorShare);
+        }
+        for(VendorShare share : this.shares) {
+            this.payVendorAmount += share.getAmount();
+        }
         this.items = items;
     }
     

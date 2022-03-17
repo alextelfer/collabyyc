@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/661464/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/Item.java</file>
-            <file>file:/C:/Users/661464/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/DBOperations.java</file>
+            <file>file:/C:/Users/857421/Documents/GitHub/collabyyc/web/WEB-INF/sales.jsp</file>
+            <file>file:/C:/Users/857421/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/servlets/FrontController.java</file>
+            <file>file:/C:/Users/857421/Documents/GitHub/collabyyc/web/WEB-INF/index.jsp</file>
+            <file>file:/C:/Users/857421/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/DBOperations.java</file>
+            <file>file:/C:/Users/857421/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/servlets/LoginServlet.java</file>
+            <file>file:/C:/Users/857421/Documents/GitHub/collabyyc/web/WEB-INF/jspf/segment.jspf</file>
         </group>
     </open-files>
 </project-private>

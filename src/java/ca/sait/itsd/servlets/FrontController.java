@@ -178,8 +178,7 @@ public class FrontController extends HttpServlet {
                             newSale.setItems(sessionItems);
                             newSale.setTransactionID(Integer.parseInt(request.getParameter("saleID")));
                             newSale.setCustomerID(Integer.parseInt(request.getParameter("customerID")));
-                            newSale.setPaymentDate(new Date());
-                            newSale.setPayVendorAmount(0);
+                            newSale.setPaymentDate(new Date());                            
                             newSale.setSoldItems("");
                             newSale.setSentShippingDate(new Date());
                             newSale.setShippingAddress("");
