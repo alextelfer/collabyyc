@@ -20,8 +20,13 @@ public class Sale implements Serializable {
     String shippingAddress;
     Date pickupDate;
     ArrayList<Item> items;
+    ArrayList<VendorShare> shares;
     
-    public Sale () {}
+    public Sale () {
+        items = new ArrayList<>();
+        shares = new ArrayList<>();
+    }
+        
     // in store sale
     public Sale(int transactionID, Date paymentDate, double saleAmount, double payVendorAmount, String soldItems) {
         this.transactionID = transactionID;
@@ -138,7 +143,12 @@ public class Sale implements Serializable {
         return this.items;
     }
     
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(ArrayList<Item> items) {    
+        for(Item item : items) {
+            this.saleAmount += item.getPrice();
+            VendorShare vendorShare = new VendorShare((item.getPrice() * 0.55), item.getVendorID());
+            shares.add(vendorShare);
+        }        
         this.items = items;
     }
     

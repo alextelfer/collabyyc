@@ -23,6 +23,21 @@
             <c:if test="${saleitems != null}">
                 <table>
                     <tr>
+                        <th>Sale ID</th>
+                        <th>Customer ID</th>
+                    </tr>
+                    <form action="FrontController" method="GET">
+                        <tr>
+                            <td><input type="number" name="saleID"/> </td>
+                            <td><input type="number" name="customerID"/></td>
+                            <td><input type="submit" value="Create Sale"/></td>
+                        </tr>
+                        <input type="hidden" name="action" value="createsale" />
+                    </form>
+                </table>
+                
+                <table>
+                    <tr>
                         <th>Item ID</th>
                         <th>Vendor ID</th>
                         <th>Name</th>
