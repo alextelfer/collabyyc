@@ -81,6 +81,42 @@ public class DBOperations {
         return items;
     }
     
+    public Item getItem(String sku) {
+        
+        Item item = null;
+        
+        ConnectionPool connectionPool = ConnectionPool.getInstance();                        
+        
+        try {
+            
+            Connection conn = connectionPool.getConnection();
+            
+            String sql = "SELECT * FROM collabyyc.items WHERE sku = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sku);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                item = new Item(
+                rs.getInt("sku"),
+                rs.getString("vendorID"),
+                rs.getString("nameProducts"),
+                rs.getDouble("price"),
+                rs.getInt("quantity"),
+                rs.getString("category")
+                );
+            }
+            
+            ps.close();
+            connectionPool.freeConnection(conn);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return item;
+    }
+    
     public ArrayList<User> getUsers(){
         
         ArrayList<User> users = new ArrayList<>();        
@@ -409,6 +445,42 @@ public class DBOperations {
         }
 
         return sales;
+    }
+    
+    public boolean addSale(Sale sale) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {            
+            Connection conn = pool.getConnection();
+
+            String sql = "insert into collabyyc.sale set transactionID = ?, customerID = ?, paymentDate = ?, "
+                    + "saleAmount = ?, payVendorAmount = ?, soldItems = ?, shippingSentDate = ?, "
+                    + "shippingAddress = ?, pickupDate = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);            
+
+            ps.setInt(1, sale.getTransactionID());
+            ps.setInt(2, sale.getCustomerID());
+            ps.setDate(3, new Date(sale.getPaymentDate().getTime()));
+            ps.setDouble(4, sale.saleAmount);
+            ps.setDouble(5, sale.getPayVendorAmount());
+            ps.setString(6, sale.getSoldItems());
+            ps.setDate(7, new Date(sale.getSentShippingDate().getTime()));
+            ps.setString(8, sale.getShippingAddress());
+            ps.setDate(9, new Date(sale.getPickupDate().getTime()));
+
+            int rowAffected = ps.executeUpdate();
+            result = (rowAffected > 0);
+            ps.close();
+            
+            pool.freeConnection(conn);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+
     }
     
 }
