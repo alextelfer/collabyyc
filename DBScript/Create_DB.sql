@@ -52,7 +52,6 @@ Create table EmployeeAccounts (
 Create table Users (
     userName VARCHAR(40) NOT NULL,
     password VARCHAR(40) NOT NULL, 
-    userType INT(1) NOT NULL,
     PRIMARY KEY (userName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -68,11 +67,8 @@ VALUES(00000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
 INSERT INTO ITEMS (ItemID, VendorID, nameproducts, Price, Quantity, Category)
 VALUES(00000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
 
-INSERT INTO Users (userName, password, userType)
-VALUES('user01', 'password', 0);
-
-INSERT INTO Users (userName, password, userType)
-VALUES('user02', 'password', 1);
+INSERT INTO Users (userName, password)
+VALUES('user01', 'password');
 
 INSERT INTO sale (transactionID, saleAmount, payVendorAmount, soldItems)
 VALUES(1, 75.25, 42.22, 'Cookies, Scrunchies');

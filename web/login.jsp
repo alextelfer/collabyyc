@@ -8,6 +8,9 @@
 </head>
 
 <body>
+    
+    <h1>Login</h1>
+    
     <table>
         <tr>
             <td>
@@ -31,10 +34,12 @@
                 <td>
                     <input type="submit" value="Login">
                 </td>
-                <input type="hidden" name="action" value="login">
             </tr>
             </table>
         </form>
+    <form action="RegisterServlet" method="GET">
+        <input type="submit" value="Register">
+    </form>
         ${invalidLogin}
 </body>
 

@@ -6,6 +6,7 @@
 package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
+import ca.sait.itsd.EmployeeAccount;
 import ca.sait.itsd.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,20 +37,21 @@ public class LoginServlet extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        String employee = (String) session.getAttribute("employee");
+        
+        if(employee != null) {
+            request.setAttribute("employeeLoggindIn", "You are already logged in.");
+            response.sendRedirect("RegisterServlet");
+        }
+
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         return;
+
     }
 
     /**
@@ -67,48 +69,54 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         DBOperations dbo = new DBOperations();
+        ArrayList<EmployeeAccount> employees = dbo.getEmployeeAccounts();
         ArrayList<User> users = dbo.getUsers();
 
         String action = request.getParameter("action");
 
-        if (action != null && action.equals("login")) {
+        
 
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            boolean login = false;
-            int userType = 1;
+            boolean employeeLogin = false;
+            boolean userLogin = false;
 
-            for (int i = 0; i < users.size(); i++) {
-                User user = users.get(i);
-                if (username.equals(user.getUsername())) {
-                    if (password.equals(user.getPassword())) {
-                        login = true;
-                        userType = user.getUserType();
-                    }
+            for (int i = 0; i < employees.size(); i++) {
+                EmployeeAccount employee = employees.get(i);
+                if (username.equals(employee.getEmployeeID())) {
+                    if (password.equals(employee.getEmployeePassword()));
+                    employeeLogin = true;
+                    session.setAttribute("employee", username);
+                    response.sendRedirect("FrontController");
+                    return;
                 }
             }
 
-            if (login == true) {
-                if (userType == 0) {
-                    session.setAttribute("adminUser", username);
+            if (employeeLogin == true) {
+
+            } else {
+
+                for (int i = 0; i < users.size(); i++) {
+                    User user = users.get(i);
+                    if (username.equals(user.getUsername())) {
+                        if (password.equals(user.getPassword())) {
+                            userLogin = true;
+                        }
+                    }
+                }
+
+                if (userLogin == true) {
+                    session.setAttribute("user", username);
                     response.sendRedirect("FrontController");
                     return;
-                    /*
-                If the user is not admin
-                     */
+
                 } else {
-                    session.setAttribute("validUser", username);
-                    request.setAttribute("invalidLogin", "Not Admin!");
+                    request.setAttribute("invalidLogin", "Invalid Login!");
                     getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
                     return;
                 }
 
-            } else {
-                request.setAttribute("invalidLogin", "Invalid Username or Password!");
-                getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-                return;
             }
-        }
     }
 
     /**

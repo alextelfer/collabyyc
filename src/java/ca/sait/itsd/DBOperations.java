@@ -81,40 +81,133 @@ public class DBOperations {
         return items;
     }
     
-    public ArrayList<User> getUsers(){
-        
-        ArrayList<User> users = new ArrayList<>();        
-        
+    public ArrayList<EmployeeAccount> getEmployeeAccounts(){
+        ArrayList<EmployeeAccount> employees = new ArrayList<>();
+
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-        
+
         try {
-            
+
             Connection conn = connectionPool.getConnection();
-            
-            String sql = "SELECT * FROM collabyyc.users";
+
+            String sql = "SELECT * FROM collabyyc.EmployeeAccounts";
             PreparedStatement ps = conn.prepareStatement(sql);
-            
-            try (ResultSet rs = ps.executeQuery()) {
-                while(rs.next()) {
-                    String userName = rs.getString("userName");
-                    String password = rs.getString("password");
-                    int userType = rs.getInt("userType");
-                    User user = new User(userName, password, userType);
-                    users.add(user);                    
+
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int employeeID = Integer.parseInt(rs.getString("employeeID"));
+                    String employeePassword = rs.getString("employeePassword");
+                    String employeeName = rs.getString("employeeName");
+                    String employeeEmail = rs.getString("employeeEmail");
+                    int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
+                    EmployeeAccount employee = new EmployeeAccount(employeeID, employeePassword, employeeName, 
+                        employeeEmail, employeePhone);
+                    employees.add(employee);
                 }
-                
+
                 connectionPool.freeConnection(conn);
             }
-            
-        } catch(SQLException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-               
-        return users;
+
+        return employees;
         
     }
     
-     public String getInventory() {
+    public boolean addEmployeeAccount(EmployeeAccount employee) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {
+
+            String sql = "insert into collabyyc.users set employeeID=?, employeePassword=?, employeeName=?, employeeEmail=?, employeePhone=?";
+
+            Connection conn = pool.getConnection();
+
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, Integer.toString(employee.getEmployeeID()));
+            st.setString(2, employee.getEmployeePassword());
+            st.setString(3, employee.getEmployeeName());
+            st.setString(4, employee.employeeEmail());
+            st.setString(5, Integer.toString(employee.getEmployeePhone()));
+
+            int rowAffected = st.executeUpdate();
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public ArrayList<User> getUsers() {
+
+        ArrayList<User> users = new ArrayList<>();
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.users";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String userName = rs.getString("userName");
+                    String password = rs.getString("password");
+                    User user = new User(userName, password);
+                    users.add(user);
+                }
+
+                connectionPool.freeConnection(conn);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+
+    }
+
+    public boolean addUser(User user) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {
+
+            String sql = "insert into collabyyc.users set userName=?, password=?";
+
+            Connection conn = pool.getConnection();
+
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, user.getUsername());
+            st.setString(2, user.getPassword());
+
+            int rowAffected = st.executeUpdate();
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public String getInventory() {
         String result = "";
         ConnectionPool pool = ConnectionPool.getInstance();
         try {
@@ -312,7 +405,6 @@ public class DBOperations {
 //            String quantity = Integer.toString(item.getQuantity());
 //            String category = item.getCategory();
 //            String oldIDStr = Integer.toString(oldID);
-
             st.setString(1, itemID);
             st.setString(2, vendorID);
             st.setString(3, itemName);
@@ -384,7 +476,7 @@ public class DBOperations {
         }
         return result;
     }
-    
+
     public ArrayList<Sale> getSales() {
 
         ArrayList<Sale> sales = new ArrayList<>();
@@ -409,7 +501,7 @@ public class DBOperations {
                     Date sentShippingDate = rs.getDate("shippingSentDate");
                     String shippingAddress = rs.getString("shippingAddress");
                     Date pickupDate = rs.getDate("pickupDate");
-                    
+
                     Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
                     sales.add(sale);
                 }
@@ -423,5 +515,5 @@ public class DBOperations {
 
         return sales;
     }
-    
+
 }
