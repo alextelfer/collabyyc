@@ -81,6 +81,39 @@ public class DBOperations {
         return items;
     }
     
+    public Item getItem(String sku) {
+        
+        Item item = null;
+        
+        ConnectionPool connectionPool = ConnectionPool.getInstance();                        
+        
+        try {
+            
+            Connection conn = connectionPool.getConnection();
+            
+            String sql = "SELECT * FROM collabyyc.items WHERE sku = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sku);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                item = new Item(
+                rs.getInt("sku"),
+                rs.getString("vendorID"),
+                rs.getString("nameProducts"),
+                rs.getDouble("price"),
+                rs.getInt("quantity"),
+                rs.getString("category")
+                );
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return item;
+    }
+    
     public ArrayList<User> getUsers(){
         
         ArrayList<User> users = new ArrayList<>();        

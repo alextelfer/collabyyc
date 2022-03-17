@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author 840303
  */
-public class Sale {
+public class Sale implements Serializable {
     
     int transactionID;
     int customerID;
@@ -19,6 +19,7 @@ public class Sale {
     Date sentShippingDate;
     String shippingAddress;
     Date pickupDate;
+    ArrayList<Item> items;
     
     public Sale () {}
     // in store sale
@@ -133,6 +134,12 @@ public class Sale {
         this.pickupDate = pickupDate;
     }
     
+    public ArrayList<Item> getItems() {
+        return this.items;
+    }
     
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
     
 }

@@ -9,8 +9,6 @@ import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
 import ca.sait.itsd.Sale;
 import ca.sait.itsd.Vendor;
-import ca.sait.itsd.exceptions.BadEmailException;
-import ca.sait.itsd.exceptions.BadPhoneNoException;
 import ca.sait.itsd.exceptions.BadStringException;
 import ca.sait.itsd.utilities.InputVerifier;
 import java.io.IOException;
@@ -154,6 +152,18 @@ public class FrontController extends HttpServlet {
                     String vendorID2 = request.getParameter("deleteID");
                     dbOps.deleteVendor(vendorID2);
                     response.sendRedirect("FrontController");
+                    break;
+                    
+                case "addtosale":
+                    ArrayList<Item> saleItems = (ArrayList<Item>) session.getAttribute("saleitems");
+                    if(saleItems == null) {
+                        saleItems = new ArrayList<>();
+                    }                    
+                    String itemID2 = request.getParameter("itemsku");
+                    Item item = dbOps.getItem(itemID2);                    
+                    saleItems.add(item);
+                    session.setAttribute("saleitems", saleItems);
+                    request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
                     break;
 
                 default:
