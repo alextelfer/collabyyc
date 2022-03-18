@@ -12,19 +12,20 @@ Create table Vendors (
     vendorName VARCHAR(40) NOT NULL,
     vendorEmail VARCHAR(40) NOT NULL,
     vendorPhone varchar(10) NOT NULL,
-    PRIMARY KEY (vendorID)
+    PRIMARY KEY (vendorID, vendorName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 Create table Items (
     itemID int(8) auto_increment,
     sku int(7) NOT NULL,
     vendorID int(5),
+    vendorName VARCHAR(40) NOT NULL,
     nameProducts VARCHAR(30) NOT NULL,
     price decimal(4,2) NOT NULL,
     quantity int(3) NOT NULL,
     category VARCHAR(20) NOT NULL,
     PRIMARY KEY (ItemID),
-    FOREIGN KEY (VendorID) REFERENCES VENDORS (VendorID)
+    FOREIGN KEY (vendorID, vendorName) REFERENCES VENDORS (vendorID, vendorName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 Create table Sale (
@@ -63,11 +64,11 @@ VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472
 INSERT INTO Vendors (VendorID, VendorName, VendorEmail, VendorPhone)
 VALUES(00002, 'Erin Baer Ceramics', 'erin@erinbaerceramics.com', 4033740619);
 
-INSERT INTO ITEMS (sku, VendorID, nameproducts, Price, Quantity, Category)
-VALUES(0000001, 00001, 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
+INSERT INTO ITEMS (sku, VendorID, vendorName, nameproducts, Price, Quantity, Category)
+VALUES(0000001, 00001, 'Kindred Clothing', 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
 
-INSERT INTO ITEMS (sku, VendorID, nameproducts, Price, Quantity, Category)
-VALUES(0000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
+INSERT INTO ITEMS (sku, VendorID, vendorName, nameproducts, Price, Quantity, Category)
+VALUES(0000002, 00002, 'Erin Baer Ceramics', 'Glazed Bowl', 65.00, 1, 'Ceramics');
 
 INSERT INTO Users (userName, password, userType)
 VALUES('user01', 'password', 0);

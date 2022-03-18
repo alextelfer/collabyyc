@@ -52,6 +52,8 @@ public class FrontController extends HttpServlet {
         ArrayList<Sale> sales = dbOps.getSales();
         request.getSession().setAttribute("saleslist", sales);
         
+        
+        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -83,7 +85,7 @@ public class FrontController extends HttpServlet {
                     double price = Double.parseDouble(request.getParameter("price"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
                     String category = request.getParameter("category");
-
+                    int vendorID = dbOps.returnVendorID(vendorName);                    
                     try {
                         if (InputVerifier.checkBadString(name)) {
                             throw new BadStringException(name);
@@ -92,7 +94,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(sku, vendorName, name, price, quantity, category);
+                        Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
@@ -139,6 +141,7 @@ public class FrontController extends HttpServlet {
                     String updatedCategory = request.getParameter("updatedCategory");
                     String updatedQuantity = request.getParameter("updatedQuantity");
                     String oldSKU = request.getParameter("oldSKU");
+                    
                     dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
                     System.out.println(updatedPrice);
                     response.sendRedirect("FrontController");
@@ -155,6 +158,7 @@ public class FrontController extends HttpServlet {
                     dbOps.deleteVendor(vendorID2);
                     response.sendRedirect("FrontController");
                     break;
+<<<<<<< Updated upstream
                     
                 case "addtosale":
                     ArrayList<Item> saleItems = (ArrayList<Item>) session.getAttribute("saleitems");
@@ -192,6 +196,13 @@ public class FrontController extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
                     break;
 
+=======
+                case "searchbysku":
+                    int searchBySku = Integer.parseInt(request.getParameter("sku"));
+                    ArrayList<Item> searchedItems = dbOps.searchBySKU(searchBySku);
+                    request.getSession().setAttribute("salelist", searchedItems);
+                    response.sendRedirect("FrontController");
+>>>>>>> Stashed changes
                 default:
                     request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
                     break;

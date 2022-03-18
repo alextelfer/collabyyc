@@ -16,9 +16,10 @@
     <body>
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
+
             
-            <%@ include file="jspf/segment.jspf" %>
         </div>
+<<<<<<< Updated upstream
         
             <c:if test="${saleitems != null}">
                 <table>
@@ -59,8 +60,36 @@
                 </table>
             </c:if>
         
+=======
+
+>>>>>>> Stashed changes
         <div class="sales">
             <h1>Sales</h1>
+            <%@ include file="jspf/segment.jspf" %>
+            <form action="FrontController" method="GET">
+                Search by SKU:<input type="number" name="sku">
+                <input type="hidden" name="action" value="searchbysku">
+                <input type="submit" value="Search">
+            </form>
+            <table>
+                <tr>
+                    <th>SKU</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Vendor<th>
+                </tr>
+                <c:forEach items="${salelist}" var="sale">
+                    <tr>
+                        <td>${sale.sku}</td>
+                        <td>${sale.name}</td>
+                        <td>${sale.price}</td>
+                        <td>${sale.category}</td>
+                        <td>${sale.vendor}</td>
+                    </tr>
+                </c:forEach>
+
+            </table>
             <table>
                 <tr>
                     <th>Sale ID</th>
@@ -73,6 +102,7 @@
                     <th>Shipping Address</th>
                     <th>Pickup Date</th>
                 </tr>
+<<<<<<< Updated upstream
                 
                 <c:forEach items="${saleslist}" var="sale">
                     <tr>
@@ -104,6 +134,10 @@
                 </tr>
 
                 <c:forEach items="${itemlist}" var="item">
+=======
+
+                <c:forEach items="${salelist}" var="sale">
+>>>>>>> Stashed changes
                     <tr>
                         <td>${item.itemID}</td>
                         <td>${item.vendorID}</td>
