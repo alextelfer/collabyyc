@@ -80,7 +80,7 @@ public class DBOperations {
 
         return items;
     }
-<<<<<<< Updated upstream
+
     
     public Item getItem(String sku) {
         
@@ -118,17 +118,13 @@ public class DBOperations {
         return item;
     }
     
-    public ArrayList<User> getUsers(){
-        
-        ArrayList<User> users = new ArrayList<>();        
-        
-=======
+     
 
     public ArrayList<User> getUsers() {
 
         ArrayList<User> users = new ArrayList<>();
 
->>>>>>> Stashed changes
+
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
         try {
@@ -448,7 +444,7 @@ public class DBOperations {
 
         return sales;
     }
-<<<<<<< Updated upstream
+
     
     public boolean addSale(Sale sale) {
         boolean result = false;
@@ -486,7 +482,7 @@ public class DBOperations {
 
     }
     
-=======
+
 
     public ArrayList<Item> searchBySKU(int searchedSku) {
         ArrayList<Item> result = new ArrayList<>();
@@ -539,5 +535,5 @@ public class DBOperations {
         return result;
 
     }
->>>>>>> Stashed changes
+
 }

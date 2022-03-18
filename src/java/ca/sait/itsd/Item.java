@@ -13,14 +13,14 @@ public class Item implements Serializable {
     int quantity;
     String category;
     
-    // public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
-    //     this.itemID = itemID;
-    //     this.vendorID = vendorID;
-    //     this.name = name;
-    //     this.price = price;
-    //     this.quantity = quantity;
-    //     this.category = category;
-    // }
+     public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
+         this.itemID = itemID;
+         this.vendorID = vendorID;
+         this.name = name;
+         this.price = price;
+         this.quantity = quantity;
+         this.category = category;
+     }
     
     public Item(int sku, String name, double price) {
         this.sku = sku;

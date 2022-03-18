@@ -158,7 +158,6 @@ public class FrontController extends HttpServlet {
                     dbOps.deleteVendor(vendorID2);
                     response.sendRedirect("FrontController");
                     break;
-<<<<<<< Updated upstream
                     
                 case "addtosale":
                     ArrayList<Item> saleItems = (ArrayList<Item>) session.getAttribute("saleitems");
@@ -196,13 +195,13 @@ public class FrontController extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
                     break;
 
-=======
+
                 case "searchbysku":
                     int searchBySku = Integer.parseInt(request.getParameter("sku"));
                     ArrayList<Item> searchedItems = dbOps.searchBySKU(searchBySku);
                     request.getSession().setAttribute("salelist", searchedItems);
                     response.sendRedirect("FrontController");
->>>>>>> Stashed changes
+
                 default:
                     request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
                     break;

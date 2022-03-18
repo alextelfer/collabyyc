@@ -19,7 +19,6 @@
 
             
         </div>
-<<<<<<< Updated upstream
         
             <c:if test="${saleitems != null}">
                 <table>
@@ -60,9 +59,7 @@
                 </table>
             </c:if>
         
-=======
 
->>>>>>> Stashed changes
         <div class="sales">
             <h1>Sales</h1>
             <%@ include file="jspf/segment.jspf" %>
@@ -102,7 +99,7 @@
                     <th>Shipping Address</th>
                     <th>Pickup Date</th>
                 </tr>
-<<<<<<< Updated upstream
+
                 
                 <c:forEach items="${saleslist}" var="sale">
                     <tr>
@@ -133,11 +130,9 @@
                     <th>Category</th>
                 </tr>
 
-                <c:forEach items="${itemlist}" var="item">
-=======
+
 
                 <c:forEach items="${salelist}" var="sale">
->>>>>>> Stashed changes
                     <tr>
                         <td>${item.itemID}</td>
                         <td>${item.vendorID}</td>
