@@ -66,12 +66,12 @@
                         <td>SKU:<input type="number" name="sku"/></td>
                         <td>Vendor Name:<select name="vendorName">
                                 <c:forEach items="${vendorlist}" var="vendor">
-                                    <option>${vendor.name}</option>
-                                </c:forEach>
+                                    <option>${vendor.name}</option>                                    
+                                </c:forEach>                                    
                             </select></td>
                         <td>Name:<input type="text" name="name"/></td>
-                        <td>Price:<input type="number" name ="price"/></td>
-                        <td>Quantity:<input type="number" name ="quantity"/></td>
+                        <td>Price:<input type="number" name="price"/></td>
+                        <td>Quantity:<input type="number" name="quantity"/></td>
                         <td>Category:<select name="category">
                                 <option>Accessories</option>
                                 <option>Apparel</option>
@@ -91,6 +91,7 @@
                                 <option>Stationary</option>
                             </select></td>
                         <td><input type="hidden" name="action" value="additem"/>
+                            
                             <input type="submit" value="Add Item" /></td>
                     </tr>  
 

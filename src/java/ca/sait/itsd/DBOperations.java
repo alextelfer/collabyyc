@@ -56,12 +56,12 @@ public class DBOperations {
 
             Connection conn = connectionPool.getConnection();
 
-            String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items inner join vendors on collabyyc.items.vendorID=collabyyc.vendors.vendorID";
+            String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items";
             PreparedStatement ps = conn.prepareStatement(sql);
 
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int sku = rs.getInt("sku");                    
+                    int sku = rs.getInt("sku");
                     String name = rs.getString("nameProducts");
                     Double price = rs.getDouble("price");
                     int quantity = rs.getInt("quantity");
@@ -80,6 +80,7 @@ public class DBOperations {
 
         return items;
     }
+
     
     public Item getItem(String sku) {
         
@@ -117,40 +118,43 @@ public class DBOperations {
         return item;
     }
     
-    public ArrayList<User> getUsers(){
-        
-        ArrayList<User> users = new ArrayList<>();        
-        
+     
+
+    public ArrayList<User> getUsers() {
+
+        ArrayList<User> users = new ArrayList<>();
+
+
         ConnectionPool connectionPool = ConnectionPool.getInstance();
-        
+
         try {
-            
+
             Connection conn = connectionPool.getConnection();
-            
+
             String sql = "SELECT * FROM collabyyc.users";
             PreparedStatement ps = conn.prepareStatement(sql);
-            
-            try (ResultSet rs = ps.executeQuery()) {
-                while(rs.next()) {
+
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
                     String userName = rs.getString("userName");
                     String password = rs.getString("password");
                     int userType = rs.getInt("userType");
                     User user = new User(userName, password, userType);
-                    users.add(user);                    
+                    users.add(user);
                 }
-                
+
                 connectionPool.freeConnection(conn);
             }
-            
-        } catch(SQLException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-               
+
         return users;
-        
+
     }
-    
-     public String getInventory() {
+
+    public String getInventory() {
         String result = "";
         ConnectionPool pool = ConnectionPool.getInstance();
         try {
@@ -220,22 +224,24 @@ public class DBOperations {
         ConnectionPool pool = ConnectionPool.getInstance();
 
         try {
-            String sql = "insert into collabyyc.items set sku=?, VendorID=?, NameProducts=?, Price=?, Quantity=?, Category=?";
+            String sql = "insert into collabyyc.items set sku=?, VendorID=?, vendorName=?, NameProducts=?, Price=?, Quantity=?, Category=?";
 
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
             String skuStr = Integer.toString(item.sku);
-            String VendorIDStr = Integer.toString(item.vendorID);
+            int vendorID1 = returnVendorID(item.vendorName);
+//            String VendorIDStr = Integer.toString(item.vendorID);
             String PriceStr = Double.toString(item.price);
             String QuantityStr = Integer.toString(item.quantity);
 
             st.setString(1, skuStr);
-            st.setString(2, VendorIDStr);
-            st.setString(3, item.name);
-            st.setString(4, PriceStr);
-            st.setString(5, QuantityStr);
-            st.setString(6, item.category);
+            st.setInt(2, vendorID1);
+            st.setString(3, item.vendorName);
+            st.setString(4, item.name);
+            st.setString(5, PriceStr);
+            st.setString(6, QuantityStr);
+            st.setString(7, item.category);
 
             int rowAffected = st.executeUpdate();
 
@@ -299,7 +305,7 @@ public class DBOperations {
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int itemID = rs.getInt("itemID");
-                    String vendorName = rs.getString("vendorName");
+                    String vendorName = rs.getString("vendorID");
                     String name = rs.getString("nameProducts");
                     Double price = rs.getDouble("price");
                     int quantity = rs.getInt("quantity");
@@ -327,14 +333,6 @@ public class DBOperations {
             String sql = "update collabyyc.items set sku=?, vendorID=?, nameProducts=?, price=?, quantity=?, category=? where sku=?";
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
-
-//            String itemID = request.getParameter("itemid");
-//            String vendorID = Integer.toString(item.getVendorID());
-//            String itemName = item.getName();
-//            String price = Double.toString(item.getPrice());
-//            String quantity = Integer.toString(item.getQuantity());
-//            String category = item.getCategory();
-//            String oldIDStr = Integer.toString(oldID);
 
             st.setString(1, sku);
             st.setString(2, vendorID);
@@ -407,7 +405,7 @@ public class DBOperations {
         }
         return result;
     }
-    
+
     public ArrayList<Sale> getSales() {
 
         ArrayList<Sale> sales = new ArrayList<>();
@@ -432,7 +430,7 @@ public class DBOperations {
                     Date sentShippingDate = rs.getDate("shippingSentDate");
                     String shippingAddress = rs.getString("shippingAddress");
                     Date pickupDate = rs.getDate("pickupDate");
-                    
+
                     Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
                     sales.add(sale);
                 }
@@ -446,6 +444,7 @@ public class DBOperations {
 
         return sales;
     }
+
     
     public boolean addSale(Sale sale) {
         boolean result = false;
@@ -483,4 +482,58 @@ public class DBOperations {
 
     }
     
+
+
+    public ArrayList<Item> searchBySKU(int searchedSku) {
+        ArrayList<Item> result = new ArrayList<>();
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.items where sku=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            try ( ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int sku = rs.getInt("sku");
+                    String name = rs.getString("nameProducts");
+                    Double price = rs.getDouble("price");
+                    Item item = new Item(sku, name, price);
+                    result.add(item);
+                }
+                rs.close();
+                ps.close();
+                connectionPool.freeConnection(conn);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public int returnVendorID(String vendorName) {
+        int result = 0;
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        try {
+            Connection conn = connectionPool.getConnection();
+            String sql = "SELECT vendorID FROM collabyyc.items where vendorName=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, vendorName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                result = rs.getInt("vendorID");
+            }
+            rs.close();
+            ps.close();
+            connectionPool.freeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
+
 }

@@ -13,16 +13,22 @@ public class Item implements Serializable {
     int quantity;
     String category;
     
-    // public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
-    //     this.itemID = itemID;
-    //     this.vendorID = vendorID;
-    //     this.name = name;
-    //     this.price = price;
-    //     this.quantity = quantity;
-    //     this.category = category;
-    // }
-
-    public Item(int sku, String vendorName, String name, double price, int quantity, String category) {
+     public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
+         this.itemID = itemID;
+         this.vendorID = vendorID;
+         this.name = name;
+         this.price = price;
+         this.quantity = quantity;
+         this.category = category;
+     }
+    
+    public Item(int sku, String name, double price) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+    }
+    
+    public Item(int sku, int vendorID, String vendorName, String name, double price, int quantity, String category) {
      //   this.itemID = itemID;
         this.sku = sku;
         this.name = name;
@@ -30,6 +36,16 @@ public class Item implements Serializable {
         this.quantity = quantity;
         this.category = category;
         this.vendorName = vendorName;
+        this.vendorID = vendorID;
+    }
+    
+    public Item(int sku, String vendorName, String name, double price, int quantity, String category) {
+        this.sku = sku;
+        this.vendorName = vendorName;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
     }
 
     public int getSku() {
