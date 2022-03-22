@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.DecimalFormat; 
 
 /**
  *
@@ -75,6 +76,8 @@ public class FrontController extends HttpServlet {
 
          
             switch (action) {
+                    //setting a double decimal limit
+                    private static final DecimalFormat df = new DecimalFormat("0.00");
 
                 case "additem":
                     //Getting values from jsp to build item
@@ -94,7 +97,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);
+                        Item newItem = new Item(sku, vendorID, vendorName, name, df.format(price), quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
