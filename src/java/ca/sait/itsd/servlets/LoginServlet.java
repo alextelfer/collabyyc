@@ -72,9 +72,7 @@ public class LoginServlet extends HttpServlet {
         ArrayList<EmployeeAccount> employees = dbo.getEmployeeAccounts();
         ArrayList<User> users = dbo.getUsers();
 
-        String action = request.getParameter("action");
-
-        
+        String action = request.getParameter("action");       
 
             String username = request.getParameter("username");
             String password = request.getParameter("password");

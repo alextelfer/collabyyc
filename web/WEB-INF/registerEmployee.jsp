@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <td>
-                    <input name="email" type="text" placeholder="Employee Email">
+                    <input name="email" type="email" placeholder="Employee Email">
             </tr>
             <tr>
                 <td>

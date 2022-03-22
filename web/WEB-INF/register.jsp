@@ -52,6 +52,6 @@
     </form>
     <h4>${registerSuccess}</h4>
     <h4>${registerError}</h4>
-    <h4>${unauthorizedReister}</h4>
+    <h4>${unauthorizedRegister}</h4>
     <h4>${employeeLoggindIn}</h4>
 </html>

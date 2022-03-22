@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
                     return;
                 }
             } else {
-                request.setAttribute("unauthorizedReister", "You cannot register en employee.");
+                request.setAttribute("unauthorizedRegister", "You cannot register en employee.");
                 getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
                 return;
             }
@@ -101,11 +101,16 @@ public class RegisterServlet extends HttpServlet {
             String password = request.getParameter("password");
 
             try {
-                User user = new User(name, password);
-                dbo.addUser(user);
-                request.setAttribute("registerSuccess", "User successfully registered!");
-                getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-                return;
+                if (name != null && !name.equals("") && (password != null && !password.equals(""))) {
+                    User user = new User(name, password);
+                    dbo.addUser(user);
+                    request.setAttribute("registerSuccess", "User successfully registered!");
+                    getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+                    return;
+                } else {
+                    Exception emptyFields = new Exception();
+                    throw emptyFields;
+                }
             } catch (Exception e) {
                 request.setAttribute("registerError", "There was an error");
                 getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
