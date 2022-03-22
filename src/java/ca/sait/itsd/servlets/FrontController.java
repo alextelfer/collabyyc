@@ -55,6 +55,8 @@ public class FrontController extends HttpServlet {
         
         
         
+        
+        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -77,7 +79,7 @@ public class FrontController extends HttpServlet {
          
             switch (action) {
                     //setting a double decimal limit
-                    private static final DecimalFormat df = new DecimalFormat("0.00");
+                  
 
                 case "additem":
                     //Getting values from jsp to build item
@@ -97,7 +99,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(sku, vendorID, vendorName, name, df.format(price), quantity, category);
+                        Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
@@ -204,7 +206,11 @@ public class FrontController extends HttpServlet {
                     ArrayList<Item> searchedItems = dbOps.searchBySKU(searchBySku);
                     request.getSession().setAttribute("searchedlist", searchedItems);
                     request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
-
+                case "searchbydate":
+                    String searchedDate = request.getParameter("date");
+                    ArrayList<Sale> searchedByDate = dbOps.searchByDate(searchedDate);
+                    request.getSession().setAttribute("searchedreports", searchedByDate);
+                    request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
                 default:
                     request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
                     break;
