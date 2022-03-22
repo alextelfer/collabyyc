@@ -40,12 +40,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         String employee = (String) session.getAttribute("employee");
-        
-        if(employee != null) {
-            request.setAttribute("employeeLoggindIn", "You are already logged in.");
+        String user = (String) session.getAttribute("user");
+
+        if (employee != null || user != null) {
+            request.setAttribute("loggindIn", "You are already logged in.");
             response.sendRedirect("RegisterServlet");
         }
 
@@ -72,49 +73,48 @@ public class LoginServlet extends HttpServlet {
         ArrayList<EmployeeAccount> employees = dbo.getEmployeeAccounts();
         ArrayList<User> users = dbo.getUsers();
 
-        String action = request.getParameter("action");       
+        String action = request.getParameter("action");
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            boolean employeeLogin = false;
-            boolean userLogin = false;
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        boolean employeeLogin = false;
+        boolean userLogin = false;
 
-            for (int i = 0; i < employees.size(); i++) {
-                EmployeeAccount employee = employees.get(i);
-                if (username.equals(employee.getEmployeeID())) {
-                    if (password.equals(employee.getEmployeePassword()));
-                    employeeLogin = true;
-                    session.setAttribute("employee", username);
-                    response.sendRedirect("FrontController");
-                    return;
-                }
+        for (int i = 0; i < employees.size(); i++) {
+            EmployeeAccount employee = employees.get(i);
+            if (username.equals(employee.getEmployeeID())) {
+                if (password.equals(employee.getEmployeePassword()));
+                employeeLogin = true;
             }
+        }
 
-            if (employeeLogin == true) {
+        if (employeeLogin == true) {
+            session.setAttribute("employee", username);
+            response.sendRedirect("FrontController");
+            return;
+        } else {
 
-            } else {
-
-                for (int i = 0; i < users.size(); i++) {
-                    User user = users.get(i);
-                    if (username.equals(user.getUsername())) {
-                        if (password.equals(user.getPassword())) {
-                            userLogin = true;
-                        }
+            for (int i = 0; i < users.size(); i++) {
+                User user = users.get(i);
+                if (username.equals(user.getUsername())) {
+                    if (password.equals(user.getPassword())) {
+                        userLogin = true;
                     }
                 }
-
-                if (userLogin == true) {
-                    session.setAttribute("user", username);
-                    response.sendRedirect("FrontController");
-                    return;
-
-                } else {
-                    request.setAttribute("invalidLogin", "Invalid Login!");
-                    getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-                    return;
-                }
-
             }
+
+            if (userLogin == true) {
+                session.setAttribute("user", username);
+                response.sendRedirect("FrontController");
+                return;
+
+            } else {
+                request.setAttribute("invalidLogin", "Invalid Login!");
+                getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+                return;
+            }
+
+        }
     }
 
     /**

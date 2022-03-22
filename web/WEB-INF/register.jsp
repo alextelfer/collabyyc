@@ -54,7 +54,7 @@
     <h4>${registerSuccess}</h4>
     <h4>${registerError}</h4>
     <h4>${unauthorizedRegister}</h4>
-    <h4>${employeeLoggindIn}</h4>
+    <h4>${loggindIn}</h4>
     <script>
         let notEmployee = <%= notEmployee%>;
         if(notEmployee === "Not Employee"){
