@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.DecimalFormat; 
 
 /**
  *
@@ -79,8 +78,6 @@ public class FrontController extends HttpServlet {
         } else {
 
             switch (action) {
-                    //setting a double decimal limit
-                    private static final DecimalFormat df = new DecimalFormat("0.00");
 
                 case "additem":
                     //Getting values from jsp to build item
@@ -88,7 +85,7 @@ public class FrontController extends HttpServlet {
                     int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
                     String vendorName = request.getParameter("vendorName");
                     String name = request.getParameter("name");
-                    double price = Double.parseDouble(request.getParameter("price"));
+                    double price = Double.parseDouble(request.getParameter("%,.2f","price"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
                     String category = request.getParameter("category");
                     int vendorID = dbOps.returnVendorID(vendorName);                    
@@ -100,7 +97,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(sku, vendorID, vendorName, name, df.format(price), quantity, category);
+                        Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
