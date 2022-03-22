@@ -76,13 +76,14 @@
                     <th>Category</th>
                     <th>Vendor<th>
                 </tr>
-                <c:forEach items="${salelist}" var="sale">
+                <c:forEach items="${searchedlist}" var="searched">
                     <tr>
-                        <td>${sale.sku}</td>
-                        <td>${sale.name}</td>
-                        <td>${sale.price}</td>
-                        <td>${sale.category}</td>
-                        <td>${sale.vendor}</td>
+                        <td>${searched.sku}</td>
+                        <td>${searched.name}</td>
+                        <td>${searched.price}</td>
+                        <td>${searched.category}</td>
+                        <td>${searched.vendorName}</td>
+                        <td><input type=submit value="Add to Cart"></td>
                     </tr>
                 </c:forEach>
 
@@ -117,7 +118,7 @@
             </table>
         </div>
         
-        <div class="inventory">
+<!--        <div class="inventory">
             <h1>Inventory</h1>
            
             <table>
@@ -155,6 +156,6 @@
                     </tr>
                 </c:forEach>
             </table>
-        </div>
+        </div>-->
     </body>
 </html>

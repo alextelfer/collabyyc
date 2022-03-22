@@ -199,8 +199,8 @@ public class FrontController extends HttpServlet {
                 case "searchbysku":
                     int searchBySku = Integer.parseInt(request.getParameter("sku"));
                     ArrayList<Item> searchedItems = dbOps.searchBySKU(searchBySku);
-                    request.getSession().setAttribute("salelist", searchedItems);
-                    response.sendRedirect("FrontController");
+                    request.getSession().setAttribute("searchedlist", searchedItems);
+                    request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
 
                 default:
                     request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);

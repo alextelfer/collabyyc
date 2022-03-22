@@ -494,12 +494,15 @@ public class DBOperations {
 
             String sql = "SELECT * FROM collabyyc.items where sku=?";
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, searchedSku);
             try ( ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int sku = rs.getInt("sku");
                     String name = rs.getString("nameProducts");
                     Double price = rs.getDouble("price");
-                    Item item = new Item(sku, name, price);
+                    String category = rs.getString("category");
+                    String vendor = rs.getString("vendorName");
+                    Item item = new Item(sku, name, price, category, vendor);
                     result.add(item);
                 }
                 rs.close();

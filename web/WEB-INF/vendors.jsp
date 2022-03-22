@@ -18,13 +18,14 @@
 
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
-            <%@ include file="jspf/segment.jspf" %>
+
             <h1>Vendors</h1>
         </div>
 
         <div>
+            <%@ include file="jspf/segment.jspf" %>
             <table class="vendorTable">
-
+                
                 <tr>
                     <th>Vendor name</th>
                     <th>Vendor ID</th>
@@ -50,35 +51,25 @@
             </table>
         </div>
 
+        <div class="form">
+            <h3>Add vendor</h3>
+            <form action="FrontController" method="GET">
+                <table>
+                    <tr>
+                        <td>Vendor Name:<input type="text" name="vendorName"></td>
+                        <td>Vendor ID:<input type="number" name="vendorid"></td>
+                        <td>Vendor Email:<input type="email" name="email"></td>
+                        <td>Vendor Phone number:<input type="text" name="phoneno"></td>
 
-        <div class="twoButtons">
-            <form action="FrontController" method="GET">
-                <input id="logoutButton" type="button" value="Logout">
-            </form>
-            <form action="FrontController" method="GET">
-                <input id="backButton" type="button" value="Back">
+                        <td>
+                            <input type="submit" value="Add Vendor">
+                            <input type="hidden" name="action" value="addvendor">
+                        </td>
+                    </tr>
+                </table>
             </form>
         </div>
-            
-            <div class="form">
-                <h3>Add vendor</h3>
-                <form action="FrontController" method="GET">
-                    <table>
-                        <tr>
-                            <td>Vendor Name:<input type="text" name="vendorName"></td>
-                            <td>Vendor ID:<input type="number" name="vendorid"></td>
-                            <td>Vendor Email:<input type="email" name="email"></td>
-                            <td>Vendor Phone number:<input type="text" name="phoneno"></td>
 
-                            <td>
-                                <input type="submit" value="Add Vendor">
-                                <input type="hidden" name="action" value="addvendor">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            
     </body>
 
 </html>
