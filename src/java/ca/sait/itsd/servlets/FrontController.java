@@ -49,12 +49,9 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Item> items = dbOps.getItems();
         request.getSession().setAttribute("itemlist", items);
-        
+
         ArrayList<Sale> sales = dbOps.getSales();
         request.getSession().setAttribute("saleslist", sales);
-        
-        
-        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -62,26 +59,32 @@ public class FrontController extends HttpServlet {
         }
 
         String modifyItem = request.getParameter("modifyItem");
+        String modifyVendor = request.getParameter("modifyVendor");
 
         if (modifyItem != null && !modifyItem.equals("")) {
-            System.out.println(modifyItem);
             dbOps.retrieveItem(Integer.parseInt(modifyItem));
             ArrayList<Item> singleItem = dbOps.retrieveItem(Integer.parseInt(modifyItem));
             request.getSession().setAttribute("singleItem", singleItem);
-            System.out.println(singleItem);
             request.getSession().setAttribute("modifyItem", modifyItem);
             request.getRequestDispatcher("WEB-INF/ModifyPage.jsp").forward(request, response);
 
+        } else if (modifyVendor != null && !modifyVendor.equals("")) {
+            dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
+            ArrayList<Vendor> singleVendor = dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
+            request.getSession().setAttribute("singleVendor", singleVendor);
+            //System.out.println(singleVendor);
+            request.getSession().setAttribute("modifyVendor", modifyVendor);
+            request.getRequestDispatcher("WEB-INF/ModifyVendor.jsp").forward(request, response);
+
         } else {
 
-         
             switch (action) {
                     //setting a double decimal limit
                     private static final DecimalFormat df = new DecimalFormat("0.00");
 
                 case "additem":
                     //Getting values from jsp to build item
-                    
+
                     int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
                     String vendorName = request.getParameter("vendorName");
                     String name = request.getParameter("name");
@@ -139,14 +142,25 @@ public class FrontController extends HttpServlet {
                 case "updateItem":
                     String updatedItemID = request.getParameter("updatedSKU");
                     String updatedItemName = request.getParameter("updatedItemName");
-                    String updatedVendorID = request.getParameter("updatedVendorID");
+//                    String updatedVendorID = request.getParameter("updatedVendorID");
                     String updatedPrice = request.getParameter("updatedPrice");
                     String updatedCategory = request.getParameter("updatedCategory");
                     String updatedQuantity = request.getParameter("updatedQuantity");
                     String oldSKU = request.getParameter("oldSKU");
+                    System.out.println(oldSKU);
+                    dbOps.modifyItem(updatedItemID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
                     
-                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
-                    System.out.println(updatedPrice);
+                    response.sendRedirect("FrontController");
+                    break;
+
+                case "updateVendor":
+                    String oldVendorID = request.getParameter("oldVendorID");
+                    String updatedVendorID = request.getParameter("updatedVendorID");
+                    String updatedVendorName = request.getParameter("updatedVendorName");
+                    String updatedVendorEmail = request.getParameter("updatedVendorEmail");
+                    String updatedVendorPhone = request.getParameter("updatedVendorPhone");               
+                    System.out.println(updatedVendorID + "*************");
+                    dbOps.updateVendor(updatedVendorName, updatedVendorEmail, updatedVendorPhone, updatedVendorID);
                     response.sendRedirect("FrontController");
                     break;
 
