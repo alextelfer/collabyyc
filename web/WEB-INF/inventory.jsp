@@ -6,6 +6,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<script>
+    function setDecimalNumber(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+}
+</script>
+
 <!DOCTYPE html>
 <html>
 

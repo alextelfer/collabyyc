@@ -44,9 +44,11 @@
                         <td>\$${item.price}</td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
-                    <form action="FrontController" method="GET"><td>
-                            <input type="hidden" name="modifyItem" value=${item.sku}>
-                            <input type="submit" value="Edit"></td></form>
+                        <td> <form action="FrontController" method="GET">
+                                <input type="hidden" name="modifyItem" value="${item.sku}">
+                                <input type="submit" value="Edit"></form>
+                        </td>
+
                     </tr>
                 </c:forEach>
 
@@ -66,10 +68,10 @@
                     <tr>
                         <td>SKU:<input type="number" name="sku"/></td>
                         <td>Vendor Name:<select name="vendorName">
-                            <c:forEach items="${vendorlist}" var="vendor">
-                                <option>${vendor.name}</option>
-                            </c:forEach>
-                        </select></td>
+                                <c:forEach items="${vendorlist}" var="vendor">
+                                    <option>${vendor.name}</option>
+                                </c:forEach>
+                            </select></td>
                         <td>Name:<input type="text" name="name"/></td>
                         <td>Price:<input type="number" name ="price"/></td>
                         <td>Quantity:<input type="number" name ="quantity"/></td>

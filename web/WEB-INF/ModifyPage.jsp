@@ -21,26 +21,47 @@
                 <table>
                     <tr>
                         <td>SKU:
-                        <input type="number" name="updatedSKU" value="${item.sku}" /></td>
+                            <input type="number" name="updatedSKU" value="${item.sku}" /></td>
 
                         <td>Name:
-                        <input type="text" name="updatedItemName" value="${item.name}" /></td>
+                            <input type="text" name="updatedItemName" value="${item.name}" /></td>
 
 <!--                        <td>Vendor ID:
                         <input type="number" name="updatedVendorID" value="${item.vendorID}" /></td>-->
 
-                        <td>Category:
-                        <input type="text" name="updatedCategory" value="${item.category}" /></td>
+
+                        <td>Category:<select name="updatedCategory" >
+                                <option value="${item.category}">${item.category}</option>
+                                <option>Accessories</option>
+                                <option>Apparel</option>
+                                <option>Art & Prints</option>
+                                <option>Bath & Body</option>
+                                <option>Ceramics</option>
+                                <option>Collab Exclusives</option>
+                                <option>DIY Kits</option>
+                                <option>Food and Drink</option>
+                                <option>For the Home</option>
+                                <option>Fundraiser</option>
+                                <option>Jewelry</option>
+                                <option>Kiddos & Baby</option>
+                                <option>Other</option>
+                                <option>Pets</option>
+                                <option>Seasonal</option>
+                                <option>Stationary</option>
+                            </select> 
+                        </td>
 
                         <td>Quantity:
-                        <input type="number" name ="updatedQuantity" value="${item.quantity}" /></td>
+                            <input type="number" name ="updatedQuantity" value="${item.quantity}" /></td>
 
                         <td>Price:
-                        <input type="number" name ="updatedPrice" value="${item.price}" /></td>
-                    <input type ="hidden" name="oldSKU" value="${item.sku}" />
+                            <input type="number" name ="updatedPrice" value="${item.price}" /></td>
+
 
                     </tr>  
                 </table>
+
+                <input type="hidden" name="oldSKU" value="${item.sku}" />
             </c:forEach>
             <input type="hidden" name="action" value="updateItem" />
             <input type="submit" value="Save"/>
