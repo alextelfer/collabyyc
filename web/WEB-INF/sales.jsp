@@ -16,8 +16,7 @@
     <body>
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
-
-            
+            <%@ include file="jspf/segment.jspf" %>
         </div>
         
             <c:if test="${saleitems != null}">
@@ -62,7 +61,6 @@
 
         <div class="sales">
             <h1>Sales</h1>
-            <%@ include file="jspf/segment.jspf" %>
             <form action="FrontController" method="GET">
                 Search by SKU:<input type="number" name="sku">
                 <input type="hidden" name="action" value="searchbysku">

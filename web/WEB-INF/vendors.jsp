@@ -18,11 +18,10 @@
 
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
-
-            <h1>Vendors</h1>
         </div>
 
         <div>
+            <h1>Vendors</h1>
             <%@ include file="jspf/segment.jspf" %>
             <table class="vendorTable">
                 
