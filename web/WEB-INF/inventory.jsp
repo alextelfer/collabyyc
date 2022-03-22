@@ -5,6 +5,13 @@
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<script>
+    function setDecimalNumber(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+}
+</script>
+
 <!DOCTYPE html>
 <html>
 
@@ -41,7 +48,7 @@
                         <td>${item.sku}</td>
                         <td>${item.vendorName}</td>
                         <td>${item.name}</td>
-                        <td>\$${item.price}</td>
+                        <td onchange="setDecimalNumber">\$${item.price}</td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
                     <form action="FrontController" method="GET"><td>
