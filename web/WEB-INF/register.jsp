@@ -12,9 +12,9 @@
         <title>Register User</title>
         <link rel="stylesheet" type="text/css" href="./login.css">
     </head>
-    
+
     <h1>Register User</h1>
-    
+
     <table>
         <tr>
             <td>
@@ -23,7 +23,7 @@
 
         </tr>
     </table>
-    
+
     <form action="RegisterServlet" method="POST">
         <table>
             <tr>
@@ -41,17 +41,26 @@
                     <input type="hidden" name="register_req" value="user">
                 </td>
             </tr>
-            </table>
+        </table>
     </form>
     <form action="LoginServlet" method="GET">
         <input type="submit" value="Login">
     </form>
     <form action="RegisterServlet" method="GET">
-        <input type="submit" value="Register Employee">
+        <input type="submit" id="register_employee" value="Register Employee">
+        <% String notEmployee = (String) request.getAttribute("notEmployee");%>
         <input type="hidden" name="register" value="user">
     </form>
     <h4>${registerSuccess}</h4>
     <h4>${registerError}</h4>
     <h4>${unauthorizedRegister}</h4>
     <h4>${employeeLoggindIn}</h4>
+    <script>
+        let notEmployee = <%= notEmployee%>;
+        if(notEmployee === "Not Employee"){
+            document.getElementById("register_employee").hidden = true;
+        } else {
+            document.getElementById("register_employee").hidden = false;
+        }
+    </script>
 </html>

@@ -49,6 +49,7 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
         } else {
+            request.setAttribute("notEmployee", "Not Employee");
             getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
             return;
         }
@@ -86,7 +87,7 @@ public class RegisterServlet extends HttpServlet {
                     getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
                     return;
                 } catch (Exception e) {
-                    request.setAttribute("registerError", "There was an error");
+                    request.setAttribute("registerError", "There was an error.");
                     getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
                     return;
                 }
