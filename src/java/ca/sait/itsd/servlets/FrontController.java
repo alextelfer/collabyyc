@@ -9,12 +9,12 @@ import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Item;
 import ca.sait.itsd.Sale;
 import ca.sait.itsd.Vendor;
-import ca.sait.itsd.exceptions.BadEmailException;
-import ca.sait.itsd.exceptions.BadPhoneNoException;
 import ca.sait.itsd.exceptions.BadStringException;
+import ca.sait.itsd.exceptions.MissingSaleException;
 import ca.sait.itsd.utilities.InputVerifier;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,10 +48,9 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Item> items = dbOps.getItems();
         request.getSession().setAttribute("itemlist", items);
-        
+
         ArrayList<Sale> sales = dbOps.getSales();
         request.getSession().setAttribute("saleslist", sales);
-        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -59,30 +58,37 @@ public class FrontController extends HttpServlet {
         }
 
         String modifyItem = request.getParameter("modifyItem");
+        String modifyVendor = request.getParameter("modifyVendor");
 
         if (modifyItem != null && !modifyItem.equals("")) {
-            System.out.println(modifyItem);
             dbOps.retrieveItem(Integer.parseInt(modifyItem));
             ArrayList<Item> singleItem = dbOps.retrieveItem(Integer.parseInt(modifyItem));
             request.getSession().setAttribute("singleItem", singleItem);
-            System.out.println(singleItem);
             request.getSession().setAttribute("modifyItem", modifyItem);
             request.getRequestDispatcher("WEB-INF/ModifyPage.jsp").forward(request, response);
 
+        } else if (modifyVendor != null && !modifyVendor.equals("")) {
+            dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
+            ArrayList<Vendor> singleVendor = dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
+            request.getSession().setAttribute("singleVendor", singleVendor);
+            //System.out.println(singleVendor);
+            request.getSession().setAttribute("modifyVendor", modifyVendor);
+            request.getRequestDispatcher("WEB-INF/ModifyVendor.jsp").forward(request, response);
+
         } else {
 
-         
             switch (action) {
 
                 case "additem":
                     //Getting values from jsp to build item
-                    int itemID = Integer.parseInt(request.getParameter("itemid")); //temp value, real value must be assigned in db
-                    int vendorID = Integer.parseInt(request.getParameter("vendor"));
+
+                    int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
+                    String vendorName = request.getParameter("vendorName");
                     String name = request.getParameter("name");
                     double price = Double.parseDouble(request.getParameter("price"));
-                    int quantity = 1;
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
                     String category = request.getParameter("category");
-
+                    int vendorID = dbOps.returnVendorID(vendorName);                    
                     try {
                         if (InputVerifier.checkBadString(name)) {
                             throw new BadStringException(name);
@@ -91,7 +97,7 @@ public class FrontController extends HttpServlet {
                             throw new BadStringException(category);
                         }
 
-                        Item newItem = new Item(itemID, vendorID, name, price, quantity, category);
+                        Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);
                         request.getSession().setAttribute("newitem", newItem);
                         response.sendRedirect("AddItem");
 
@@ -104,7 +110,7 @@ public class FrontController extends HttpServlet {
 
                 case "addvendor":
                     int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
-                    String vendorName = request.getParameter("vendorname");
+                    vendorName = request.getParameter("vendorName");
                     String email = request.getParameter("email");
                     String phoneNo = request.getParameter("phoneno");
 
@@ -131,15 +137,27 @@ public class FrontController extends HttpServlet {
                     break;
 
                 case "updateItem":
-                    String updatedItemID = request.getParameter("updatedItemID");
+                    String updatedItemID = request.getParameter("updatedSKU");
                     String updatedItemName = request.getParameter("updatedItemName");
-                    String updatedVendorID = request.getParameter("updatedVendorID");
+//                    String updatedVendorID = request.getParameter("updatedVendorID");
                     String updatedPrice = request.getParameter("updatedPrice");
                     String updatedCategory = request.getParameter("updatedCategory");
                     String updatedQuantity = request.getParameter("updatedQuantity");
-                    String oldID = request.getParameter("oldID");
-                    dbOps.modifyItem(updatedItemID, updatedVendorID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldID);
-                    System.out.println(updatedPrice);
+                    String oldSKU = request.getParameter("oldSKU");
+                    System.out.println(oldSKU);
+                    dbOps.modifyItem(updatedItemID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
+                    
+                    response.sendRedirect("FrontController");
+                    break;
+
+                case "updateVendor":
+                    String oldVendorID = request.getParameter("oldVendorID");
+                    String updatedVendorID = request.getParameter("updatedVendorID");
+                    String updatedVendorName = request.getParameter("updatedVendorName");
+                    String updatedVendorEmail = request.getParameter("updatedVendorEmail");
+                    String updatedVendorPhone = request.getParameter("updatedVendorPhone");               
+                    System.out.println(updatedVendorID + "*************");
+                    dbOps.updateVendor(updatedVendorName, updatedVendorEmail, updatedVendorPhone, updatedVendorID);
                     response.sendRedirect("FrontController");
                     break;
 
@@ -154,9 +172,52 @@ public class FrontController extends HttpServlet {
                     dbOps.deleteVendor(vendorID2);
                     response.sendRedirect("FrontController");
                     break;
+                    
+                case "addtosale":
+                    ArrayList<Item> saleItems = (ArrayList<Item>) session.getAttribute("saleitems");
+                    if(saleItems == null) {
+                        saleItems = new ArrayList<>();
+                    }                    
+                    String itemID2 = request.getParameter("itemsku");
+                    Item item = dbOps.getItem(itemID2);                    
+                    saleItems.add(item);
+                    session.setAttribute("saleitems", saleItems);
+                    request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
+                    break;
+                    
+                case "createsale":                                                            
+                    try {
+                        ArrayList<Item> sessionItems = (ArrayList<Item>) session.getAttribute("saleitems");
+                        if(sessionItems == null) {                            
+                            throw new MissingSaleException();
+                        } else {
+                            Sale newSale = new Sale();
+                            newSale.setItems(sessionItems);
+                            newSale.setTransactionID(Integer.parseInt(request.getParameter("saleID")));
+                            newSale.setCustomerID(Integer.parseInt(request.getParameter("customerID")));
+                            newSale.setPaymentDate(new Date());                            
+                            newSale.setSoldItems("");
+                            newSale.setSentShippingDate(new Date());
+                            newSale.setShippingAddress("");
+                            newSale.setPickupDate(new Date());
+                            dbOps.addSale(newSale);
+                            session.setAttribute("saleslist", dbOps.getSales());
+                        }
+                    } catch(MissingSaleException mse) {
+                        System.out.println(mse.getMessage());
+                    }   
+                    request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
+                    break;
+
+
+                case "searchbysku":
+                    int searchBySku = Integer.parseInt(request.getParameter("sku"));
+                    ArrayList<Item> searchedItems = dbOps.searchBySKU(searchBySku);
+                    request.getSession().setAttribute("searchedlist", searchedItems);
+                    request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
 
                 default:
-                    request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+                    request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
                     break;
             }
 

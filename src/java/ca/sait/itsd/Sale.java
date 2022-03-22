@@ -1,14 +1,14 @@
 package ca.sait.itsd;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
  *
  * @author 840303
  */
-public class Sale {
+public class Sale implements Serializable {
     
     int transactionID;
     int customerID;
@@ -19,8 +19,14 @@ public class Sale {
     Date sentShippingDate;
     String shippingAddress;
     Date pickupDate;
+    ArrayList<Item> items;
+    ArrayList<VendorShare> shares;
     
-    public Sale () {}
+    public Sale () {
+        items = new ArrayList<>();
+        shares = new ArrayList<>();
+    }
+        
     // in store sale
     public Sale(int transactionID, Date paymentDate, double saleAmount, double payVendorAmount, String soldItems) {
         this.transactionID = transactionID;
@@ -133,6 +139,20 @@ public class Sale {
         this.pickupDate = pickupDate;
     }
     
+    public ArrayList<Item> getItems() {
+        return this.items;
+    }
     
+    public void setItems(ArrayList<Item> items) {    
+        for(Item item : items) {
+            this.saleAmount += item.getPrice();
+            VendorShare vendorShare = new VendorShare((item.getPrice() * 0.55), item.getVendorID());
+            this.shares.add(vendorShare);
+        }
+        for(VendorShare share : this.shares) {
+            this.payVendorAmount += share.getAmount();
+        }
+        this.items = items;
+    }
     
 }

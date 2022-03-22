@@ -5,28 +5,57 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     int itemID;
+    int sku;
     int vendorID;
+    String vendorName;
     String name;
     double price;
     int quantity;
     String category;
     
-    // public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
-    //     this.itemID = itemID;
-    //     this.vendorID = vendorID;
-    //     this.name = name;
-    //     this.price = price;
-    //     this.quantity = quantity;
-    //     this.category = category;
-    // }
-
-    public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
-        this.itemID = itemID;
-        this.vendorID = vendorID;
+     public Item(int itemID, int vendorID, String name, double price, int quantity, String category) {
+         this.itemID = itemID;
+         this.vendorID = vendorID;
+         this.name = name;
+         this.price = price;
+         this.quantity = quantity;
+         this.category = category;
+     }
+    
+    public Item(int sku, String name, double price, String category, String vendorName) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.vendorName = vendorName;
+    }
+    
+    public Item(int sku, int vendorID, String vendorName, String name, double price, int quantity, String category) {
+     //   this.itemID = itemID;
+        this.sku = sku;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.category = category;
+        this.vendorName = vendorName;
+        this.vendorID = vendorID;
+    }
+    
+    public Item(int sku, String vendorName, String name, double price, int quantity, String category) {
+        this.sku = sku;
+        this.vendorName = vendorName;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+    }
+
+    public int getSku() {
+        return sku;
+    }
+
+    public void setSku(int sku) {
+        this.sku = sku;
     }
     
     public Item() {}
@@ -84,7 +113,13 @@ public class Item implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-
     
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
 
 }
