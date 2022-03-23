@@ -51,6 +51,11 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Sale> sales = dbOps.getSales();
         request.getSession().setAttribute("saleslist", sales);
+        
+        
+        
+        
+        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -78,6 +83,8 @@ public class FrontController extends HttpServlet {
         } else {
 
             switch (action) {
+                    //setting a double decimal limit
+                  
 
                 case "additem":
                     //Getting values from jsp to build item
@@ -215,7 +222,11 @@ public class FrontController extends HttpServlet {
                     ArrayList<Item> searchedItems = dbOps.searchBySKU(searchBySku);
                     request.getSession().setAttribute("searchedlist", searchedItems);
                     request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
-
+                case "searchbydate":
+                    String searchedDate = request.getParameter("date");
+                    ArrayList<Sale> searchedByDate = dbOps.searchByDate(searchedDate);
+                    request.getSession().setAttribute("searchedreports", searchedByDate);
+                    request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
                 default:
                     request.getRequestDispatcher("WEB-INF/inventory.jsp").forward(request, response);
                     break;

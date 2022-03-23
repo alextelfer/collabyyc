@@ -4,6 +4,7 @@
     Author     : 857421
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <script>
@@ -48,7 +49,7 @@
                         <td>${item.sku}</td>
                         <td>${item.vendorName}</td>
                         <td>${item.name}</td>
-                        <td onload="setDecimalNumber">\$${item.price}</td>
+                        <td>\$<fmt:formatNumber minFractionDigits='2' value='${item.price}'/></td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
                     <form action="FrontController" method="GET"><td>

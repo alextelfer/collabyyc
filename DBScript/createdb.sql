@@ -46,7 +46,8 @@ Create table EmployeeAccounts (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 Create table Users (
     userName VARCHAR(40) NOT NULL,
-    password VARCHAR(40) NOT NULL, 
+    password VARCHAR(40) NOT NULL,
+    userType int(1) not null,
     PRIMARY KEY (userName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
