@@ -139,7 +139,7 @@ public class DBOperations {
                     String userName = rs.getString("userName");
                     String password = rs.getString("password");
                     int userType = rs.getInt("userType");
-                    User user = new User(userName, password, userType);
+                    User user = new User(userName, password);
                     users.add(user);
                 }
 

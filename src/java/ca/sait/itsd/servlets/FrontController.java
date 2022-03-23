@@ -71,7 +71,7 @@ public class FrontController extends HttpServlet {
             dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
             ArrayList<Vendor> singleVendor = dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
             request.getSession().setAttribute("singleVendor", singleVendor);
-            //System.out.println(singleVendor);
+            System.out.println(singleVendor);
             request.getSession().setAttribute("modifyVendor", modifyVendor);
             request.getRequestDispatcher("WEB-INF/ModifyVendor.jsp").forward(request, response);
 
@@ -85,7 +85,7 @@ public class FrontController extends HttpServlet {
                     int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
                     String vendorName = request.getParameter("vendorName");
                     String name = request.getParameter("name");
-                    double price = Double.parseDouble(request.getParameter("%,.2f","price"));
+                    double price = Double.parseDouble(request.getParameter("price"));
                     int quantity = Integer.parseInt(request.getParameter("quantity"));
                     String category = request.getParameter("category");
                     int vendorID = dbOps.returnVendorID(vendorName);                    

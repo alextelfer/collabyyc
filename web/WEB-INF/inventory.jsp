@@ -48,7 +48,7 @@
                         <td>${item.sku}</td>
                         <td>${item.vendorName}</td>
                         <td>${item.name}</td>
-                        <td onchange="setDecimalNumber">\$${item.price}</td>
+                        <td onload="setDecimalNumber">\$${item.price}</td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
                     <form action="FrontController" method="GET"><td>
