@@ -76,7 +76,7 @@ public class FrontController extends HttpServlet {
             dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
             ArrayList<Vendor> singleVendor = dbOps.retrieveVendor(Integer.parseInt(modifyVendor));
             request.getSession().setAttribute("singleVendor", singleVendor);
-            //System.out.println(singleVendor);
+            System.out.println(singleVendor);
             request.getSession().setAttribute("modifyVendor", modifyVendor);
             request.getRequestDispatcher("WEB-INF/ModifyVendor.jsp").forward(request, response);
 
