@@ -58,10 +58,10 @@ INSERT INTO ITEMS (sku, VendorID, vendorName, nameproducts, Price, Quantity, Cat
 VALUES(0000001, 00001, 'Kindred Clothing', 'Polka Dot Scrunchie', 10.00, 1, 'Accessories');
 INSERT INTO ITEMS (sku, VendorID, vendorName, nameproducts, Price, Quantity, Category)
 VALUES(0000002, 00002, 'Erin Baer Ceramics', 'Glazed Bowl', 65.00, 1, 'Ceramics');
-INSERT INTO Users (userName, password)
-VALUES('user01', 'password');
-INSERT INTO Users (userName, password)
-VALUES('user02', 'password');
+INSERT INTO Users (userName, password, userType)
+VALUES('user01', 'password', 0);
+INSERT INTO Users (userName, password, userType)
+VALUES('user02', 'password', 1);
 INSERT INTO EmployeeAccounts(employeeID, employeePassword, employeeName, employeeEmail, employeePhone)
 VALUES(12345, 'password', 'emp', 'a@b.c', 1234567890);
 INSERT INTO sale (transactionID, saleAmount, payVendorAmount, soldItems)
