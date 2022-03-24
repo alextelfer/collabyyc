@@ -42,11 +42,13 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String logout = (String) request.getAttribute("logout");
+        String logout = (String) session.getAttribute("logout");
+        System.out.println("Printing logout attribute in servlet...");
+        System.out.println(logout);
 
-        if (logout != null && !logout.equals("")) {
+        if (logout != null && logout.equals("logout")) {
+            
             session.invalidate();
-            request.setAttribute("loggedOut", "loggedOut");
         }
         
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
