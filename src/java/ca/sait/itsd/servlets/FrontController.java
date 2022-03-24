@@ -52,11 +52,7 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Sale> sales = dbOps.getSales();
         request.getSession().setAttribute("saleslist", sales);
-        
-        
-        
-        
-        
+                                        
         //jsp sends "action" param with the form that tells this servlet what servlet to send the request to
         String action = request.getParameter("action");
         if (action == null) {
@@ -93,40 +89,19 @@ public class FrontController extends HttpServlet {
                     break;
 
                 case "updateItem":
-                    String updatedItemID = request.getParameter("updatedSKU");
-                    String updatedItemName = request.getParameter("updatedItemName");
-//                    String updatedVendorID = request.getParameter("updatedVendorID");
-                    String updatedPrice = request.getParameter("updatedPrice");
-                    String updatedCategory = request.getParameter("updatedCategory");
-                    String updatedQuantity = request.getParameter("updatedQuantity");
-                    String oldSKU = request.getParameter("oldSKU");
-                    System.out.println(oldSKU);
-                    dbOps.modifyItem(updatedItemID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
-                    
-                    response.sendRedirect("FrontController");
+                    RequestOptions.updateItem(request, response);
                     break;
 
                 case "updateVendor":
-                    String oldVendorID = request.getParameter("oldVendorID");
-                    String updatedVendorID = request.getParameter("updatedVendorID");
-                    String updatedVendorName = request.getParameter("updatedVendorName");
-                    String updatedVendorEmail = request.getParameter("updatedVendorEmail");
-                    String updatedVendorPhone = request.getParameter("updatedVendorPhone");               
-                    System.out.println(updatedVendorID + "*************");
-                    dbOps.updateVendor(updatedVendorName, updatedVendorEmail, updatedVendorPhone, updatedVendorID);
-                    response.sendRedirect("FrontController");
+                    RequestOptions.updateVendor(request, response);
                     break;
 
                 case "deleteitem":
-                    String itemID1 = request.getParameter("deleteID");
-                    dbOps.deleteItem(itemID1);
-                    response.sendRedirect("FrontController");
+                    RequestOptions.deleteItem(request, response);
                     break;
 
                 case "deletevendor":
-                    String vendorID2 = request.getParameter("deleteID");
-                    dbOps.deleteVendor(vendorID2);
-                    response.sendRedirect("FrontController");
+                    RequestOptions.deleteVendor(request, response);
                     break;
                     
                 case "addtosale":

@@ -95,4 +95,61 @@ public final class RequestOptions {
             response.sendRedirect("FrontController");
         }
     }
+
+    public static void updateItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String updatedItemID = request.getParameter("updatedSKU");
+                    String updatedItemName = request.getParameter("updatedItemName");
+//                    String updatedVendorID = request.getParameter("updatedVendorID");
+                    String updatedPrice = request.getParameter("updatedPrice");
+                    String updatedCategory = request.getParameter("updatedCategory");
+                    String updatedQuantity = request.getParameter("updatedQuantity");
+                    String oldSKU = request.getParameter("oldSKU");
+                    System.out.println(oldSKU);
+                    DBOperations dbOps = new DBOperations();
+                    dbOps.modifyItem(updatedItemID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
+                    
+                    response.sendRedirect("FrontController");
+    }
+    
+    public static void updateVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String oldVendorID = request.getParameter("oldVendorID");
+                    String updatedVendorID = request.getParameter("updatedVendorID");
+                    String updatedVendorName = request.getParameter("updatedVendorName");
+                    String updatedVendorEmail = request.getParameter("updatedVendorEmail");
+                    String updatedVendorPhone = request.getParameter("updatedVendorPhone");               
+                    System.out.println(updatedVendorID + "*************");
+                    DBOperations dbOps = new DBOperations();
+                    dbOps.updateVendor(updatedVendorName, updatedVendorEmail, updatedVendorPhone, updatedVendorID);
+                    response.sendRedirect("FrontController");
+    }
+    
+    public static void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String itemID1 = request.getParameter("deleteID");
+        DBOperations dbOps = new DBOperations();
+        dbOps.deleteItem(itemID1);
+        response.sendRedirect("FrontController");  
+    }
+    
+    public static void deleteVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String vendorID2 = request.getParameter("deleteID");
+        DBOperations dbOps = new DBOperations();
+        dbOps.deleteVendor(vendorID2);
+        response.sendRedirect("FrontController"); 
+    }
+    
+    public static void createSale(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+    }
+    
+    public static void addToSale(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+    }
+    
+    public static void searchBySku(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+    }
+    
+    public static void searchByDate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
+    }
 }
