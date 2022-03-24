@@ -78,8 +78,8 @@
                                 </c:forEach>                                    
                             </select></td>
                         <td>Name:<input type="text" name="name"/></td>
-                        <td>Price:<input type="number" name="price"/></td>
-                        <td>Quantity:<input type="number" name="quantity"/></td>
+                        <td>Price:<input type="number" name="price" min="0"/></td>
+                        <td>Quantity:<input type="number" name="quantity" min="0"/></td>
                         <td>Category:<select name="category">
                                 <option>Accessories</option>
                                 <option>Apparel</option>
