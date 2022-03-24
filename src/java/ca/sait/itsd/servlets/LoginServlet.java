@@ -48,23 +48,9 @@ public class LoginServlet extends HttpServlet {
             session.invalidate();
             request.setAttribute("loggedOut", "loggedOut");
         }
-
-//        String employee = (String) session.getAttribute("employee");
-//        String user = (String) session.getAttribute("user");
-//
-//        if (employee == null && user == null) {
-//            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-//            return;
-//
-//        } else {
-//            request.setAttribute("loggindIn", "You are already logged in.");
-//            response.sendRedirect("FrontController");
-//            return;
-//        }
         
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         return;
-
 
     }
 

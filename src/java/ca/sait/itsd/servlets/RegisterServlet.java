@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
         String register = request.getParameter("register");
 
         if (register != null && register.equals("employee")) {
-            if (session != null) {
+            if (employee != null) {
                 getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
                 return;
             }

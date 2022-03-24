@@ -56,7 +56,7 @@
     <h4>${unauthorizedRegister}</h4>
     <h4>${loggindIn}</h4>
     <script>
-        let notEmployee = <%= notEmployee%>;
+        var notEmployee =<%= notEmployee%>;
         if(notEmployee === "Not Employee"){
             document.getElementById("register_employee").hidden = true;
         } else {
