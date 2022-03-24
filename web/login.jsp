@@ -40,7 +40,8 @@
     <form action="RegisterServlet" method="GET">
         <input type="submit" value="Register">
     </form>
-        ${invalidLogin}
+    <h4>${invalidLogin}</h4>
+    <h4>${loggedOut}</h4>
 </body>
 
 </html>

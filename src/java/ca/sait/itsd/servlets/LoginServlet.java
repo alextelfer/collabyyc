@@ -42,16 +42,29 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String employee = (String) session.getAttribute("employee");
-        String user = (String) session.getAttribute("user");
+        String logout = (String) request.getAttribute("logout");
 
-        if (employee != null || user != null) {
-            request.setAttribute("loggindIn", "You are already logged in.");
-            response.sendRedirect("RegisterServlet");
+        if (logout != null && !logout.equals("")) {
+            session.invalidate();
+            request.setAttribute("loggedOut", "loggedOut");
         }
 
+//        String employee = (String) session.getAttribute("employee");
+//        String user = (String) session.getAttribute("user");
+//
+//        if (employee == null && user == null) {
+//            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+//            return;
+//
+//        } else {
+//            request.setAttribute("loggindIn", "You are already logged in.");
+//            response.sendRedirect("FrontController");
+//            return;
+//        }
+        
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         return;
+
 
     }
 
@@ -70,51 +83,31 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         DBOperations dbo = new DBOperations();
-        ArrayList<EmployeeAccount> employees = dbo.getEmployeeAccounts();
-        ArrayList<User> users = dbo.getUsers();
 
         String action = request.getParameter("action");
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean employeeLogin = false;
-        boolean userLogin = false;
 
-        for (int i = 0; i < employees.size(); i++) {
-            EmployeeAccount employee = employees.get(i);
-            if (username.equals(employee.getEmployeeID())) {
-                if (password.equals(employee.getEmployeePassword()));
-                employeeLogin = true;
-            }
-        }
-
-        if (employeeLogin == true) {
+        try {
+            EmployeeAccount employee = dbo.getEmployeeAccount(username, password);
             session.setAttribute("employee", username);
             response.sendRedirect("FrontController");
             return;
-        } else {
-
-            for (int i = 0; i < users.size(); i++) {
-                User user = users.get(i);
-                if (username.equals(user.getUsername())) {
-                    if (password.equals(user.getPassword())) {
-                        userLogin = true;
-                    }
-                }
-            }
-
-            if (userLogin == true) {
+        } catch (Exception e1) {
+            try {
+                User user = dbo.getUserAccount(username, password);
                 session.setAttribute("user", username);
                 response.sendRedirect("FrontController");
                 return;
-
-            } else {
+            } catch (Exception e2) {
                 request.setAttribute("invalidLogin", "Invalid Login!");
+                e2.printStackTrace();
                 getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
                 return;
             }
-
         }
+
     }
 
     /**

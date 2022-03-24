@@ -50,6 +50,11 @@ public class Director extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
                 break;
                 
+            case "logout":
+                request.setAttribute("logout", "logout");
+                response.sendRedirect("LoginServlet");
+                break;
+                
             default:
                 request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
                 break;

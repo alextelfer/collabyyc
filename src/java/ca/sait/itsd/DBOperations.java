@@ -80,8 +80,8 @@ public class DBOperations {
 
         return items;
     }
-    
-    public ArrayList<EmployeeAccount> getEmployeeAccounts(){
+
+    public ArrayList<EmployeeAccount> getEmployeeAccounts() {
         ArrayList<EmployeeAccount> employees = new ArrayList<>();
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -100,8 +100,8 @@ public class DBOperations {
                     String employeeName = rs.getString("employeeName");
                     String employeeEmail = rs.getString("employeeEmail");
                     int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
-                    EmployeeAccount employee = new EmployeeAccount(employeeID, employeePassword, employeeName, 
-                        employeeEmail, employeePhone);
+                    EmployeeAccount employee = new EmployeeAccount(employeeID, employeePassword, employeeName,
+                            employeeEmail, employeePhone);
                     employees.add(employee);
                 }
 
@@ -113,9 +113,45 @@ public class DBOperations {
         }
 
         return employees;
-        
+
     }
-    
+
+    public EmployeeAccount getEmployeeAccount(String employeeID, String password) throws Exception{
+        EmployeeAccount employee = null;
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.EmployeeAccounts where employeeID=? AND employeePassword=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, Integer.parseInt(employeeID));
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+            String employeeFound = rs.getString("employeeID");
+            int employeeIDReturned = Integer.parseInt(rs.getString("employeeID"));
+            String passwordReturned = rs.getString("employeePassword");
+            String employeeName = rs.getString("employeeName");
+            String employeeEmail = rs.getString("employeeEmail");
+            int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
+
+            employee = new EmployeeAccount(employeeIDReturned, passwordReturned, employeeName, employeeEmail, employeePhone);
+            } else {
+                Exception noEmployeeFound = new Exception();
+                throw noEmployeeFound;
+            }
+        } catch (Exception noUserFound) {
+            throw noUserFound;
+        }
+
+        return employee;
+    }
+
     public boolean addEmployeeAccount(EmployeeAccount employee) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -177,6 +213,39 @@ public class DBOperations {
 
         return users;
 
+    }
+
+    public User getUserAccount(String username, String password) throws Exception {
+        User user = null;
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.Users where userName=? AND password=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String usernameReturned = rs.getString("userName");
+                String passwordReturned = rs.getString("password");
+
+                user = new User(usernameReturned, passwordReturned);
+
+            } else {
+                Exception noUserFound = new Exception();
+                throw noUserFound;
+            }
+
+        } catch (Exception noUserFound) {
+            throw noUserFound;
+        }
+
+        return user;
     }
 
     public boolean addUser(User user) {
