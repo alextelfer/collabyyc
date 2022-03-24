@@ -12,6 +12,7 @@ import ca.sait.itsd.Vendor;
 import ca.sait.itsd.exceptions.BadStringException;
 import ca.sait.itsd.exceptions.MissingSaleException;
 import ca.sait.itsd.utilities.InputVerifier;
+import ca.sait.itsd.utilities.RequestOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,65 +83,13 @@ public class FrontController extends HttpServlet {
 
         } else {
 
-            switch (action) {
-                    //setting a double decimal limit
-                  
-
+            switch (action) {                                      
                 case "additem":
-                    //Getting values from jsp to build item
-
-                    int sku = Integer.parseInt(request.getParameter("sku")); //temp value, real value must be assigned in db
-                    String vendorName = request.getParameter("vendorName");
-                    String name = request.getParameter("name");
-                    double price = Double.parseDouble(request.getParameter("price"));
-                    int quantity = Integer.parseInt(request.getParameter("quantity"));
-                    String category = request.getParameter("category");
-                    int vendorID = dbOps.returnVendorID(vendorName);                    
-                    try {
-                        if (InputVerifier.checkBadString(name)) {
-                            throw new BadStringException(name);
-                        }
-                        if (InputVerifier.checkBadString(category)) {
-                            throw new BadStringException(category);
-                        }
-
-                        Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);
-                        request.getSession().setAttribute("newitem", newItem);
-                        response.sendRedirect("AddItem");
-
-                    } catch (BadStringException bse) {
-                        request.getSession().setAttribute("exceptionmessage", bse.getMessage());
-                        response.sendRedirect("FrontController");
-                    }
-
+                    RequestOptions.addItem(request, response);                    
                     break;
 
                 case "addvendor":
-                    int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
-                    vendorName = request.getParameter("vendorName");
-                    String email = request.getParameter("email");
-                    String phoneNo = request.getParameter("phoneno");
-
-                    try {
-                        if (InputVerifier.checkBadString(vendorName)) {
-                            throw new BadStringException("vendorName");
-                        }
-                        if (InputVerifier.checkBadString(email)) {
-                            throw new BadStringException("email");
-                        }
-                        if (InputVerifier.checkBadString(phoneNo)) {
-                            throw new BadStringException("phoneNo");
-                        }
-
-                        Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
-                        request.getSession().setAttribute("newvendor", newVendor);
-                        response.sendRedirect("AddVendor");
-
-                    } catch (BadStringException bse) {
-                        request.getSession().setAttribute("exceptionmessage", bse.getMessage());
-                        response.sendRedirect("FrontController");
-                    }
-
+                    RequestOptions.addVendor(request, response);
                     break;
 
                 case "updateItem":

@@ -59,6 +59,36 @@ public final class RequestOptions {
 
             Item newItem = new Item(sku, vendorID, vendorName, name, price, quantity, category);            
             dbOps.addItem(newItem);
+            response.sendRedirect("FrontController");
+
+        } catch (BadStringException bse) {
+            request.getSession().setAttribute("exceptionmessage", bse.getMessage());
+            response.sendRedirect("FrontController");
+        }
+    }
+
+    public static void addVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
+        String vendorName = request.getParameter("vendorName");
+        String email = request.getParameter("email");
+        String phoneNo = request.getParameter("phoneno");
+
+        try {
+            if (InputVerifier.checkBadString(vendorName)) {
+                throw new BadStringException("vendorName");
+            }
+            if (InputVerifier.checkBadString(email)) {
+                throw new BadStringException("email");
+            }
+            if (InputVerifier.checkBadString(phoneNo)) {
+                throw new BadStringException("phoneNo");
+            }
+
+            Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
+            DBOperations dbOps = new DBOperations();
+            dbOps.addVendor(newVendor);
+            updateSessionLists(request, response);
+            response.sendRedirect("Director?direction=vendors");
 
         } catch (BadStringException bse) {
             request.getSession().setAttribute("exceptionmessage", bse.getMessage());
