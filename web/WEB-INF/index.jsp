@@ -48,6 +48,9 @@
                                 <input type="hidden" name="modifyItem" value="${item.sku}">
                                 <input type="submit" value="Edit"></form>
                         </td>
+                        <td>
+                            <a href="FrontController?action=deleteitem$id=${item.sku}">Delete</a>
+                        </td>
 
                     </tr>
                 </c:forEach>
