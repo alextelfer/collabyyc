@@ -18,7 +18,7 @@ Create table Items (
     vendorID int(5),
     vendorName VARCHAR(40) NOT NULL,
     nameProducts VARCHAR(30) NOT NULL,
-    price decimal(4,2) NOT NULL,
+    price decimal(6,2) NOT NULL,
     quantity int(3) NOT NULL,
     category VARCHAR(20) NOT NULL,
     PRIMARY KEY (ItemID),

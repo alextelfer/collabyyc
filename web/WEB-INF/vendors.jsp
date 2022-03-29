@@ -45,7 +45,8 @@
 
                     <td>
                         <form action="FrontController" method="GET">
-                            <input type="hidden" name="deleteVendor" value=${vendor.vendorID}>
+                            <input type="hidden" name="action" value="deletevendor" />
+                            <input type="hidden" name="deleteID" value="${vendor.vendorID}" />                            
                             <input id="deleteButton" type="submit" value="X">
                         </form>
                     </td>
