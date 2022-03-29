@@ -52,6 +52,10 @@ public class Director extends HttpServlet {
                 request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
                 break;
                 
+            case "register":
+                response.sendRedirect("RegisterServlet");
+                break;
+                
             case "logout":
                 session.setAttribute("logout", "logout");
                 System.out.println("Made session attribute...");

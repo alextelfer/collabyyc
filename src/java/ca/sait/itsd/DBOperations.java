@@ -164,17 +164,21 @@ public class DBOperations {
 
             PreparedStatement st = conn.prepareStatement(sql);
 
-            st.setString(1, Integer.toString(employee.getEmployeeID()));
+//            st.setString(1, Integer.toString(employee.getEmployeeID()));
+            st.setInt(1, employee.getEmployeeID());
             st.setString(2, employee.getEmployeePassword());
             st.setString(3, employee.getEmployeeName());
             st.setString(4, employee.employeeEmail());
-            st.setString(5, Integer.toString(employee.getEmployeePhone()));
+            st.setInt(5, employee.getEmployeePhone());
+//            st.setString(5, Integer.toString(employee.getEmployeePhone()));
 
             int rowAffected = st.executeUpdate();
             result = (rowAffected > 0);
 
             st.close();
             pool.freeConnection(conn);
+            
+            
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -43,11 +43,10 @@ public class RegisterServlet extends HttpServlet {
         String employee = (String) session.getAttribute("employee");
         String register = request.getParameter("register");
 
-        if (register != null && register.equals("employee")) {
-            if (employee != null) {
-                getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
-                return;
-            }
+        if (employee != null) {
+            getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
+            return;
+
         } else {
             request.setAttribute("notEmployee", "Not Employee");
             getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
@@ -82,11 +81,16 @@ public class RegisterServlet extends HttpServlet {
 
                 try {
                     EmployeeAccount employee = new EmployeeAccount(employeeID, password, name, email, phone);
-                    dbo.addEmployeeAccount(employee);
+                    boolean result = dbo.addEmployeeAccount(employee);
+                    if (result == false) {
+                        Exception notRegistered = new Exception();
+                        throw notRegistered;
+                    }
                     request.setAttribute("registerSuccess", "Employee successfully registered!");
                     getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
                     return;
                 } catch (Exception e) {
+                    e.printStackTrace();
                     request.setAttribute("registerError", "There was an error.");
                     getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
                     return;
@@ -106,8 +110,15 @@ public class RegisterServlet extends HttpServlet {
                     User user = new User(name, password);
                     dbo.addUser(user);
                     request.setAttribute("registerSuccess", "User successfully registered!");
-                    getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-                    return;
+                    if (employeeSession != null) {
+                        getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
+                        return;
+
+                    } else {
+                        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+                        return;
+                    }
+
                 } else {
                     Exception emptyFields = new Exception();
                     throw emptyFields;

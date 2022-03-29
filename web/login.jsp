@@ -42,6 +42,7 @@
     </form>
     <h4>${invalidLogin}</h4>
     <h4>${loggedOut}</h4>
+    <h4>${registerSuccess}</h4>
 </body>
 
 </html>

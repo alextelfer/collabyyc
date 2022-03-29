@@ -46,21 +46,8 @@
     <form action="LoginServlet" method="GET">
         <input type="submit" value="Login">
     </form>
-    <form action="RegisterServlet" method="GET">
-        <input type="submit" id="register_employee" value="Register Employee">
-        <% String notEmployee = (String) request.getAttribute("notEmployee");%>
-        <input type="hidden" name="register" value="user">
-    </form>
     <h4>${registerSuccess}</h4>
     <h4>${registerError}</h4>
     <h4>${unauthorizedRegister}</h4>
     <h4>${loggindIn}</h4>
-    <script>
-        var notEmployee =<%= notEmployee%>;
-        if(notEmployee === "Not Employee"){
-            document.getElementById("register_employee").hidden = true;
-        } else {
-            document.getElementById("register_employee").hidden = false;
-        }
-    </script>
 </html>
