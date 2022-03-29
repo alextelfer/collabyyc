@@ -96,11 +96,15 @@
             <h1>Sales</h1>
             <table>
                 <tr>
-                    <th>SKU</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Vendor</th>
+                    <th>Sale ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Vendor Share</th>
+                    <th>Items</th>
+                    <th>SSD</th>
+                    <th>SA</th>
+                    <th>PD</th>
+                    <th>LINK</th>
                 </tr>
 
                 <c:forEach items="${saleslist}" var="sale">
@@ -113,6 +117,7 @@
                         <td>${sale.sentShippingDate}</td>
                         <td>${sale.shippingAddress}</td>
                         <td>${sale.pickupDate}</td>
+                        <td><a href="Director?direction=saledetails&transactionid=${sale.transactionID}">link</a></td>
                     </tr>
                 </c:forEach>
             </table>

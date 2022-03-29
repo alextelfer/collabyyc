@@ -81,6 +81,32 @@ public class DBOperations {
         return items;
     }
 
+    public ArrayList<Item> getSoldItems(Sale sale) {
+        ArrayList<Item> items = new ArrayList<>();
+                
+        ConnectionPool cp = ConnectionPool.getInstance();
+        
+        try {
+            Connection c = cp.getConnection();
+            String sql = "SELECT * FROM collabyyc.solditems WHERE transactionID=?";            
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, String.valueOf(sale.transactionID));
+            try(ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    int sku = rs.getInt("sku");
+                    Item i = getItem(String.valueOf(sku));
+                    items.add(i);
+                }
+            }
+            ps.close();
+            c.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return items;
+    }
+    
     public Item getItem(String sku) {
 
         Item item = null;
@@ -117,6 +143,31 @@ public class DBOperations {
         return item;
     }
 
+    public Sale getSale(int transactionID) {
+        Sale sale = null;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        try {
+            Connection c  = cp.getConnection();
+            String sql = "SELECT * FROM collabyyc.sale WHERE transactionID=?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setInt(1, transactionID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                sale = new Sale(
+                    rs.getInt("transactionID"),
+                    rs.getDate("paymentDate"),
+                    rs.getDouble("saleAmount"),
+                    rs.getDouble("payVendorAmount"),
+                    rs.getString("soldItems")
+                );
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return sale;
+    }
+    
     public ArrayList<User> getUsers() {
 
         ArrayList<User> users = new ArrayList<>();
@@ -286,6 +337,24 @@ public class DBOperations {
 
     }
 
+    public boolean addSoldItem(Sale sale, Item item) {
+        boolean result = false;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        try {
+            Connection c = cp.getConnection();
+            String sql = "INSERT INTO collabyyc.solditems SET transactionID=? itemID=?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, String.valueOf(sale.transactionID));
+            ps.setString(2, String.valueOf(item.itemID));            
+            int rows = ps.executeUpdate();
+            result = (rows > 0);
+            c.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
     public ArrayList<Item> retrieveItem(int modifyItem) {
         ArrayList<Item> singleItem = new ArrayList<>();
 
