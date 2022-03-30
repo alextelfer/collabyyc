@@ -1,5 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `collabyyc` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `collabyyc`;
+DROP TABLE IF EXISTS SOLDITEMS;
 Drop Table if exists Items;
 Drop Table if exists Vendors;
 Drop Table if exists Users;
@@ -18,11 +19,11 @@ Create table Items (
     vendorID int(5),
     vendorName VARCHAR(40) NOT NULL,
     nameProducts VARCHAR(30) NOT NULL,
-    price decimal(4,2) NOT NULL,
+    price decimal(6,2) NOT NULL,
     quantity int(3) NOT NULL,
     category VARCHAR(20) NOT NULL,
     PRIMARY KEY (ItemID),
-    FOREIGN KEY (vendorID, vendorName) REFERENCES VENDORS (vendorID, vendorName)
+    FOREIGN KEY (vendorID, vendorName) REFERENCES VENDORS (vendorID, vendorName) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 Create table Sale (
     transactionID int(10) auto_increment,
@@ -50,6 +51,15 @@ Create table Users (
     userType int(1) not null,
     PRIMARY KEY (userName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE SOLDITEMS (
+    solditemID INT(5) PRIMARY KEY AUTO_INCREMENT,
+    transactionID INT(10),
+    itemID INT(8),
+    FOREIGN KEY (transactionID) REFERENCES SALE (transactionID),
+    FOREIGN KEY (itemID) REFERENCES ITEMS (itemID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
 VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472);
 INSERT INTO Vendors (VendorID, VendorName, VendorEmail, VendorPhone)

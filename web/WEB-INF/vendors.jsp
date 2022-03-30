@@ -24,7 +24,7 @@
             <h1>Vendors</h1>
             <%@ include file="jspf/segment.jspf" %>
             <table class="vendorTable">
-                
+
                 <tr>
                     <th>Vendor name</th>
                     <th>Vendor ID</th>
@@ -39,12 +39,17 @@
                         <td> ${vendor.vendorEmail}</td>
                         <td> ${vendor.vendorPhoneNumber}</td>
 
-                        <td>
-                            <form action="FrontController" method="GET">
-                                <input type="hidden" name="deleteVendor" value=${vendor.vendorID}>
-                                <input id="deleteButton" type="submit" value="X">
-                            </form>
-                        </td>
+                    <form action="FrontController" method="GET"><td>
+                            <input type="hidden" name="modifyVendor" value="${vendor.vendorID}">
+                            <input type="submit" value="Edit"></td></form>
+
+                    <td>
+                        <form action="FrontController" method="GET">
+                            <input type="hidden" name="action" value="deletevendor" />
+                            <input type="hidden" name="deleteID" value="${vendor.vendorID}" />                            
+                            <input id="deleteButton" type="submit" value="X">
+                        </form>
+                    </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -58,7 +63,7 @@
                         <td>Vendor Name:<input type="text" name="vendorName"></td>
                         <td>Vendor ID:<input type="number" name="vendorid"></td>
                         <td>Vendor Email:<input type="email" name="email"></td>
-                        <td>Vendor Phone number:<input type="text" name="phoneno"></td>
+                        <td>Vendor Phone:<input type="text" name="phoneno"></td>
 
                         <td>
                             <input type="submit" value="Add Vendor">

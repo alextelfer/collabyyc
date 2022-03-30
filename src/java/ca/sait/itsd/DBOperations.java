@@ -81,49 +81,96 @@ public class DBOperations {
         return items;
     }
 
-    
-    public Item getItem(String sku) {
-        
-        Item item = null;
-        
-        ConnectionPool connectionPool = ConnectionPool.getInstance();                        
+    public ArrayList<Item> getSoldItems(Sale sale) {
+        ArrayList<Item> items = new ArrayList<>();
+                
+        ConnectionPool cp = ConnectionPool.getInstance();
         
         try {
-
-            Connection conn = connectionPool.getConnection();
-            
-            String sql = "SELECT * FROM collabyyc.items WHERE sku = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, sku);
-            
-            ResultSet rs = ps.executeQuery();
-            
-            if(rs.next()) {
-                item = new Item(
-                rs.getInt("sku"),
-                rs.getString("vendorID"),
-                rs.getString("nameProducts"),
-                rs.getDouble("price"),
-                rs.getInt("quantity"),
-                rs.getString("category")
-                );
+            Connection c = cp.getConnection();
+            String sql = "SELECT * FROM collabyyc.solditems WHERE transactionID=?";            
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, String.valueOf(sale.transactionID));
+            try(ResultSet rs = ps.executeQuery()) {
+                while(rs.next()) {
+                    int sku = rs.getInt("sku");
+                    Item i = getItem(String.valueOf(sku));
+                    items.add(i);
+                }
             }
-            
             ps.close();
-            connectionPool.freeConnection(conn);
+            c.close();
         } catch(SQLException e) {
             e.printStackTrace();
         }
         
-        return item;
+        return items;
     }
     
-     
+    public Item getItem(String sku) {
 
+        Item item = null;
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.items WHERE sku = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, sku);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                item = new Item(
+                        rs.getInt("sku"),
+                        rs.getString("vendorID"),
+                        rs.getString("nameProducts"),
+                        rs.getDouble("price"),
+                        rs.getInt("quantity"),
+                        rs.getString("category")
+                );
+            }
+
+            ps.close();
+            connectionPool.freeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return item;
+    }
+
+    public Sale getSale(int transactionID) {
+        Sale sale = null;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        try {
+            Connection c  = cp.getConnection();
+            String sql = "SELECT * FROM collabyyc.sale WHERE transactionID=?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setInt(1, transactionID);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                sale = new Sale(
+                    rs.getInt("transactionID"),
+                    rs.getDate("paymentDate"),
+                    rs.getDouble("saleAmount"),
+                    rs.getDouble("payVendorAmount"),
+                    rs.getString("soldItems")
+                );
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return sale;
+    }
+    
     public ArrayList<User> getUsers() {
 
         ArrayList<User> users = new ArrayList<>();
-
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
 
@@ -138,8 +185,8 @@ public class DBOperations {
                 while (rs.next()) {
                     String userName = rs.getString("userName");
                     String password = rs.getString("password");
-                    int userType = rs.getInt("userType");
-                    User user = new User(userName, password, userType);
+//                    int userType = rs.getInt("userType");
+                    User user = new User(userName, password);
                     users.add(user);
                 }
 
@@ -290,6 +337,24 @@ public class DBOperations {
 
     }
 
+    public boolean addSoldItem(Sale sale, Item item) {
+        boolean result = false;
+        ConnectionPool cp = ConnectionPool.getInstance();
+        try {
+            Connection c = cp.getConnection();
+            String sql = "INSERT INTO collabyyc.solditems SET transactionID=? itemID=?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, String.valueOf(sale.transactionID));
+            ps.setString(2, String.valueOf(item.itemID));            
+            int rows = ps.executeUpdate();
+            result = (rows > 0);
+            c.close();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
     public ArrayList<Item> retrieveItem(int modifyItem) {
         ArrayList<Item> singleItem = new ArrayList<>();
 
@@ -485,18 +550,17 @@ public class DBOperations {
         return sales;
     }
 
-    
     public boolean addSale(Sale sale) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
 
-        try {            
+        try {
             Connection conn = pool.getConnection();
 
             String sql = "insert into collabyyc.sale set transactionID = ?, customerID = ?, paymentDate = ?, "
                     + "saleAmount = ?, payVendorAmount = ?, soldItems = ?, shippingSentDate = ?, "
                     + "shippingAddress = ?, pickupDate = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);            
+            PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setInt(1, sale.getTransactionID());
             ps.setInt(2, sale.getCustomerID());
@@ -511,7 +575,7 @@ public class DBOperations {
             int rowAffected = ps.executeUpdate();
             result = (rowAffected > 0);
             ps.close();
-            
+
             pool.freeConnection(conn);
 
         } catch (SQLException ex) {
@@ -521,8 +585,6 @@ public class DBOperations {
         return result;
 
     }
-    
-
 
     public ArrayList<Item> searchBySKU(int searchedSku) {
         ArrayList<Item> result = new ArrayList<>();
@@ -566,7 +628,7 @@ public class DBOperations {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, vendorName);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 result = rs.getInt("vendorID");
             }
             rs.close();
@@ -577,6 +639,39 @@ public class DBOperations {
         }
         return result;
 
+    }
+
+    public ArrayList<Sale> searchByDate(String date) {
+        ArrayList<Sale> searched = new ArrayList<Sale>();
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        try {
+            Connection conn = connectionPool.getConnection();
+            String sql = "select * from collabyyc.sale where DATE(paymentDate)=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, date);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int transactionID = rs.getInt("transactionID");
+                int customerID = rs.getInt("customerID");
+                Date paymentDate = rs.getDate("paymentDate");
+                double saleAmount = rs.getDouble("saleAmount");
+                double payVendorAmount = rs.getDouble("payVendorAmount");
+                String soldItems = rs.getString("soldItems");
+                Date sentShippingDate = rs.getDate("shippingSentDate");
+                String shippingAddress = rs.getString("shippingAddress");
+                Date pickupDate = rs.getDate("pickupDate");
+
+                Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
+                searched.add(sale);
+            }
+            rs.close();
+            ps.close();
+            connectionPool.freeConnection(conn);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return searched;
     }
 
 }

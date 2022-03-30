@@ -26,8 +26,8 @@
                         <td>Name:
                             <input type="text" name="updatedItemName" value="${item.name}" /></td>
 
-                        <!--                        <td>Vendor ID:
-                                                <input type="number" name="updatedVendorID" value="${item.vendorID}" /></td>-->
+<!--                        <td>Vendor ID:
+                        <input type="number" name="updatedVendorID" value="${item.vendorID}" /></td>-->
 
 
                         <td>Category:<select name="updatedCategory" >
