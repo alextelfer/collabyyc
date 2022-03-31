@@ -158,18 +158,18 @@ public class DBOperations {
 
         try {
 
-            String sql = "insert into collabyyc.users set employeeID=?, employeePassword=?, employeeName=?, employeeEmail=?, employeePhone=?";
+            String sql = "insert into collabyyc.EmployeeAccounts set employeeID=?, employeePassword=?, employeeName=?, employeeEmail=?, employeePhone=?";
 
             Connection conn = pool.getConnection();
 
             PreparedStatement st = conn.prepareStatement(sql);
 
 //            st.setString(1, Integer.toString(employee.getEmployeeID()));
-            st.setInt(1, employee.getEmployeeID());
+            st.setString(1, Integer.toString(employee.getEmployeeID()));
             st.setString(2, employee.getEmployeePassword());
             st.setString(3, employee.getEmployeeName());
             st.setString(4, employee.employeeEmail());
-            st.setInt(5, employee.getEmployeePhone());
+            st.setString(5, Integer.toString(employee.getEmployeePhone()));
 //            st.setString(5, Integer.toString(employee.getEmployeePhone()));
 
             int rowAffected = st.executeUpdate();

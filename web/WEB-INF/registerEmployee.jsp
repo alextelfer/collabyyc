@@ -24,24 +24,24 @@
         <table>
             <tr>
                 <td>
-                    <input name="employeeid" type="text" placeholder="Employee ID">
+                    <input name="employeeid" type="number" placeholder="Employee ID" maxlength="5">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input name="password" type="password" placeholder="Employee Password">
+                    <input name="employee_password" type="password" placeholder="Employee Password" maxlength="50">
             </tr>
             <tr>
                 <td>
-                    <input name="name" type="text" placeholder="Employee Name">
+                    <input name="employee_name" type="text" placeholder="Employee Name" maxlength="50">
             </tr>
             <tr>
                 <td>
-                    <input name="email" type="email" placeholder="Employee Email">
+                    <input name="employee_email" type="name" placeholder="Employee Email" maxlength="50">
             </tr>
             <tr>
                 <td>
-                    <input name="phone" type="number" placeholder="Employee Phone">
+                    <input name="employee_phone" type="number" placeholder="Employee Phone" maxlength="10">
             </tr>
             <tr>
                 <td>

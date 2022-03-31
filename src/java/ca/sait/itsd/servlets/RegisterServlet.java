@@ -73,15 +73,16 @@ public class RegisterServlet extends HttpServlet {
 
         if (registerReq != null && registerReq.equals("employee")) {
             if (employeeSession != null) {
-                int employeeID = Integer.parseInt(request.getParameter("employeeid"));
-                String password = request.getParameter("password");
-                String name = request.getParameter("name");
-                String email = request.getParameter("email");
-                int phone = Integer.parseInt(request.getParameter("phone"));
-
                 try {
+                    int employeeID = Integer.parseInt(request.getParameter("employeeid"));
+                    String password = request.getParameter("employee_password");
+                    String name = request.getParameter("employee_name");
+                    String email = request.getParameter("employee_email");
+                    int phone = Integer.parseInt(request.getParameter("employee_phone"));
+
                     EmployeeAccount employee = new EmployeeAccount(employeeID, password, name, email, phone);
                     boolean result = dbo.addEmployeeAccount(employee);
+                    System.out.println(result);
                     if (result == false) {
                         Exception notRegistered = new Exception();
                         throw notRegistered;
@@ -108,7 +109,11 @@ public class RegisterServlet extends HttpServlet {
             try {
                 if (name != null && !name.equals("") && (password != null && !password.equals(""))) {
                     User user = new User(name, password);
-                    dbo.addUser(user);
+                    boolean result = dbo.addUser(user);
+                    if (result == false) {
+                        Exception notRegistered = new Exception();
+                        throw notRegistered;
+                    }
                     request.setAttribute("registerSuccess", "User successfully registered!");
                     if (employeeSession != null) {
                         getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
