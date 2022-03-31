@@ -5,9 +5,9 @@
  */
 package ca.sait.itsd.servlets;
 
+import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.Sale;
 import java.io.IOException;
-import java.util.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,6 +50,13 @@ public class Director extends HttpServlet {
                 
             case "reports":
                 request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
+                break;
+                
+            case "saledetails":                
+                DBOperations dbOps = new DBOperations();
+                Sale sale = dbOps.getSale(Integer.parseInt(request.getParameter("transactionID")));
+                request.setAttribute("sale", sale);
+                request.getRequestDispatcher("WEB-INF/saledetails.jsp").forward(request, response);
                 break;
                 
             default:

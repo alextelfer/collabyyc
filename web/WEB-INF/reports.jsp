@@ -4,7 +4,9 @@
     Author     : corbi
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,13 +18,19 @@
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
 
-            <%@ include file="jspf/segment.jspf" %>
+            
         </div>
 
         <div class="inventory">
             <h1>
                 Sales Reports
             </h1>
+            <%@ include file="jspf/segment.jspf" %>
+            <form action="FrontController" method="GET">
+                Search by Date:<input type="date" name="date">
+                <input type="hidden" name="action" value="searchbydate">
+                <input type="submit" value="Search"><br/>
+            </form>
             <div class="form">
                 <table>
                     <tr>
@@ -33,17 +41,18 @@
                         <th>Items Sold</th>
                     </tr>
                     
-                        <c:forEach items="${saleslist}" var="sale">
+                        <c:forEach items="${searchedreports}" var="searched">
+                            
                             <tr>
-                                <td>${sale.transactionID}</td>
-                                <td>${sale.paymentDate}</td>
-                                <td>${sale.saleAmount}</td>
-                                <td>${sale.payVendorAmount}</td>
-                                <td>${sale.soldItems}</td>
+                                <td>${searched.transactionID}</td>
+                                <td>${searched.paymentDate}</td>
+                                <td>\$<fmt:formatNumber minFractionDigits='2' value='${searched.saleAmount}'/></td>
+                                <td>\$<fmt:formatNumber minFractionDigits='2' value='${searched.payVendorAmount}'/></td>
+                                <td>${searched.soldItems}</td>
                             </tr>
                             
                         </c:forEach>
-                    
+                
                 </table>
             </div>
         </div>

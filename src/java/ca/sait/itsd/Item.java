@@ -22,10 +22,12 @@ public class Item implements Serializable {
          this.category = category;
      }
     
-    public Item(int sku, String name, double price) {
+    public Item(int sku, String name, double price, String category, String vendorName) {
         this.sku = sku;
         this.name = name;
         this.price = price;
+        this.category = category;
+        this.vendorName = vendorName;
     }
     
     public Item(int sku, int vendorID, String vendorName, String name, double price, int quantity, String category) {

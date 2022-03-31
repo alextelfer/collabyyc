@@ -20,11 +20,12 @@ public class User implements Serializable {
     public User(){
     }
     
-    public User(String username, String password, int userType) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.userType = userType;
+//        this.userType = userType;
     }
+    
 
     public String getUsername() {
         return username;
