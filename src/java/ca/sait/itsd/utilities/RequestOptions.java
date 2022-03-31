@@ -31,7 +31,8 @@ public final class RequestOptions {
         ArrayList<Vendor> vendors = dbOps.getVendors();
         session.setAttribute("vendorlist", vendors);
         
-        ArrayList<Item> items = dbOps.getItems();
+        String vendorName = request.getParameter("vendorName");
+        ArrayList<Item> items = dbOps.getItems(vendorName);
         session.setAttribute("itemlist", items);
 
         ArrayList<Sale> sales = dbOps.getSales();
@@ -48,7 +49,8 @@ public final class RequestOptions {
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String category = request.getParameter("category");
         int vendorID = dbOps.returnVendorID(vendorName);
-        
+        System.out.println(vendorName);
+        System.out.println("THIS IS THE VENDORID:  " + vendorID);
         try {
             if (InputVerifier.checkBadString(name)) {
                 throw new BadStringException(name);

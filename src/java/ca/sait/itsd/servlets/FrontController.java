@@ -46,8 +46,10 @@ public class FrontController extends HttpServlet {
 
         ArrayList<Vendor> vendors = dbOps.getVendors();
         request.getSession().setAttribute("vendorlist", vendors);
-
-        ArrayList<Item> items = dbOps.getItems();
+        
+        String vendorName = request.getParameter("vendorName");
+        System.out.println(vendorName);
+        ArrayList<Item> items = dbOps.getItems(vendorName);
         request.getSession().setAttribute("itemlist", items);
 
         ArrayList<Sale> sales = dbOps.getSales();
@@ -61,6 +63,7 @@ public class FrontController extends HttpServlet {
 
         String modifyItem = request.getParameter("modifyItem");
         String modifyVendor = request.getParameter("modifyVendor");
+        
 
         if (modifyItem != null && !modifyItem.equals("")) {
             dbOps.retrieveItem(Integer.parseInt(modifyItem));

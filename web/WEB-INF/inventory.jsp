@@ -9,8 +9,8 @@
 
 <script>
     function setDecimalNumber(event) {
-    this.value = parseFloat(this.value).toFixed(2);
-}
+        this.value = parseFloat(this.value).toFixed(2);
+    }
 </script>
 
 <!DOCTYPE html>
@@ -34,31 +34,42 @@
         <div class="inventory">
             <h1>Inventory</h1>
             <%@ include file="jspf/segment.jspf" %>
-            <table>
-                <tr>
-                    <th>SKU</th>
-                    <th>Vendor Name</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Category</th>
-                </tr>
-
-                <c:forEach items="${itemlist}" var="item">
+            <form action="FrontController" method="GET">
+                Search by Vendor Name:<select name="vendorName">
+                    <option disabled selected value>Select a Vendor</option>
+                    <c:forEach items="${vendorlist}" var="vendor">
+                        <option>${vendor.name}</option>                                    
+                    </c:forEach>                                    
+                </select>
+                <input type='submit' value='Search'>
+            </form>
+            <form action="FrontController" method="GET">
+                <table>
                     <tr>
-                        <td>${item.sku}</td>
-                        <td>${item.vendorName}</td>
-                        <td>${item.name}</td>
-                        <td>\$<fmt:formatNumber minFractionDigits='2' value='${item.price}'/></td>
-                        <td>${item.quantity}</td>
-                        <td>${item.category}</td>
-                    <form action="FrontController" method="GET"><td>
-                            <input type="hidden" name="modifyItem" value=${item.sku}>
-                            <input type="submit" value="Edit"></td></form>
+                        <th>SKU</th>
+                        <th>Vendor Name</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Category</th>
                     </tr>
-                </c:forEach>
-            </table>
 
+                    <c:forEach items="${itemlist}" var="item">
+                        <tr>
+                            <td>${item.sku}</td>
+                            <td>${item.vendorName}</td>
+                            <td>${item.name}</td>
+                            <td>\$<fmt:formatNumber minFractionDigits='2' value='${item.price}'/></td>
+                            <td>${item.quantity}</td>
+                            <td>${item.category}</td>
+                            <td>
+                                <input type="hidden" name="modifyItem" value=${item.sku}>
+                                <input type="submit" value="Edit"></td>
+
+                        </tr>
+                    </c:forEach>
+                </table>
+            </form>
         </div>
 
 
@@ -99,7 +110,7 @@
                                 <option>Stationary</option>
                             </select></td>
                         <td><input type="hidden" name="action" value="additem"/>
-                            
+
                             <input type="submit" value="Add Item" /></td>
                     </tr>  
 

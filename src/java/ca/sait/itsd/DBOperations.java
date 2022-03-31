@@ -35,7 +35,8 @@ public class DBOperations {
                     Vendor vendor = new Vendor(vendorID, name, email, phone);
                     vendors.add(vendor);
                 }
-
+                ps.close();
+                rs.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -46,7 +47,7 @@ public class DBOperations {
         return vendors;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<Item> getItems(String vendorSearch) {
 
         ArrayList<Item> items = new ArrayList<>();
 
@@ -55,25 +56,47 @@ public class DBOperations {
         try {
 
             Connection conn = connectionPool.getConnection();
+            if (vendorSearch == null) {
+                String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items";
+                PreparedStatement ps = conn.prepareStatement(sql);
 
-            String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items";
-            PreparedStatement ps = conn.prepareStatement(sql);
-
-            try ( ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    int sku = rs.getInt("sku");
-                    String name = rs.getString("nameProducts");
-                    Double price = rs.getDouble("price");
-                    int quantity = rs.getInt("quantity");
-                    String category = rs.getString("category");
-                    String vendorName = rs.getString("vendorName");
-                    Item item = new Item(sku, vendorName, name, price, quantity, category);
-                    items.add(item);
+                try ( ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int sku = rs.getInt("sku");
+                        String name = rs.getString("nameProducts");
+                        Double price = rs.getDouble("price");
+                        int quantity = rs.getInt("quantity");
+                        String category = rs.getString("category");
+                        String vendorName = rs.getString("vendorName");
+                        Item item = new Item(sku, vendorName, name, price, quantity, category);
+                        items.add(item);
+                    }
+                    rs.close();
                 }
-
-                connectionPool.freeConnection(conn);
+            } else {
+                String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items where vendorName=?";
+                
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, vendorSearch);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        int sku = rs.getInt("sku");
+                        String name = rs.getString("nameProducts");
+                        Double price = rs.getDouble("price");
+                        int quantity = rs.getInt("quantity");
+                        String category = rs.getString("category");
+                        String vendorName = rs.getString("vendorName");
+                        Item item = new Item(sku, vendorName, name, price, quantity, category);
+                        items.add(item);
+                    }
+                    rs.close();
+                }
+                ps.close();
+                    
+                    connectionPool.freeConnection(conn);
             }
-
+            
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,7 +130,7 @@ public class DBOperations {
                         rs.getString("category")
                 );
             }
-
+            rs.close();
             ps.close();
             connectionPool.freeConnection(conn);
         } catch (SQLException e) {
@@ -138,7 +161,8 @@ public class DBOperations {
                     User user = new User(userName, password);
                     users.add(user);
                 }
-
+                ps.close();
+                rs.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -309,7 +333,8 @@ public class DBOperations {
                     Item item = new Item(itemID, vendorName, name, price, quantity, category);
                     singleItem.add(item);
                 }
-
+                ps.close();
+                rs.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -340,10 +365,10 @@ public class DBOperations {
                     String vendorPhone = rs.getString("vendorPhone");
                     Vendor vendor = new Vendor(vendorID, vendorName, vendorEmail, vendorPhone);
                     singleVendor.add(vendor);
- 
 
                 }
-
+                ps.close();
+                rs.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -363,15 +388,7 @@ public class DBOperations {
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
-//            String itemID = request.getParameter("itemid");
-//            String vendorID = Integer.toString(item.getVendorID());
-//            String itemName = item.getName();
-//            String price = Double.toString(item.getPrice());
-//            String quantity = Integer.toString(item.getQuantity());
-//            String category = item.getCategory();
-//            String oldIDStr = Integer.toString(oldID);
             st.setString(1, sku);
-//            st.setString(2, vendorID);
             st.setString(2, itemName);
             st.setString(3, price);
             st.setString(4, quantity);
@@ -398,11 +415,6 @@ public class DBOperations {
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
-//            String vendorIDStr = Integer.toString(vendor.getVendorID());
-//            String vendorName = vendor.getName();
-//            String vendorEmail = vendor.getVendorEmail();
-//            String vendorPhoneNumber = vendor.getVendorPhoneNumber();
-//            st.setString(1, vendorID);
             st.setString(1, vendorName);
             st.setString(2, vendorEmail);
             st.setString(3, vendorPhone);
@@ -470,7 +482,8 @@ public class DBOperations {
                     Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
                     sales.add(sale);
                 }
-
+                ps.close();
+                rs.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -555,7 +568,7 @@ public class DBOperations {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection conn = connectionPool.getConnection();
-            String sql = "SELECT vendorID FROM collabyyc.items where vendorName=?";
+            String sql = "SELECT vendorID FROM collabyyc.vendors where vendorName=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, vendorName);
             ResultSet rs = ps.executeQuery();
@@ -565,6 +578,7 @@ public class DBOperations {
             rs.close();
             ps.close();
             connectionPool.freeConnection(conn);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
