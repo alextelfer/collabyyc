@@ -130,6 +130,30 @@ public class DBOperations {
         return items;
     }
     
+    public ArrayList<Item> getSoldItems(int transactionID) {
+        ArrayList<Item> soldItems = new ArrayList<>();
+        
+        ConnectionPool cp = ConnectionPool.getInstance();
+        try {
+            Connection conn = cp.getConnection();
+            
+            String sql = "SELECT * FROM collabyyc.solditems WHERE transactionID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, String.valueOf(transactionID));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                int soldItemID = rs.getInt("solditemID");
+                int transID = rs.getInt("transactionID");
+                int sku = rs.getInt("sku");                
+                Item newItem = getItem(String.valueOf(sku));
+                soldItems.add(newItem);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return soldItems;
+    }
+    
     public Item getItem(String sku) {
 
         Item item = null;

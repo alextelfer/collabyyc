@@ -6,6 +6,7 @@
 package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
+import ca.sait.itsd.Item;
 import ca.sait.itsd.Sale;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +56,10 @@ public class Director extends HttpServlet {
             case "saledetails":                
                 DBOperations dbOps = new DBOperations();
                 Sale sale = dbOps.getSale(Integer.parseInt(request.getParameter("transactionID")));
-                request.setAttribute("sale", sale);
+                request.setAttribute("sale", sale);     
+                ArrayList<Item> soldItems = dbOps.getSoldItems(2);
+                System.out.println(soldItems.toString());
+                request.setAttribute("solditems", soldItems);
                 request.getRequestDispatcher("WEB-INF/saledetails.jsp").forward(request, response);
                 break;
                 

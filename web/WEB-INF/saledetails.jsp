@@ -14,8 +14,13 @@
         <link rel="stylesheet" type="text/css" href="./index.css">
     </head>
     <body>
+        <div class="header">
+            <img src=".\Resources\photos\collabyyc.png">
+            <%@ include file="jspf/segment.jspf" %>            
+        </div>
+        
         <h1>Sale</h1>
-        <c:if test="${sale}">
+        <c:if test="${sale != null}">
             <table>
                 <tr>
                     <th>Sale ID</th>
@@ -38,6 +43,26 @@
                     <td>${sale.shippingAddress}</td>
                     <td>${sale.pickupDate}</td>
                 </tr>
+            </table>                
+            <table>
+                <tr>
+                    <th>SKU</th>
+                    <th>Vendor Name</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Category</th>
+                </tr>                
+                <c:forEach items="${solditems}" var="item">
+                    <tr>
+                        <td>${item.sku}</td>
+                        <td>${item.vendorName}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.category}</td>                        
+                    </tr>
+                </c:forEach>
             </table>
         </c:if>
     </body>

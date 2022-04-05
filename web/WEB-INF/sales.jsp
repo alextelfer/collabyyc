@@ -74,8 +74,10 @@
                     <th>PD</th>
                     <th>LINK</th>
                 </tr>
+                
+                <!-- comment 1 -->
 
-                <c:set var="total" value="${0}"/>
+                <!-- <c:set var="total" value="${0}"/>
                 <c:forEach items="${itemlist}" var="item">
                     <c:set var="total" value="${total + item.price}"/>
                     <tr>
@@ -96,11 +98,11 @@
                     <th>Shipping Address</th>
                     <th>Pickup Date</th>
                 </tr>
+                </c:forEach> -->
                 
                 <c:forEach items="${saleslist}" var="sale">
                     <tr>
-                        <td>${sale.transactionID}</td>
-                        <td>${sale.customerID}</td>
+                        <td>${sale.transactionID}</td>                        
                         <td>${sale.paymentDate}</td>
                         <td>${sale.saleAmount}</td>
                         <td>${sale.payVendorAmount}</td>
@@ -108,7 +110,7 @@
                         <td>${sale.sentShippingDate}</td>
                         <td>${sale.shippingAddress}</td>
                         <td>${sale.pickupDate}</td>
-                        <td><a href="Director?direction=saledetails&transactionid=${sale.transactionID}">link</a></td>
+                        <td><a href="Director?direction=saledetails&transactionID=${sale.transactionID}">link</a></td>
                     </tr>
                 </c:forEach>
             </table>
@@ -119,7 +121,7 @@
            
             <table>
                 <tr>
-                    <th>Item ID</th>
+                    <th>SKU</th>
                     <th>Vendor ID</th>
                     <th>Name</th>
                     <th>Price</th>
@@ -129,7 +131,7 @@
 
                 <c:forEach items="${itemlist}" var="item">
                     <tr>
-                        <td>${item.itemID}</td>
+                        <td>${item.sku}</td>
                         <td>${item.vendorID}</td>
                         <td>${item.name}</td>
                         <td>${item.price}</td>
@@ -153,7 +155,9 @@
             </table>
         </div>
 
-        <div class="totals">
+        <!-- comment 2 -->
+                
+        <!-- <div class="totals">
             <table>
                 <tr>
                     <th>Subtotal</th>
@@ -192,6 +196,6 @@
                 document.getElementById("demo").innerHTML = "Changes are: " + newAfterTax;
                 
             }
-        </script>
+        </script> -->
     </body>
 </html>
