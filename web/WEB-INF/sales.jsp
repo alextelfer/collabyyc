@@ -16,52 +16,52 @@
 
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">
-            <%@ include file="jspf/segment.jspf" %>
-            
-        </div>
-        
-            <c:if test="${saleitems != null}">
-                <table>
-                    <tr>
-                        <th>Sale ID</th>
-                        <th>Customer ID</th>
-                    </tr>
-                    <form action="FrontController" method="GET">
-                        <tr>
-                            <td><input type="number" name="saleID"/> </td>
-                            <td><input type="number" name="customerID"/></td>
-                            <td><input type="submit" value="Create Sale"/></td>
-                        </tr>
-                        <input type="hidden" name="action" value="createsale" />
-                    </form>
-                </table>
-                
-                <table>
-                    <tr>
-                        <th>Item ID</th>
-                        <th>Vendor ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Category</th>
-                    </tr>
 
-                    <c:forEach items="${saleitems}" var="item">
-                        <tr>
-                            <td>${item.itemID}</td>
-                            <td>${item.vendorID}</td>
-                            <td>${item.name}</td>
-                            <td>${item.price}</td>
-                            <td>${item.quantity}</td>
-                            <td>${item.category}</td>                        
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:if>
-        
+
+        </div>
+
+        <c:if test="${saleitems != null}">
+            <table>
+                <tr>
+                    <th>Sale ID</th>
+                    <th>Customer ID</th>
+                </tr>
+                <form action="FrontController" method="GET">
+                    <tr>
+                        <td><input type="number" name="saleID"/> </td>
+                        <td><input type="number" name="customerID"/></td>
+                        <td><input type="submit" value="Create Sale"/></td>
+                    </tr>
+                    <input type="hidden" name="action" value="createsale" />
+                </form>
+            </table>
+
+            <table>
+                <tr>
+                    <th>Item ID</th>
+                    <th>Vendor ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Category</th>
+                </tr>
+
+                <c:forEach items="${saleitems}" var="item">
+                    <tr>
+                        <td>${item.itemID}</td>
+                        <td>${item.vendorID}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.category}</td>                        
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+
         <div class="sales">
             <h1>Sale Page</h1>    
-
+            <%@ include file="jspf/segment.jspf" %>
             <table>
                 <tr>
                     <th>Sale ID</th>
@@ -74,7 +74,7 @@
                     <th>PD</th>
                     <th>LINK</th>
                 </tr>
-                
+
                 <!-- comment 1 -->
 
                 <!-- <c:set var="total" value="${0}"/>
@@ -99,7 +99,7 @@
                     <th>Pickup Date</th>
                 </tr>
                 </c:forEach> -->
-                
+
                 <c:forEach items="${saleslist}" var="sale">
                     <tr>
                         <td>${sale.transactionID}</td>                        
@@ -115,10 +115,10 @@
                 </c:forEach>
             </table>
         </div>
-        
+
         <div class="inventory">
             <h1>Inventory</h1>
-           
+
             <table>
                 <tr>
                     <th>SKU</th>
@@ -137,17 +137,17 @@
                         <td>${item.price}</td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
-                        
-                        <form action="FrontController" method="GET">
-                            <td><input type="hidden" name="modifyItem" value=${item.itemID}>
-                                <input type="submit" value="Edit"></td>
-                        </form>
-                    
-                        <form action="FrontController" method="GET">
-                            <td><input type="hidden" name="action" value="addtosale" />
-                                <input type="hidden" name="itemsku" value="${item.sku}" />
-                                <input type="submit" value="Add" /></td>
-                        </form>
+
+                    <form action="FrontController" method="GET">
+                        <td><input type="hidden" name="modifyItem" value=${item.itemID}>
+                            <input type="submit" value="Edit"></td>
+                    </form>
+
+                    <form action="FrontController" method="GET">
+                        <td><input type="hidden" name="action" value="addtosale" />
+                            <input type="hidden" name="itemsku" value="${item.sku}" />
+                            <input type="submit" value="Add" /></td>
+                    </form>
 
                     </tr>
 
@@ -156,7 +156,7 @@
         </div>
 
         <!-- comment 2 -->
-                
+
         <!-- <div class="totals">
             <table>
                 <tr>
