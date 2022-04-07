@@ -141,8 +141,7 @@ public class DBOperations {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, String.valueOf(transactionID));
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                int soldItemID = rs.getInt("solditemID");
+            while(rs.next()) {                
                 int transID = rs.getInt("transactionID");
                 int sku = rs.getInt("sku");                
                 Item newItem = getItem(String.valueOf(sku));
@@ -152,6 +151,60 @@ public class DBOperations {
             e.printStackTrace();
         }
         return soldItems;
+    }
+    
+    public boolean addSoldItem(int transactionID, int sku) {
+        boolean result = false;
+        
+        ConnectionPool cp = ConnectionPool.getInstance();
+        
+        try{
+            Connection c = cp.getConnection();
+            
+            String sql = "INSERT INTO collabyyc.solditems SET transactionID = ?, sku = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            
+            ps.setString(1, String.valueOf(transactionID));
+            ps.setString(2, String.valueOf(sku));
+            
+            int rowsAffected = ps.executeUpdate();
+            
+            result = (rowsAffected > 0);
+            
+            ps.close();
+            cp.freeConnection(c);
+        } catch(SQLException e) {
+          e.printStackTrace();
+        }
+        
+        return result;
+    }
+    
+    public boolean addSoldItems(ArrayList<Item> items, int transactionID) {
+        boolean result = false;
+        
+        ConnectionPool cp = ConnectionPool.getInstance();
+        
+        try{
+            Connection c = cp.getConnection();
+            
+            String sql = "INSERT INTO collabyyc.solditems SET transactionID = ?, sku = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            
+            for(Item item : items) {
+                ps.setInt(1, transactionID);
+                ps.setInt(2, item.getSku());
+                ps.addBatch();
+            }
+            
+            ps.executeBatch();
+            ps.close();
+            cp.freeConnection(c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return result;
     }
     
     public Item getItem(String sku) {
@@ -611,7 +664,7 @@ public class DBOperations {
 
             int rowAffected = ps.executeUpdate();
             result = (rowAffected > 0);
-            ps.close();
+            ps.close();                        
 
             pool.freeConnection(conn);
 

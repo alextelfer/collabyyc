@@ -57,8 +57,7 @@ public class Director extends HttpServlet {
                 DBOperations dbOps = new DBOperations();
                 Sale sale = dbOps.getSale(Integer.parseInt(request.getParameter("transactionID")));
                 request.setAttribute("sale", sale);     
-                ArrayList<Item> soldItems = dbOps.getSoldItems(2);
-                System.out.println(soldItems.toString());
+                ArrayList<Item> soldItems = dbOps.getSoldItems(sale.getTransactionID());                
                 request.setAttribute("solditems", soldItems);
                 request.getRequestDispatcher("WEB-INF/saledetails.jsp").forward(request, response);
                 break;
@@ -72,11 +71,10 @@ public class Director extends HttpServlet {
     private void sendToSales(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException {
         
-        ArrayList<Sale> sales = new ArrayList<>();
+        DBOperations dbOps = new DBOperations();
+        ArrayList<Sale> sales = dbOps.getSales();               
         
-        //sales.add(new Sale(1, 10.00f, new Date()));
-        
-        request.getSession().setAttribute("salelist", sales);
+        request.getSession().setAttribute("saleslist", sales);
         
         request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
     } 

@@ -55,9 +55,9 @@ Create table Users (
 CREATE TABLE SOLDITEMS (
     solditemID INT(5) PRIMARY KEY AUTO_INCREMENT,
     transactionID INT(10),
-    itemID INT(8),
+    sku INT(8),
     FOREIGN KEY (transactionID) REFERENCES SALE (transactionID),
-    FOREIGN KEY (itemID) REFERENCES ITEMS (itemID)
+    FOREIGN KEY (sku) REFERENCES ITEMS (itemID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)

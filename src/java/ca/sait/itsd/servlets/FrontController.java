@@ -135,12 +135,15 @@ public class FrontController extends HttpServlet {
                             newSale.setShippingAddress("");
                             newSale.setPickupDate(new Date());
                             dbOps.addSale(newSale);
-                            session.setAttribute("saleslist", dbOps.getSales());
+                            dbOps.addSoldItems(newSale.getItems(), newSale.getTransactionID());
+                            session.setAttribute("saleslist", dbOps.getSales());  
+                            session.setAttribute("saleitems", null);
                         }
                     } catch(MissingSaleException mse) {
                         System.out.println(mse.getMessage());
                     }   
-                    request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
+                    //request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
+                    response.sendRedirect("Director?direction=sales");
                     break;
 
 
