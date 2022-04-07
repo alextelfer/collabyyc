@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/sksms/OneDrive/문서/collabyyc/web/login.css</file>
             <file>file:/C:/Users/sksms/OneDrive/문서/collabyyc/web/index.css</file>
             <file>file:/C:/Users/sksms/OneDrive/문서/collabyyc/web/WEB-INF/inventory.jsp</file>
@@ -14,6 +15,11 @@
             <file>file:/C:/Users/sksms/OneDrive/문서/collabyyc/web/WEB-INF/index.jsp</file>
             <file>file:/C:/Users/sksms/OneDrive/문서/collabyyc/web/Resources/photos/collabyyc.png</file>
             <file>file:/C:/Users/sksms/OneDrive/문서/collabyyc/web/WEB-INF/reports.jsp</file>
+=======
+            <file>file:/C:/Users/661464/Documents/GitHub/collabyyc/src/java/ca/sait/itsd/Item.java</file>
+            <file>file:/C:/Users/661464/Documents/GitHub/collabyyc/web/WEB-INF/index.jsp</file>
+            <file>file:/C:/Users/661464/Documents/GitHub/collabyyc/web/WEB-INF/sales.jsp</file>
+>>>>>>> db4e4eb5343f541ace6705b86d6ec356b61c9c13
         </group>
     </open-files>
 </project-private>
