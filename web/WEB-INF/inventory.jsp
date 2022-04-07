@@ -52,6 +52,13 @@
                         <td>\$<fmt:formatNumber minFractionDigits='2' value='${item.price}'/></td>
                         <td>${item.quantity}</td>
                         <td>${item.category}</td>
+                        <td>
+                            <form action="FrontController" method="GET">
+                                <input type="hidden" name="action" value="deleteitem" />
+                                <input type="hidden" name="deleteID" value="${item.sku}">
+                                <input id="deleteButton" type="submit" value="X" onclick="return confirm('Delete item?')">
+                            </form>    
+                        </td>
                     <form action="FrontController" method="GET"><td>
                             <input type="hidden" name="modifyItem" value=${item.sku}>
                             <input type="submit" value="Edit"></td></form>
@@ -122,10 +129,6 @@
                                     <option value="${item.sku}">${item.name}</option>
                                 </c:forEach>
                             </select>
-                        </td>
-                        <td>  
-                            <input type="hidden" name="action" value="deleteitem"/>
-                            <input type="submit" value="Delete Item" onclick="return confirm('Delete item?')"/>
                         </td>
 
                     </tr>

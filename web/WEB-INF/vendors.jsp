@@ -47,7 +47,7 @@
                         <form action="FrontController" method="GET">
                             <input type="hidden" name="action" value="deletevendor" />
                             <input type="hidden" name="deleteID" value="${vendor.vendorID}" />                            
-                            <input id="deleteButton" type="submit" value="X">
+                            <input id="deleteButton" type="submit" value="X" onclick="return confirm('Delete vendor? WARNING this will delete all items linked to this vendor.')"/>
                         </form>
                     </td>
                     </tr>

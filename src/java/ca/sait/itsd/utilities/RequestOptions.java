@@ -120,21 +120,21 @@ public final class RequestOptions {
                     System.out.println(updatedVendorID + "*************");
                     DBOperations dbOps = new DBOperations();
                     dbOps.updateVendor(updatedVendorName, updatedVendorEmail, updatedVendorPhone, updatedVendorID);
-                    response.sendRedirect("FrontController");
+                    response.sendRedirect("Director?direction=vendors");
     }
     
     public static void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemID1 = request.getParameter("deleteID");
-        DBOperations dbOps = new DBOperations();
-        dbOps.deleteItem(itemID1);
-        response.sendRedirect("FrontController");  
+                    DBOperations dbOps = new DBOperations();
+                    dbOps.deleteItem(itemID1);
+                    response.sendRedirect("FrontController");  
     }
     
     public static void deleteVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String vendorID2 = request.getParameter("deleteID");
-        DBOperations dbOps = new DBOperations();
-        dbOps.deleteVendor(vendorID2);
-        response.sendRedirect("FrontController"); 
+                    DBOperations dbOps = new DBOperations();
+                    dbOps.deleteVendor(vendorID2);
+                    response.sendRedirect("FrontController"); 
     }
     
     public static void createSale(HttpServletRequest request, HttpServletResponse response) throws IOException {

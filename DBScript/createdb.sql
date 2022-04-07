@@ -22,7 +22,7 @@ Create table Items (
     quantity int(3) NOT NULL,
     category VARCHAR(20) NOT NULL,
     PRIMARY KEY (ItemID),
-    FOREIGN KEY (vendorID, vendorName) REFERENCES VENDORS (vendorID, vendorName)
+    FOREIGN KEY (vendorID, vendorName) REFERENCES VENDORS (vendorID, vendorName) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 Create table Sale (
     transactionID int(10) auto_increment,
