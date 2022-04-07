@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
             session.invalidate();
         }
         
-        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
         return;
 
     }
