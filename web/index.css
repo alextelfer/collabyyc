@@ -31,32 +31,25 @@ td {
     width: 100px;
 }
 
-#contents {
-    display: block;
+div{
+    resize: both;
+    overflow: auto;
+}
+
+#sidebar {
     float: right;
-    position: static;
-    margin-right: 10%;
+    position: relative;
+    margin-left: -100%;
+    margin-top: -10%;
     padding: 5px;
     width: 12%;
 }
 
-#cellContents {
-    padding: 20px;
-}
-
-#eachItem {
-    border: 1px solid;
-    padding: 5px;
-    width: 70%;
-    overflow: scroll;
-    position: static;
-}
-
-#deleteButton {
-    background-color: white;
-    height: 36px;
-    width: 36px;
-    padding-right: -100px;
+#itemlist {
+    margin-right: -100%;
+    float: left;
+    Overflow-y: scroll;
+    height: 750px;
 }
 
 .header {
