@@ -26,7 +26,7 @@ public class DBOperations {
             String sql = "SELECT * FROM collabyyc.vendors";
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int vendorID = rs.getInt("vendorID");
                     String name = rs.getString("vendorName");
@@ -35,7 +35,8 @@ public class DBOperations {
                     Vendor vendor = new Vendor(vendorID, name, email, phone);
                     vendors.add(vendor);
                 }
-
+                rs.close();
+                ps.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -59,7 +60,7 @@ public class DBOperations {
             String sql = "select sku, nameproducts, price, quantity, category, vendorName from collabyyc.items";
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int sku = rs.getInt("sku");
                     String name = rs.getString("nameProducts");
@@ -70,7 +71,8 @@ public class DBOperations {
                     Item item = new Item(sku, vendorName, name, price, quantity, category);
                     items.add(item);
                 }
-
+                rs.close();
+                ps.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -104,10 +106,9 @@ public class DBOperations {
                         rs.getString("nameProducts"),
                         rs.getDouble("price"),
                         rs.getInt("quantity"),
-                        rs.getString("category")
-                );
+                        rs.getString("category"));
             }
-
+            rs.close();
             ps.close();
             connectionPool.freeConnection(conn);
         } catch (SQLException e) {
@@ -115,6 +116,112 @@ public class DBOperations {
         }
 
         return item;
+    }
+
+    public ArrayList<EmployeeAccount> getEmployeeAccounts() {
+        ArrayList<EmployeeAccount> employees = new ArrayList<>();
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.EmployeeAccounts";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int employeeID = Integer.parseInt(rs.getString("employeeID"));
+                    String employeePassword = rs.getString("employeePassword");
+                    String employeeName = rs.getString("employeeName");
+                    String employeeEmail = rs.getString("employeeEmail");
+                    int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
+                    EmployeeAccount employee = new EmployeeAccount(employeeID, employeePassword, employeeName,
+                            employeeEmail, employeePhone);
+                    employees.add(employee);
+                }
+                rs.close();
+                ps.close();
+                connectionPool.freeConnection(conn);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return employees;
+
+    }
+
+    public EmployeeAccount getEmployeeAccount(String employeeID, String password) throws Exception {
+        EmployeeAccount employee = null;
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.EmployeeAccounts where employeeID=? AND employeePassword=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, Integer.parseInt(employeeID));
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String employeeFound = rs.getString("employeeID");
+                int employeeIDReturned = Integer.parseInt(rs.getString("employeeID"));
+                String passwordReturned = rs.getString("employeePassword");
+                String employeeName = rs.getString("employeeName");
+                String employeeEmail = rs.getString("employeeEmail");
+                int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
+
+                employee = new EmployeeAccount(employeeIDReturned, passwordReturned, employeeName, employeeEmail,
+                        employeePhone);
+            } else {
+                Exception noEmployeeFound = new Exception();
+                throw noEmployeeFound;
+            }
+        } catch (Exception noUserFound) {
+            throw noUserFound;
+        }
+
+        return employee;
+    }
+
+    public boolean addEmployeeAccount(EmployeeAccount employee) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {
+
+            String sql = "insert into collabyyc.users set employeeID=?, employeePassword=?, employeeName=?, employeeEmail=?, employeePhone=?";
+
+            Connection conn = pool.getConnection();
+
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            // st.setString(1, Integer.toString(employee.getEmployeeID()));
+            st.setInt(1, employee.getEmployeeID());
+            st.setString(2, employee.getEmployeePassword());
+            st.setString(3, employee.getEmployeeName());
+            st.setString(4, employee.employeeEmail());
+            st.setInt(5, employee.getEmployeePhone());
+            // st.setString(5, Integer.toString(employee.getEmployeePhone()));
+
+            int rowAffected = st.executeUpdate();
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public ArrayList<User> getUsers() {
@@ -130,15 +237,15 @@ public class DBOperations {
             String sql = "SELECT * FROM collabyyc.users";
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String userName = rs.getString("userName");
                     String password = rs.getString("password");
-//                    int userType = rs.getInt("userType");
                     User user = new User(userName, password);
                     users.add(user);
                 }
-
+                rs.close();
+                ps.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -148,6 +255,69 @@ public class DBOperations {
 
         return users;
 
+    }
+
+    public User getUserAccount(String username, String password) throws Exception {
+        User user = null;
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.Users where userName=? AND password=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String usernameReturned = rs.getString("userName");
+                String passwordReturned = rs.getString("password");
+
+                user = new User(usernameReturned, passwordReturned);
+
+            } else {
+                Exception noUserFound = new Exception();
+                throw noUserFound;
+            }
+            rs.close();
+            ps.close();
+            connectionPool.freeConnection(conn);
+        } catch (Exception noUserFound) {
+            throw noUserFound;
+        }
+
+        return user;
+    }
+
+    public boolean addUser(User user) {
+        boolean result = false;
+        ConnectionPool pool = ConnectionPool.getInstance();
+
+        try {
+
+            String sql = "insert into collabyyc.users set userName=?, password=?";
+
+            Connection conn = pool.getConnection();
+
+            PreparedStatement st = conn.prepareStatement(sql);
+
+            st.setString(1, user.getUsername());
+            st.setString(2, user.getPassword());
+
+            int rowAffected = st.executeUpdate();
+            result = (rowAffected > 0);
+
+            st.close();
+            pool.freeConnection(conn);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public String getInventory() {
@@ -227,7 +397,7 @@ public class DBOperations {
 
             String skuStr = Integer.toString(item.sku);
             int vendorID1 = returnVendorID(item.vendorName);
-//            String VendorIDStr = Integer.toString(item.vendorID);
+            // String VendorIDStr = Integer.toString(item.vendorID);
             String PriceStr = Double.toString(item.price);
             String QuantityStr = Integer.toString(item.quantity);
 
@@ -298,7 +468,7 @@ public class DBOperations {
             String sql = "SELECT * FROM collabyyc.items WHERE itemID=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, modifyItem);
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int itemID = rs.getInt("itemID");
                     String vendorName = rs.getString("vendorID");
@@ -309,7 +479,8 @@ public class DBOperations {
                     Item item = new Item(itemID, vendorName, name, price, quantity, category);
                     singleItem.add(item);
                 }
-
+                rs.close();
+                ps.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -332,7 +503,7 @@ public class DBOperations {
             String sql = "SELECT * FROM collabyyc.vendors WHERE VendorID=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, modifyVendor);
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int vendorID = rs.getInt("vendorID");
                     String vendorName = rs.getString("vendorName");
@@ -340,10 +511,10 @@ public class DBOperations {
                     String vendorPhone = rs.getString("vendorPhone");
                     Vendor vendor = new Vendor(vendorID, vendorName, vendorEmail, vendorPhone);
                     singleVendor.add(vendor);
- 
 
                 }
-
+                rs.close();
+                ps.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -354,7 +525,8 @@ public class DBOperations {
         return singleVendor;
     }
 
-    public boolean modifyItem(String sku, String itemName, String price, String quantity, String category, String oldSKU) {
+    public boolean modifyItem(String sku, String itemName, String price, String quantity, String category,
+            String oldSKU) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
 
@@ -363,15 +535,15 @@ public class DBOperations {
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
-//            String itemID = request.getParameter("itemid");
-//            String vendorID = Integer.toString(item.getVendorID());
-//            String itemName = item.getName();
-//            String price = Double.toString(item.getPrice());
-//            String quantity = Integer.toString(item.getQuantity());
-//            String category = item.getCategory();
-//            String oldIDStr = Integer.toString(oldID);
+            // String itemID = request.getParameter("itemid");
+            // String vendorID = Integer.toString(item.getVendorID());
+            // String itemName = item.getName();
+            // String price = Double.toString(item.getPrice());
+            // String quantity = Integer.toString(item.getQuantity());
+            // String category = item.getCategory();
+            // String oldIDStr = Integer.toString(oldID);
             st.setString(1, sku);
-//            st.setString(2, vendorID);
+            // st.setString(2, vendorID);
             st.setString(2, itemName);
             st.setString(3, price);
             st.setString(4, quantity);
@@ -398,11 +570,11 @@ public class DBOperations {
             Connection conn = pool.getConnection();
             PreparedStatement st = conn.prepareStatement(sql);
 
-//            String vendorIDStr = Integer.toString(vendor.getVendorID());
-//            String vendorName = vendor.getName();
-//            String vendorEmail = vendor.getVendorEmail();
-//            String vendorPhoneNumber = vendor.getVendorPhoneNumber();
-//            st.setString(1, vendorID);
+            // String vendorIDStr = Integer.toString(vendor.getVendorID());
+            // String vendorName = vendor.getName();
+            // String vendorEmail = vendor.getVendorEmail();
+            // String vendorPhoneNumber = vendor.getVendorPhoneNumber();
+            // st.setString(1, vendorID);
             st.setString(1, vendorName);
             st.setString(2, vendorEmail);
             st.setString(3, vendorPhone);
@@ -455,7 +627,7 @@ public class DBOperations {
             String sql = "SELECT * FROM collabyyc.sale";
             PreparedStatement ps = conn.prepareStatement(sql);
 
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int transactionID = rs.getInt("transactionID");
                     int customerID = rs.getInt("customerID");
@@ -467,10 +639,12 @@ public class DBOperations {
                     String shippingAddress = rs.getString("shippingAddress");
                     Date pickupDate = rs.getDate("pickupDate");
 
-                    Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
+                    Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems,
+                            sentShippingDate, shippingAddress, pickupDate);
                     sales.add(sale);
                 }
-
+                rs.close();
+                ps.close();
                 connectionPool.freeConnection(conn);
             }
 
@@ -528,7 +702,7 @@ public class DBOperations {
             String sql = "SELECT * FROM collabyyc.items where sku=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, searchedSku);
-            try ( ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int sku = rs.getInt("sku");
                     String name = rs.getString("nameProducts");
@@ -592,7 +766,8 @@ public class DBOperations {
                 String shippingAddress = rs.getString("shippingAddress");
                 Date pickupDate = rs.getDate("pickupDate");
 
-                Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems, sentShippingDate, shippingAddress, pickupDate);
+                Sale sale = new Sale(transactionID, customerID, paymentDate, saleAmount, payVendorAmount, soldItems,
+                        sentShippingDate, shippingAddress, pickupDate);
                 searched.add(sale);
             }
             rs.close();

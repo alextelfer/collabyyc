@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <filter>
-        <filter-name>AdminFilter</filter-name>
-        <filter-class>ca.sait.itsd.filters.AdminFilter</filter-class>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>ca.sait.itsd.filters.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AdminFilter</filter-name>
+        <filter-name>AuthenticationFilter</filter-name>
+        <servlet-name>Director</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <servlet-name>AddVendor</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <servlet-name>AddItem</servlet-name>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
         <servlet-name>FrontController</servlet-name>
     </filter-mapping>
     <servlet>
@@ -24,6 +36,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>ca.sait.itsd.servlets.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>ca.sait.itsd.servlets.RegisterServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/FrontController</url-pattern>
@@ -37,8 +53,12 @@
         <url-pattern>/Director</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
+        <servlet-name>Logout</servlet-name>    
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>    
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

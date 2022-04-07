@@ -6,6 +6,7 @@
 package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
+import ca.sait.itsd.EmployeeAccount;
 import ca.sait.itsd.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,20 +37,23 @@ public class LoginServlet extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+
+        HttpSession session = request.getSession();
+        String logout = (String) session.getAttribute("logout");
+        System.out.println("Printing logout attribute in servlet...");
+        System.out.println(logout);
+
+        if (logout != null && logout.equals("logout")) {
+            
+            session.invalidate();
+        }
+        
+        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         return;
+
     }
 
     /**
@@ -67,48 +71,31 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         DBOperations dbo = new DBOperations();
-        ArrayList<User> users = dbo.getUsers();
 
         String action = request.getParameter("action");
 
-        if (action != null && action.equals("login")) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            boolean login = false;
-            int userType = 1;
-
-            for (int i = 0; i < users.size(); i++) {
-                User user = users.get(i);
-                if (username.equals(user.getUsername())) {
-                    if (password.equals(user.getPassword())) {
-                        login = true;
-                        userType = user.getUserType();
-                    }
-                }
-            }
-
-            if (login == true) {
-                if (userType == 0) {
-                    session.setAttribute("adminUser", username);
-                    response.sendRedirect("FrontController");
-                    return;
-                    /*
-                If the user is not admin
-                     */
-                } else {
-                    session.setAttribute("validUser", username);
-                    request.setAttribute("invalidLogin", "Not Admin!");
-                    getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-                    return;
-                }
-
-            } else {
-                request.setAttribute("invalidLogin", "Invalid Username or Password!");
-                getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        try {
+            EmployeeAccount employee = dbo.getEmployeeAccount(username, password);
+            session.setAttribute("employee", username);
+            response.sendRedirect("FrontController");
+            return;
+        } catch (Exception e1) {
+            try {
+                User user = dbo.getUserAccount(username, password);
+                session.setAttribute("user", username);
+                response.sendRedirect("FrontController");
+                return;
+            } catch (Exception e2) {
+                request.setAttribute("invalidLogin", "Invalid Login!");
+                e2.printStackTrace();
+                getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
                 return;
             }
         }
+
     }
 
     /**

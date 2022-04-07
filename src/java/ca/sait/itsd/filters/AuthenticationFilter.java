@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.sait.itsd.filters;
 
 import java.io.IOException;
@@ -19,13 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author manve
- */
-public class AdminFilter implements Filter {
+public class AuthenticationFilter implements Filter {
 
-@Override
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
@@ -35,21 +26,20 @@ public class AdminFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
 
-        // session variable containing the username if the user is logged in
-        String admin_user = (String) session.getAttribute("adminUser");
-
-        // if not, return to login servlet
-        if (admin_user == null) {
+        String user = (String) session.getAttribute("user");
+        String employee = (String) session.getAttribute("employee");
+        
+        if(user == null && employee == null){
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendRedirect("LoginServlet");
             return;
-        } 
-
+        }
+  
         chain.doFilter(request, response);
     }
 
     @Override
     public void destroy() {
     }
-    
+
 }

@@ -16,12 +16,11 @@
         <td><div><a href="Director?direction=vendors">Vendors</a></div></td>
     </tr>
     <tr>
-        <td><div><a href="Director?direction=accounts">Account</a></div></td>
-        <td><div><a href="Director?direction=adminAccounts">Admin Account</a></div></td>
+        <td><a href="Director?direction=register">Register</a></td>
+        <td><a href="Director?direction=default">Index</a></td>
     </tr>
     <tr>
-        <td><div><a href="Logout">Logout</a></div></td>
-        
+        <td><a href="Director?direction=logout">Logout</a></td>
     </tr>
     
 </table>
