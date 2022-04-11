@@ -780,4 +780,92 @@ public class DBOperations {
         return searched;
     }
 
+    public Sale getSale(int transactionID) {
+        Sale sale = null;
+        
+        ConnectionPool cp = ConnectionPool.getInstance();
+        
+        try {
+            Connection c = cp.getConnection();
+            
+            String sql = "SELECT * FROM collabyyc.sale WHERE transactionID = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            
+            ps.setInt(1, transactionID);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                sale = new Sale(
+                        rs.getInt("transactionID"),
+                        rs.getDate("paymentDate"),
+                        rs.getDouble("saleAmount"),
+                        rs.getDouble("payVendorAmount"),
+                        rs.getString("soldItems")
+                );
+            }
+            rs.close();
+            ps.close();
+            cp.freeConnection(c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return sale;
+    }
+
+    public ArrayList<Item> getSoldItems(int transactionID) {
+        ArrayList<Item> items = new ArrayList<>();
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+        try {
+
+            Connection conn = connectionPool.getConnection();
+
+            String sql = "SELECT * FROM collabyyc.solditems WHERE transactionID = ?";            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, transactionID);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Item item = getItem(String.valueOf(rs.getInt("itemID")));
+                    items.add(item);
+                }
+                rs.close();
+                ps.close();
+                connectionPool.freeConnection(conn);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return items;
+    }
+
+    public void addSoldItems(ArrayList<Item> soldItems, int transactionID) {
+        
+        ConnectionPool cp = ConnectionPool.getInstance();
+        
+        try {
+            Connection c = cp.getConnection();
+            
+            String sql = "INSERT INTO collabyyc.solditems (transactionID, itemID) VALUES (?, ?)";
+            PreparedStatement ps = c.prepareStatement(sql);
+            
+            for(Item item : soldItems) {
+                ps.setInt(1, transactionID);                
+                ps.setInt(2, item.getSku());
+                ps.addBatch();
+            }
+            
+            ps.executeBatch();
+            
+            ps.close();
+            cp.freeConnection(c);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

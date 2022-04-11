@@ -5,9 +5,10 @@
  */
 package ca.sait.itsd.servlets;
 
+import ca.sait.itsd.DBOperations;
+import ca.sait.itsd.Item;
 import ca.sait.itsd.Sale;
 import java.io.IOException;
-import java.util.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -62,6 +63,16 @@ public class Director extends HttpServlet {
                 session.setAttribute("logout", "logout");
                 System.out.println("Made session attribute...");
                 response.sendRedirect("LoginServlet");
+                break;
+                
+            case "saledetails":
+                int transactionID = Integer.parseInt(request.getParameter("transactionid"));
+                DBOperations dbOps = new DBOperations();
+                Sale sale = dbOps.getSale(transactionID);
+                ArrayList<Item> soldItems = dbOps.getSoldItems(transactionID);
+                request.getSession().setAttribute("solditems", soldItems);
+                request.getSession().setAttribute("detailsale", sale);
+                request.getRequestDispatcher("WEB-INF/saledetails.jsp").forward(request, response);
                 break;
                 
             default:

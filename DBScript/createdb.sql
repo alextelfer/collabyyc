@@ -1,5 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `collabyyc` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `collabyyc`;
+DROP TABLE IF EXISTS SoldItems;
 Drop Table if exists Items;
 Drop Table if exists Vendors;
 Drop Table if exists Users;
@@ -50,6 +51,16 @@ Create table Users (
     userType int(1) not null,
     PRIMARY KEY (userName)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE solditems (
+    soldItemID int(8) auto_increment,
+    transactionID int(10),
+    itemID int(8),
+    PRIMARY KEY (soldItemID),
+    FOREIGN KEY (transactionID) REFERENCES Sale (transactionID),
+    FOREIGN KEY (itemID) REFERENCES Items (itemID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
 VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472);
 INSERT INTO Vendors (VendorID, VendorName, VendorEmail, VendorPhone)
