@@ -396,6 +396,7 @@ public class DBOperations {
             PreparedStatement st = conn.prepareStatement(sql);
 
             String skuStr = Integer.toString(item.sku);
+            System.out.println(item.vendorName);
             int vendorID1 = returnVendorID(item.vendorName);
             // String VendorIDStr = Integer.toString(item.vendorID);
             String PriceStr = Double.toString(item.price);
@@ -729,7 +730,7 @@ public class DBOperations {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
             Connection conn = connectionPool.getConnection();
-            String sql = "SELECT vendorID FROM collabyyc.items where vendorName=?";
+            String sql = "SELECT vendorID FROM collabyyc.vendors where vendorName=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, vendorName);
             ResultSet rs = ps.executeQuery();
