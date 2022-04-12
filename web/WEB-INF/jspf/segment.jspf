@@ -7,22 +7,19 @@
 </head>
 <body>
     <table id="contents">
-    <tr>
-        <td><div><a href="Director?direction=inventory">Inventory</a></div></td>
-        <td><div><a href="Director?direction=sales">Sales</a></div></td>
-    </tr>
-    <tr>
-        <td><div><a href="Director?direction=reports">Reports</a></div></td>
-        <td><div><a href="Director?direction=vendors">Vendors</a></div></td>
-    </tr>
-    <tr>
-        <td><a href="Director?direction=register">Register</a></td>
-        <td><a href="Director?direction=default">Index</a></td>
-    </tr>
-    <tr>
-        <td><a href="Director?direction=logout">Logout</a></td>
-    </tr>
-    
-</table>
+        <tr>
+            <td><div><a href="Director?direction=inventory">Inventory</a></div></td>
+            <td><div><a href="Director?direction=sales">Sales</a></div></td>
+        </tr>
+        <tr>
+            <td><div><a href="Director?direction=reports">Reports</a></div></td>
+            <td><div><a href="Director?direction=vendors">Vendors</a></div></td>
+        </tr>
+        <tr>
+            <td><a href="Director?direction=register">Register</a></td>
+            <td><a href="Director?direction=logout">Logout</a></td>
+        </tr>
+
+    </table>
 </body>
 

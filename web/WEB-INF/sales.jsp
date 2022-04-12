@@ -50,7 +50,7 @@
                 <c:forEach items="${saleitems}" var="item">
                     <tr>
                         <td>${item.sku}</td>
-                        <td>${item.vendorID}</td>
+                        <td>${item.vendorName}</td>
                         <td>${item.name}</td>
                         <td>${item.price}</td>
                         <td>${item.quantity}</td>
