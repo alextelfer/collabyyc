@@ -3,7 +3,6 @@ body {
     background-size: cover;
     opacity: 100;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri;
-    font-size: 20px;
     color: black;
     display: block;
     position: relative;
@@ -32,6 +31,10 @@ td {
 }
 
 div{
+    
+    /*overflow: auto;*/
+}
+#scrollable {
     resize: both;
     overflow: auto;
 }
