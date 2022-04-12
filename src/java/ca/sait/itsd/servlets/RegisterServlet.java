@@ -77,7 +77,7 @@ public class RegisterServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 String name = request.getParameter("name");
                 String email = request.getParameter("email");
-                int phone = Integer.parseInt(request.getParameter("phone"));
+                long phone = Long.parseLong(request.getParameter("phone"));
 
                 try {
                     EmployeeAccount employee = new EmployeeAccount(employeeID, password, name, email, phone);
@@ -97,40 +97,10 @@ public class RegisterServlet extends HttpServlet {
                 }
             } else {
                 request.setAttribute("unauthorizedRegister", "You cannot register en employee.");
-                getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
                 return;
             }
 
-        } else if (registerReq.equals("user")) {
-            String name = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            try {
-                if (name != null && !name.equals("") && (password != null && !password.equals(""))) {
-                    User user = new User(name, password);
-                    dbo.addUser(user);
-                    request.setAttribute("registerSuccess", "User successfully registered!");
-                    if (employeeSession != null) {
-                        getServletContext().getRequestDispatcher("/WEB-INF/registerEmployee.jsp").forward(request, response);
-                        return;
-
-                    } else {
-                        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-                        return;
-                    }
-
-                } else {
-                    Exception emptyFields = new Exception();
-                    throw emptyFields;
-                }
-            } catch (Exception e) {
-                request.setAttribute("registerError", "There was an error");
-                getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-                return;
-            }
-        } else {
-            getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-            return;
         }
     }
 

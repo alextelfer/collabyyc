@@ -44,7 +44,7 @@ Create table EmployeeAccounts (
     employeePassword VARCHAR (20) NOT NULL,
     employeeName VARCHAR(50) NOT NULL,
     employeeEmail VARCHAR(50) NOT NULL,
-    employeePhone int(10) NOT NULL,
+    employeePhone BIGINT NOT NULL,
     PRIMARY KEY (employeeID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

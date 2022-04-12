@@ -24,7 +24,7 @@
         <table>
             <tr>
                 <td>
-                    <input name="employeeid" type="text" placeholder="Employee ID">
+                    <input name="employeeid" type="text" placeholder="Employee ID" min="00001" max="99999">
                 </td>
             </tr>
             <tr>
@@ -41,31 +41,12 @@
             </tr>
             <tr>
                 <td>
-                    <input name="phone" type="number" placeholder="Employee Phone">
+                    <input name="phone" type="number" placeholder="Employee Phone" min="1111111111" max="9999999999">
             </tr>
             <tr>
                 <td>
                     <input type="submit" value="Register Employee">
                     <input type="hidden" name="register_req" value="employee">
-                </td>
-            </tr>
-        </table>
-    </form>
-    <form action="RegisterServlet" method="POST">
-        <table>
-            <tr>
-                <td>
-                    <input name="username" type="text" placeholder="Username">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input name="password" type="password" placeholder="Password">
-            </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="Register User">
-                    <input type="hidden" name="register_req" value="user">
                 </td>
             </tr>
         </table>

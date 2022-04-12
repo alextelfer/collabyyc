@@ -47,10 +47,10 @@ public class LoginServlet extends HttpServlet {
         System.out.println(logout);
 
         if (logout != null && logout.equals("logout")) {
-            
+
             session.invalidate();
         }
-        
+
         request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
         return;
 
@@ -82,18 +82,13 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("employee", username);
             response.sendRedirect("FrontController");
             return;
-        } catch (Exception e1) {
-            try {
-                User user = dbo.getUserAccount(username, password);
-                session.setAttribute("user", username);
-                response.sendRedirect("FrontController");
-                return;
-            } catch (Exception e2) {
-                request.setAttribute("invalidLogin", "Invalid Login!");
-                e2.printStackTrace();
-                getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-                return;
-            }
+        } catch (Exception e) {
+
+            request.setAttribute("invalidLogin", "Invalid Login!");
+            e.printStackTrace();
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
+
         }
 
     }

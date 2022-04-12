@@ -136,7 +136,7 @@ public class DBOperations {
                     String employeePassword = rs.getString("employeePassword");
                     String employeeName = rs.getString("employeeName");
                     String employeeEmail = rs.getString("employeeEmail");
-                    int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
+                    long employeePhone = Long.parseLong(rs.getString("employeePhone"));
                     EmployeeAccount employee = new EmployeeAccount(employeeID, employeePassword, employeeName,
                             employeeEmail, employeePhone);
                     employees.add(employee);
@@ -176,7 +176,7 @@ public class DBOperations {
                 String passwordReturned = rs.getString("employeePassword");
                 String employeeName = rs.getString("employeeName");
                 String employeeEmail = rs.getString("employeeEmail");
-                int employeePhone = Integer.parseInt(rs.getString("employeePhone"));
+                long employeePhone = Long.parseLong(rs.getString("employeePhone"));
 
                 employee = new EmployeeAccount(employeeIDReturned, passwordReturned, employeeName, employeeEmail,
                         employeePhone);
@@ -197,7 +197,7 @@ public class DBOperations {
 
         try {
 
-            String sql = "insert into collabyyc.users set employeeID=?, employeePassword=?, employeeName=?, employeeEmail=?, employeePhone=?";
+            String sql = "insert into collabyyc.EmployeeAccounts set employeeID=?, employeePassword=?, employeeName=?, employeeEmail=?, employeePhone=?";
 
             Connection conn = pool.getConnection();
 
@@ -208,7 +208,7 @@ public class DBOperations {
             st.setString(2, employee.getEmployeePassword());
             st.setString(3, employee.getEmployeeName());
             st.setString(4, employee.employeeEmail());
-            st.setInt(5, employee.getEmployeePhone());
+            st.setLong(5, employee.getEmployeePhone());
             // st.setString(5, Integer.toString(employee.getEmployeePhone()));
 
             int rowAffected = st.executeUpdate();
