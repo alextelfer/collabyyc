@@ -15,12 +15,12 @@ public class EmployeeAccount {
     private String employeePassword;
     private String employeeName;
     private String employeeEmail;
-    private int employeePhone;
+    private long employeePhone;
     
     public EmployeeAccount() {
     }
 
-    public EmployeeAccount(int employeeID, String employeePassword, String employeeName, String employeeEmail, int employeePhone) {
+    public EmployeeAccount(int employeeID, String employeePassword, String employeeName, String employeeEmail, long employeePhone) {
         this.employeeID = employeeID;
         this.employeePassword = employeePassword;
         this.employeeName = employeeName;
@@ -60,11 +60,11 @@ public class EmployeeAccount {
         this.employeeEmail = employeeEmail;
     }
 
-    public int getEmployeePhone() {
+    public long getEmployeePhone() {
         return employeePhone;
     }
 
-    public void setEmployeePhone(int employeePhone) {
+    public void setEmployeePhone(long employeePhone) {
         this.employeePhone = employeePhone;
     }
   
