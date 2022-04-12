@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="./index.css">
 </head>
 <body>
-    <table id = "contents">
+    <table id="contents">
     <tr>
         <td><div><a href="Director?direction=inventory">Inventory</a></div></td>
         <td><div><a href="Director?direction=sales">Sales</a></div></td>

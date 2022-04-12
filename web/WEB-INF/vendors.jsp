@@ -7,11 +7,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="./index.css">
         <title>Vendors Page</title>
+          
     </head>
 
     <body>
@@ -47,7 +47,7 @@
                         <form action="FrontController" method="GET">
                             <input type="hidden" name="action" value="deletevendor" />
                             <input type="hidden" name="deleteID" value="${vendor.vendorID}" />                            
-                            <input id="deleteButton" type="submit" value="X">
+                            <input id="deleteButton" type="submit" value="X" onclick="return confirm('Delete vendor? WARNING this will delete all items linked to this vendor.')"/>
                         </form>
                     </td>
                     </tr>

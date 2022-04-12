@@ -12,6 +12,7 @@ import ca.sait.itsd.Vendor;
 import ca.sait.itsd.exceptions.BadStringException;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -107,12 +108,12 @@ public final class RequestOptions {
                     System.out.println(oldSKU);
                     DBOperations dbOps = new DBOperations();
                     dbOps.modifyItem(updatedItemID, updatedItemName, updatedPrice, updatedQuantity, updatedCategory, oldSKU);
-                    
                     response.sendRedirect("FrontController");
     }
     
-    public static void updateVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void updateVendor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String oldVendorID = request.getParameter("oldVendorID");
+        HttpSession session = request.getSession();
                     String updatedVendorID = request.getParameter("updatedVendorID");
                     String updatedVendorName = request.getParameter("updatedVendorName");
                     String updatedVendorEmail = request.getParameter("updatedVendorEmail");
@@ -120,21 +121,26 @@ public final class RequestOptions {
                     System.out.println(updatedVendorID + "*************");
                     DBOperations dbOps = new DBOperations();
                     dbOps.updateVendor(updatedVendorName, updatedVendorEmail, updatedVendorPhone, updatedVendorID);
-                    response.sendRedirect("FrontController");
+                    ArrayList<Vendor> vendors = dbOps.getVendors();
+                    session.setAttribute("vendorlist", vendors);
+                    request.getRequestDispatcher("WEB-INF/vendors.jsp").forward(request, response);
     }
     
     public static void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemID1 = request.getParameter("deleteID");
-        DBOperations dbOps = new DBOperations();
-        dbOps.deleteItem(itemID1);
-        response.sendRedirect("FrontController");  
+                    DBOperations dbOps = new DBOperations();
+                    dbOps.deleteItem(itemID1);
+                    response.sendRedirect("FrontController");  
     }
     
-    public static void deleteVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void deleteVendor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String vendorID2 = request.getParameter("deleteID");
-        DBOperations dbOps = new DBOperations();
-        dbOps.deleteVendor(vendorID2);
-        response.sendRedirect("FrontController"); 
+        HttpSession session = request.getSession();
+                    DBOperations dbOps = new DBOperations();
+                    dbOps.deleteVendor(vendorID2);
+                    ArrayList<Vendor> vendors = dbOps.getVendors();
+                    session.setAttribute("vendorlist", vendors);
+                    request.getRequestDispatcher("WEB-INF/vendors.jsp").forward(request, response);
     }
     
     public static void createSale(HttpServletRequest request, HttpServletResponse response) throws IOException {

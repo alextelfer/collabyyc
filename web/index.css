@@ -55,3 +55,15 @@ div{
 .header {
     border-bottom: 5px solid black;
 }
+
+#contents {
+    display: block;
+    float: right;
+    position: static;
+    margin-right: 10%;
+    padding: 5px;
+    width: 12%;
+}
+#cellContents {
+    padding: 20px;
+}
