@@ -23,7 +23,7 @@
             <table>
             <tr>
                 <td>
-                    <input name="username" type="text" placeholder="Username">
+                    <input name="username" type="number" placeholder="Username" min="00001" max="99999">
                 </td>
             </tr>
             <tr>

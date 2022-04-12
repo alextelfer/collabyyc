@@ -26,10 +26,9 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpSession session = httpRequest.getSession();
 
-        String user = (String) session.getAttribute("user");
         String employee = (String) session.getAttribute("employee");
         
-        if(user == null && employee == null){
+        if(employee == null){
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.sendRedirect("LoginServlet");
             return;

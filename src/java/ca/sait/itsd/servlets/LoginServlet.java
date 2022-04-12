@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 
             request.setAttribute("invalidLogin", "Invalid Login!");
             e.printStackTrace();
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
 
         }
