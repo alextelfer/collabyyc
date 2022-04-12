@@ -68,7 +68,7 @@ public final class RequestOptions {
     }
 
     public static void addVendor(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
+        //int vendorID1 = Integer.parseInt(request.getParameter("vendorid"));
         String vendorName = request.getParameter("vendorName");
         String email = request.getParameter("email");
         String phoneNo = request.getParameter("phoneno");
@@ -83,10 +83,9 @@ public final class RequestOptions {
             if (InputVerifier.checkBadString(phoneNo)) {
                 throw new BadStringException("phoneNo");
             }
-
-            Vendor newVendor = new Vendor(vendorID1, vendorName, email, phoneNo);
+            
             DBOperations dbOps = new DBOperations();
-            dbOps.addVendor(newVendor);
+            dbOps.addVendor(vendorName, email, phoneNo);
             updateSessionLists(request, response);
             response.sendRedirect("Director?direction=vendors");
 

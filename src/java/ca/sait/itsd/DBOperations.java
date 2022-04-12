@@ -425,23 +425,20 @@ public class DBOperations {
 
     }
 
-    public boolean addVendor(Vendor vendor) {
+    public boolean addVendor(String vendorName, String vendorEmail, String vendorPhone) {
         boolean result = false;
         ConnectionPool pool = ConnectionPool.getInstance();
 
         try {
-            String sql = "insert into collabyyc.vendors set vendorID=?, vendorName=?, vendorEmail=?, vendorPhone=?";
+            String sql = "insert into collabyyc.vendors set vendorName=?, vendorEmail=?, vendorPhone=?";
 
             Connection conn = pool.getConnection();
 
-            PreparedStatement st = conn.prepareStatement(sql);
-
-            String vendorIDStr = Integer.toString(vendor.vendorID);
-
-            st.setString(1, vendorIDStr);
-            st.setString(2, vendor.name);
-            st.setString(3, vendor.vendorEmail);
-            st.setString(4, vendor.vendorPhoneNumber);
+            PreparedStatement st = conn.prepareStatement(sql);            
+            
+            st.setString(1, vendorName);
+            st.setString(2, vendorEmail);
+            st.setString(3, vendorPhone);
 
             int rowAffected = st.executeUpdate();
             result = (rowAffected > 0);

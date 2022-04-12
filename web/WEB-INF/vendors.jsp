@@ -60,8 +60,7 @@
             <form action="FrontController" method="GET">
                 <table>
                     <tr>
-                        <td>Vendor Name:<input type="text" name="vendorName"></td>
-                        <td>Vendor ID:<input type="number" name="vendorid"></td>
+                        <td>Vendor Name:<input type="text" name="vendorName"></td>                        
                         <td>Vendor Email:<input type="email" name="email"></td>
                         <td>Vendor Phone:<input type="text" name="phoneno"></td>
 
