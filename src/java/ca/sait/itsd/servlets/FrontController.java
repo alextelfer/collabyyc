@@ -132,7 +132,9 @@ public class FrontController extends HttpServlet {
                             newSale.setShippingAddress("");
                             newSale.setPickupDate(new Date());
                             dbOps.addSale(newSale);
+                            dbOps.addSoldItems(sessionItems, newSale.getTransactionID());
                             session.setAttribute("saleslist", dbOps.getSales());
+                            session.setAttribute("saleitems", null);
                         }
                     } catch(MissingSaleException mse) {
                         System.out.println(mse.getMessage());

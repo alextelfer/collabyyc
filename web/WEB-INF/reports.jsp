@@ -48,7 +48,7 @@
                                 <td>${searched.paymentDate}</td>
                                 <td>\$<fmt:formatNumber minFractionDigits='2' value='${searched.saleAmount}'/></td>
                                 <td>\$<fmt:formatNumber minFractionDigits='2' value='${searched.payVendorAmount}'/></td>
-                                <td>${searched.soldItems}</td>
+                                <td><a href="Director?direction=saledetails&transactionid=${searched.transactionID}">...</a></td>
                             </tr>
                             
                         </c:forEach>

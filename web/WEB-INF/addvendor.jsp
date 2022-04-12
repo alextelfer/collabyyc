@@ -24,7 +24,7 @@
                 <tr><td><label for="phoneno"></label></td>
                     <td><input type="number" id="phoneno"></td></tr>
                 <input type="hidden" name="action" value="addvendor" />
-                <tr><td><input type="submit" value="Save"></tr>
+                <tr><td><input type="submit" value="Save"></td></tr>
             </table>
         </form>
     </body>

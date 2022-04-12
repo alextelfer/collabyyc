@@ -5,14 +5,16 @@
  */
 package ca.sait.itsd.servlets;
 
+import ca.sait.itsd.DBOperations;
+import ca.sait.itsd.Item;
 import ca.sait.itsd.Sale;
 import java.io.IOException;
-import java.util.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,6 +34,7 @@ public class Director extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        HttpSession session = request.getSession();
         String direction = request.getParameter("direction");
         
         switch(direction) {
@@ -50,6 +53,26 @@ public class Director extends HttpServlet {
                 
             case "reports":
                 request.getRequestDispatcher("WEB-INF/reports.jsp").forward(request, response);
+                break;
+                
+            case "register":
+                response.sendRedirect("RegisterServlet");
+                break;
+                
+            case "logout":
+                session.setAttribute("logout", "logout");
+                System.out.println("Made session attribute...");
+                response.sendRedirect("LoginServlet");
+                break;
+                
+            case "saledetails":
+                int transactionID = Integer.parseInt(request.getParameter("transactionid"));
+                DBOperations dbOps = new DBOperations();
+                Sale sale = dbOps.getSale(transactionID);
+                ArrayList<Item> soldItems = dbOps.getSoldItems(transactionID);
+                request.getSession().setAttribute("solditems", soldItems);
+                request.getSession().setAttribute("detailsale", sale);
+                request.getRequestDispatcher("WEB-INF/saledetails.jsp").forward(request, response);
                 break;
                 
             default:

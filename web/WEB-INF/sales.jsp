@@ -49,7 +49,7 @@
 
                 <c:forEach items="${saleitems}" var="item">
                     <tr>
-                        <td>${item.itemID}</td>
+                        <td>${item.sku}</td>
                         <td>${item.vendorID}</td>
                         <td>${item.name}</td>
                         <td>${item.price}</td>
@@ -76,28 +76,32 @@
                     <th>Price</th>
                     <th>Category</th>
                     <th>Vendor<th>
-                </tr>
-                <form action="FrontController" method='GET'>
+                </tr>                
                     <c:forEach items="${searchedlist}" var="searched">
                         <tr>
+                        <form action="FrontController" method="GET">
                             <td>${searched.sku}</td>
                             <td>${searched.name}</td>
                             <td>\$<fmt:formatNumber minFractionDigits="2" value='${searched.price}'/></td>
                             <td>${searched.category}</td>
                             <td>${searched.vendorName}</td>
                             <td><input type=submit value="Add to Cart"></td>
+                            <input type="hidden" name="action" value="addtosale" />
+                            <input type="hidden" name="itemsku" value="${searched.sku}" />
+                        </form>                            
                         </tr>
-                    </c:forEach>
-                </form>
-            </table>
-            <h1>Cart</h1>
+                    </c:forEach>              
+            </table>            
             <table>
                 <tr>
-                    <th>SKU</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Vendor</th>
+                    <th>Sale ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>V. Share</th>
+                    <th>Items</th>
+                    <th>SSD</th>
+                    <th>SA</th>
+                    <th>PD</th>
                 </tr>
 
 
@@ -107,7 +111,7 @@
                         <td>${sale.paymentDate}</td>
                         <td>${sale.saleAmount}</td>
                         <td>${sale.payVendorAmount}</td>
-                        <td>${sale.soldItems}</td>                                                
+                        <td><a href="Director?direction=saledetails&transactionid=${sale.transactionID}">...</a></td>                                                
                         <td>${sale.sentShippingDate}</td>
                         <td>${sale.shippingAddress}</td>
                         <td>${sale.pickupDate}</td>
