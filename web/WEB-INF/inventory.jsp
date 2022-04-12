@@ -102,14 +102,10 @@
 
                             <input type="submit" value="Add Item" /></td>
                     </tr>  
-
                 </table>
-
-
-
-
             </form>
         </div>
+            
         <div class="form">
             <h3>Delete Item</h3>
             <table>
