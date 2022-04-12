@@ -102,7 +102,7 @@ public class DBOperations {
             if (rs.next()) {
                 item = new Item(
                         rs.getInt("sku"),
-                        rs.getString("vendorID"),
+                        rs.getInt("vendorID"),
                         rs.getString("nameProducts"),
                         rs.getDouble("price"),
                         rs.getInt("quantity"),
