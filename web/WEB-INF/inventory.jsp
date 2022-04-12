@@ -9,8 +9,8 @@
 
 <script>
     function setDecimalNumber(event) {
-    this.value = parseFloat(this.value).toFixed(2);
-}
+        this.value = parseFloat(this.value).toFixed(2);
+    }
 </script>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@
                     <th>Quantity</th>
                     <th>Category</th>
                 </tr>
-
+                
                 <c:forEach items="${itemlist}" var="item">
                     <tr>
                         <td>${item.sku}</td>
@@ -106,7 +106,7 @@
                                 <option>Stationary</option>
                             </select></td>
                         <td><input type="hidden" name="action" value="additem"/>
-                            
+
                             <input type="submit" value="Add Item" /></td>
                     </tr>  
                 </table>
