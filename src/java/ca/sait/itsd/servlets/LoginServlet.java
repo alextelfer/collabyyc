@@ -7,7 +7,6 @@ package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.EmployeeAccount;
-import ca.sait.itsd.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -43,8 +42,6 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String logout = (String) session.getAttribute("logout");
-        System.out.println("Printing logout attribute in servlet...");
-        System.out.println(logout);
 
         if (logout != null && logout.equals("logout")) {
 

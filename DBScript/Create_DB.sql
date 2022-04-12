@@ -48,13 +48,6 @@ Create table EmployeeAccounts (
     PRIMARY KEY (employeeID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
-Create table Users (
-    userName VARCHAR(40) NOT NULL,
-    password VARCHAR(40) NOT NULL, 
-    PRIMARY KEY (userName)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO Vendors (VendorID, Vendorname, VendorEmail, VendorPhone)
 VALUES(00001, 'Kindred Clothing', 'KINDREDCLOTHINGCALGARY@GMAIL.com', 5872254472);
 
@@ -69,9 +62,6 @@ VALUES(00000002, 00002, 'Glazed Bowl', 65.00, 1, 'Ceramics');
 
 INSERT INTO EmployeeAccounts (employeeID, employeePassword, employeeName, employeeEmail, employeePhone)
 VALUES(12345, 'password', 'Employee', 'employee@gmail.com', 1234567890);
-
-INSERT INTO Users (userName, password)
-VALUES('user01', 'password');
 
 INSERT INTO sale (transactionID, saleAmount, payVendorAmount, soldItems)
 VALUES(1, 75.25, 42.22, 'Cookies, Scrunchies');

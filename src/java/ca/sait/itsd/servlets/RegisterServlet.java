@@ -7,7 +7,6 @@ package ca.sait.itsd.servlets;
 
 import ca.sait.itsd.DBOperations;
 import ca.sait.itsd.EmployeeAccount;
-import ca.sait.itsd.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
