@@ -126,9 +126,9 @@
                                 </c:forEach>
                             </select>
                         </td>
-
+                        <td><input type="submit" value="Delete" /></td>
                     </tr>
-
+                    <input type="hidden" name="action" value="deleteitem" />                    
                 </form>
             </table>
         </div>
