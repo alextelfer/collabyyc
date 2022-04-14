@@ -18,7 +18,7 @@ Create table Vendors (
 
 Create table Items (
     itemID int(8) auto_increment,
-    sku int(7) NOT NULL,
+    sku int(7) UNIQUE NOT NULL,
     vendorID int(5),
     vendorName VARCHAR(40) NOT NULL,
     nameProducts VARCHAR(30) NOT NULL,
