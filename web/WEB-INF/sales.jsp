@@ -17,9 +17,9 @@
     <body>
         <div class="header">
             <img src=".\Resources\photos\collabyyc.png">               
-        </div>
-        <h1>Sales</h1>  
+        </div>        
         <%@ include file="jspf/segment.jspf" %>
+        <h1>Create Sales</h1>  
         <c:if test="${saleitems != null}">
             <table>
                 <tr>
@@ -57,37 +57,39 @@
                 </c:forEach>
             </table>
         </c:if>
-
-
-        <div class="sales">                  
-            <form action="FrontController" method="GET">
-                Search by SKU:<input type="number" name="sku">
-                <input type="hidden" name="action" value="searchbysku">
-                <input type="submit" value="Search">
-            </form>
-            <table>
+        <form action="FrontController" method="GET">
+            Search by SKU:<input type="number" name="sku">
+            <input type="hidden" name="action" value="searchbysku">
+            <input type="submit" value="Search">
+        </form>
+        
+        <table>
+            <tr>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Vendor<th>
+            </tr>                
+            <c:forEach items="${searchedlist}" var="searched">
                 <tr>
-                    <th>SKU</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Vendor<th>
-                </tr>                
-                    <c:forEach items="${searchedlist}" var="searched">
-                        <tr>
-                        <form action="FrontController" method="GET">
-                            <td>${searched.sku}</td>
-                            <td>${searched.name}</td>
-                            <td>\$<fmt:formatNumber minFractionDigits="2" value='${searched.price}'/></td>
-                            <td>${searched.category}</td>
-                            <td>${searched.vendorName}</td>
-                            <td><input type=submit value="Add to Cart"></td>
-                            <input type="hidden" name="action" value="addtosale" />
-                            <input type="hidden" name="itemsku" value="${searched.sku}" />
-                        </form>                            
-                        </tr>
-                    </c:forEach>              
-            </table>            
+                <form action="FrontController" method="GET">
+                    <td>${searched.sku}</td>
+                    <td>${searched.name}</td>
+                    <td>\$<fmt:formatNumber minFractionDigits="2" value='${searched.price}'/></td>
+                    <td>${searched.category}</td>
+                    <td>${searched.vendorName}</td>
+                    <td><input type=submit value="Add to Cart"></td>
+                    <input type="hidden" name="action" value="addtosale" />
+                    <input type="hidden" name="itemsku" value="${searched.sku}" />
+                </form>                            
+                </tr>
+            </c:forEach>              
+        </table> 
+
+
+        <h2>Sale History</h2>
+        <div class="sales">                                              
             <table>
                 <tr>
                     <th>Sale ID</th>
@@ -95,11 +97,7 @@
                     <th>Total</th>
                     <th>V. Share</th>
                     <th>Items</th>
-                    <th>SSD</th>
-                    <th>SA</th>
-                    <th>PD</th>
                 </tr>
-
 
                 <c:forEach items="${saleslist}" var="sale">
                     <tr>
@@ -107,53 +105,10 @@
                         <td>${sale.paymentDate}</td>
                         <td>${sale.saleAmount}</td>
                         <td>${sale.payVendorAmount}</td>
-                        <td><a href="Director?direction=saledetails&transactionid=${sale.transactionID}">...</a></td>                                                
-                        <td>${sale.sentShippingDate}</td>
-                        <td>${sale.shippingAddress}</td>
-                        <td>${sale.pickupDate}</td>
+                        <td><a href="Director?direction=saledetails&transactionid=${sale.transactionID}">...</a></td>                                                                        
                     </tr>
                 </c:forEach>
             </table>
-        </div>
-
-        <!--        <div class="inventory">
-                    <h1>Inventory</h1>
-                   
-                    <table>
-                        <tr>
-                            <th>Item ID</th>
-                            <th>Vendor ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Category</th>
-                        </tr>
-        
-        
-        
-        <c:forEach items="${salelist}" var="sale">
-            <tr>
-                <td>${item.itemID}</td>
-                <td>${item.vendorID}</td>
-                <td>${item.name}</td>
-                <td>${item.price}</td>
-                <td>${item.quantity}</td>
-                <td>${item.category}</td>
-                
-                <form action="FrontController" method="GET">
-                    <td><input type="hidden" name="modifyItem" value=${item.itemID}>
-                        <input type="submit" value="Edit"></td>
-                </form>
-            
-                <form action="FrontController" method="GET">
-                    <td><input type="hidden" name="action" value="addtosale" />
-                        <input type="hidden" name="itemsku" value="${item.sku}" />
-                        <input type="submit" value="Add" /></td>
-                </form>
-                                
-            </tr>
-        </c:forEach>
-    </table>
-</div>-->
+        </div>        
     </body>
 </html>
