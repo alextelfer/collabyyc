@@ -40,8 +40,7 @@
                     <th>Item ID</th>
                     <th>Vendor ID</th>
                     <th>Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>Price</th>                    
                     <th>Category</th>
                 </tr>
 
@@ -50,8 +49,7 @@
                         <td>${item.sku}</td>
                         <td>${item.vendorID}</td>
                         <td>${item.name}</td>
-                        <td>${item.price}</td>
-                        <td>${item.quantity}</td>
+                        <td>${item.price}</td>                        
                         <td>${item.category}</td>                        
                     </tr>
                 </c:forEach>
