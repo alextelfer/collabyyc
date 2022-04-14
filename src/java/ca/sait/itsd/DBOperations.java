@@ -101,12 +101,13 @@ public class DBOperations {
 
             if (rs.next()) {
                 item = new Item(
+                        rs.getInt("itemID"),
                         rs.getInt("sku"),
                         rs.getInt("vendorID"),
                         rs.getString("nameProducts"),
                         rs.getDouble("price"),
                         rs.getInt("quantity"),
-                        rs.getString("category"));
+                        rs.getString("category"));                
             }
             rs.close();
             ps.close();

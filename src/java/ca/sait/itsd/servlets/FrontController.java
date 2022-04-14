@@ -111,7 +111,7 @@ public class FrontController extends HttpServlet {
                     }                    
                     String itemID2 = request.getParameter("itemsku");
                     Item item = dbOps.getItem(itemID2);                    
-                    saleItems.add(item);
+                    saleItems.add(item);                    
                     session.setAttribute("saleitems", saleItems);
                     request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
                     break;
