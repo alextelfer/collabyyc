@@ -9,7 +9,7 @@ drop table if exists sale;
 drop table if exists EmployeeAccounts;
 
 Create table Vendors (
-    vendorID int(5),
+    vendorID int(5) AUTO_INCREMENT,
     vendorName VARCHAR(40) NOT NULL,
     vendorEmail VARCHAR(40) NOT NULL,
     vendorPhone varchar(10) NOT NULL,
@@ -18,7 +18,7 @@ Create table Vendors (
 
 Create table Items (
     itemID int(8) auto_increment,
-    sku int(7) NOT NULL,
+    sku int(7) UNIQUE NOT NULL,
     vendorID int(5),
     vendorName VARCHAR(40) NOT NULL,
     nameProducts VARCHAR(30) NOT NULL,

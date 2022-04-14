@@ -111,7 +111,7 @@ public class FrontController extends HttpServlet {
                     }                    
                     String itemID2 = request.getParameter("itemsku");
                     Item item = dbOps.getItem(itemID2);                    
-                    saleItems.add(item);
+                    saleItems.add(item);                    
                     session.setAttribute("saleitems", saleItems);
                     request.getRequestDispatcher("WEB-INF/sales.jsp").forward(request, response);
                     break;
@@ -125,7 +125,7 @@ public class FrontController extends HttpServlet {
                             Sale newSale = new Sale();
                             newSale.setItems(sessionItems);
                             newSale.setTransactionID(Integer.parseInt(request.getParameter("saleID")));
-                            newSale.setCustomerID(Integer.parseInt(request.getParameter("customerID")));
+                            newSale.setCustomerID(1);
                             newSale.setPaymentDate(new Date());                            
                             newSale.setSoldItems("");
                             newSale.setSentShippingDate(new Date());
