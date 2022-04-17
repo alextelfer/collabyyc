@@ -77,7 +77,9 @@ public class RegisterServlet extends HttpServlet {
                 String password = request.getParameter("password");
                 String name = request.getParameter("name");
                 String email = request.getParameter("email");
+//                long phoneNumber = request.getParameter("phone");
                 long phone = Long.parseLong(request.getParameter("phone"));
+                System.out.println(employeeID + password + name + email + phone);
 
                 try {
                     EmployeeAccount employee = new EmployeeAccount(employeeID, password, name, email, phone);
